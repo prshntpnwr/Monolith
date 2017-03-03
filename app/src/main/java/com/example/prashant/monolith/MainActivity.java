@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.GridView;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
@@ -90,6 +91,7 @@ public class MainActivity extends AppCompatActivity {
      * A placeholder fragment containing a simple view.
      */
     public static class PlaceholderFragment extends Fragment {
+        private MyAdapter adapter;
         /**
          * The fragment argument representing the section number for this
          * fragment.
@@ -115,8 +117,11 @@ public class MainActivity extends AppCompatActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
+
+            adapter = new MyAdapter(getActivity());
+            GridView gridView = (GridView) rootView.findViewById(R.id.grid_view);
+            gridView.setNumColumns(2);
+            gridView.setAdapter(adapter);
             return rootView;
         }
     }
@@ -148,9 +153,9 @@ public class MainActivity extends AppCompatActivity {
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "SECTION 1";
+                    return "Gallery";
                 case 1:
-                    return "SECTION 2";
+                    return "Article";
             }
             return null;
         }
