@@ -167,16 +167,16 @@ public class MainActivity extends AppCompatActivity {
             // Show 2 total pages.
             return  mNumOfTabs;
         }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            switch (position) {
-                case 0:
-                    return "Gallery";
-                case 1:
-                    return "Article";
-            }
-            return null;
-        }
+//
+//        @Override
+//        public CharSequence getPageTitle(int position) {
+//            switch (position) {
+//                case 0:
+//                    return "Gallery";
+//                case 1:
+//                    return "Article";
+//            }
+//            return null;
+//        }
     }
 }
