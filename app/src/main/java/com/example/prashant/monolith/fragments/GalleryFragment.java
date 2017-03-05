@@ -58,14 +58,13 @@ public class GalleryFragment extends Fragment {
                     @Override
                     public void onResponse(String response) {
                         Gson gson = new GsonBuilder().create();
-                        List<GalleryObject> result = Arrays.asList(gson.fromJson(response, GalleryObject[].class));
+                        List<GalleryObject> result = Arrays.asList(gson.fromJson(response, GalleryObject.class));
 
                         Log.d("PostActivity", result.size() + " loaded.");
                         for (GalleryObject galleryObject : result) {
                             Log.i("PostActivity",  galleryObject.getDate());
                         }
                     }
-
                 }, new Response.ErrorListener() {
 
                     @Override
