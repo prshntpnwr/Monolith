@@ -1,4 +1,4 @@
-package com.example.prashant.monolith;
+package com.example.prashant.monolith.adapters;
 
 import android.content.Context;
 import android.view.View;
@@ -6,17 +6,25 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
-public class MyAdapter extends BaseAdapter
+import com.example.prashant.monolith.R;
+import com.squareup.picasso.Picasso;
+
+import java.sql.Array;
+import java.util.ArrayList;
+
+public class GalleryAdapter extends BaseAdapter
 {
     private Context mContext;
+    private ArrayList<String> array;
 
-    public MyAdapter(Context c) {
+    public GalleryAdapter(Context c, ArrayList<String> paths) {
         mContext= c;
+        array = paths;
     }
 
     @Override
     public int getCount() {
-        return mThumbIds.length;
+        return 0;
     }
 
     @Override
@@ -42,18 +50,13 @@ public class MyAdapter extends BaseAdapter
             imageView = (ImageView) convertView;
         }
 
-        imageView.setScaleType(ImageView.ScaleType.CENTER);
-        imageView.setImageResource(mThumbIds[position]);
-        return imageView;
+        imageView.setAdjustViewBounds(true);
 
+        Picasso.with(mContext)
+                .load("http://i.imgur.com/DvpvklR.png")
+                .placeholder(R.drawable.bg)
+                .into(imageView);
+        return imageView;
     }
 
-    // references to our images
-    private Integer[] mThumbIds = {
-            R.drawable.bg, R.drawable.bg,
-            R.drawable.bg, R.drawable.bg,
-            R.drawable.bg, R.drawable.bg,
-            R.drawable.bg, R.drawable.bg,
-
-    };
 }

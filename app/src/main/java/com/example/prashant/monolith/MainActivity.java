@@ -1,3 +1,4 @@
+
 package com.example.prashant.monolith;
 
 import android.support.design.widget.TabLayout;
@@ -11,14 +12,12 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 
-import android.widget.GridView;
-import android.widget.TextView;
+import com.example.prashant.monolith.fragments.ArticleFragment;
+import com.example.prashant.monolith.fragments.GalleryFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -120,9 +119,10 @@ public class MainActivity extends AppCompatActivity {
                     return null;
             }
         }
+
         @Override
         public int getCount() {
-            // Show 2 total pages.
+            // Show total pages.
             return  mNumOfTabs;
         }
 
