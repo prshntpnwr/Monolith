@@ -12,15 +12,17 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.prashant.monolith.R;
 import com.example.prashant.monolith.adapters.GalleryAdapter;
-
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.example.prashant.monolith.objects.GalleryItems;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class GalleryFragment extends Fragment {
 
@@ -42,28 +44,28 @@ public class GalleryFragment extends Fragment {
 
     @Override
     public void onStart() {
-        ImageLoadTask();
+        ImageFetchTask();
         super.onStart();
     }
 
-    public void ImageLoadTask() {
+    public void ImageFetchTask() {
         RequestQueue queue = Volley.newRequestQueue(getContext());
         String url = "https://api.nasa.gov/planetary/apod?date=2017-03-04&hd=True&api_key=DEMO_KEY";
 
-        JsonObjectRequest jsObjRequest = new JsonObjectRequest
-                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
-
+        // Request a string response from the provided URL.
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
                     @Override
-                    public void onResponse(JSONObject response) {
-                        Log.d("here goes response", response.toString());
-                        String date  = null;
-                        try {
-                            date = response.getString("date");
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+                    public void onResponse(String response) {
+                        Gson gson = new GsonBuilder().create();
+                        List<GalleryItems> result = Arrays.asList(gson.fromJson(response, GalleryItems[].class));
+
+                        Log.d("PostActivity", result.size() + " loaded.");
+                        for (GalleryItems galleryObject : result) {
+                            Log.i("PostActivity",  galleryObject.getDate());
                         }
-                        Log.d("----------", "date is : " + date);
                     }
+
                 }, new Response.ErrorListener() {
 
                     @Override
@@ -71,6 +73,7 @@ public class GalleryFragment extends Fragment {
                         error.printStackTrace();
                     }
                 });
-        queue.add(jsObjRequest);
+
+        queue.add(stringRequest);
     }
 }

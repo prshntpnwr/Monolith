@@ -1,13 +1,16 @@
 package com.example.prashant.monolith.objects;
 
-public class GalleryObject {
+import com.google.gson.annotations.SerializedName;
 
-    private String Image = null;
-    private String date = null;
-    private String title = null;
-    private String detail = null;
+public class GalleryItems {
 
-    public GalleryObject(String image, String date, String title, String detail){
+    @SerializedName("MessagesRequestStatus")
+    private String Image;
+    private String date;
+    private String title;
+    private String detail;
+
+    public GalleryItems(String image, String date, String title, String detail){
         this.Image = image;
         this.date = date;
         this.title = title;
