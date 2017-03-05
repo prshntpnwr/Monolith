@@ -16,7 +16,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.prashant.monolith.R;
 import com.example.prashant.monolith.adapters.GalleryAdapter;
-import com.example.prashant.monolith.objects.GalleryItems;
+import com.example.prashant.monolith.objects.GalleryObject;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -58,10 +58,10 @@ public class GalleryFragment extends Fragment {
                     @Override
                     public void onResponse(String response) {
                         Gson gson = new GsonBuilder().create();
-                        List<GalleryItems> result = Arrays.asList(gson.fromJson(response, GalleryItems[].class));
+                        List<GalleryObject> result = Arrays.asList(gson.fromJson(response, GalleryObject[].class));
 
                         Log.d("PostActivity", result.size() + " loaded.");
-                        for (GalleryItems galleryObject : result) {
+                        for (GalleryObject galleryObject : result) {
                             Log.i("PostActivity",  galleryObject.getDate());
                         }
                     }
