@@ -9,7 +9,6 @@ import android.widget.ImageView;
 import com.example.prashant.monolith.R;
 import com.squareup.picasso.Picasso;
 
-import java.sql.Array;
 import java.util.ArrayList;
 
 public class GalleryAdapter extends BaseAdapter
@@ -24,7 +23,7 @@ public class GalleryAdapter extends BaseAdapter
 
     @Override
     public int getCount() {
-        return 0;
+        return array.size();
     }
 
     @Override

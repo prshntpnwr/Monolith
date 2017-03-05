@@ -12,29 +12,25 @@ import com.google.gson.Gson;
 
 import com.example.prashant.monolith.R;
 import com.example.prashant.monolith.adapters.GalleryAdapter;
-import com.example.prashant.monolith.objects.GalleryObject;
-import com.google.gson.reflect.TypeToken;
-
-import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
-import java.sql.Array;
 import java.util.ArrayList;
 
 public class GalleryFragment extends Fragment {
 
-    public static ArrayList<String> imageList = null;
     public GalleryAdapter adapter;
+    public GridView gridView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_gallery, container, false);
 
+        ArrayList<String> imageList = new ArrayList<>();
         adapter = new GalleryAdapter(getContext(), imageList);
-        GridView gridView = (GridView) rootView.findViewById(R.id.grid_view);
+        gridView = (GridView) rootView.findViewById(R.id.grid_view);
         gridView.setNumColumns(2);
         gridView.setAdapter(adapter);
         return rootView;
@@ -46,19 +42,20 @@ public class GalleryFragment extends Fragment {
         super.onStart();
     }
 
-    public class ImageLoadTask extends AsyncTask<Void, Void, Void> {
+    public class ImageLoadTask extends AsyncTask<Void, Void, ArrayList<String>> {
 
         private final String LOG_TAG = ImageLoadTask.class.getSimpleName();
 
         String response = null;
 
         @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
+        protected void onPostExecute(ArrayList<String> result) {
+            GalleryAdapter adapter = new GalleryAdapter(getActivity(), result);
+            gridView.setAdapter(adapter);
         }
 
         @Override
-        protected Void doInBackground(Void... params) {
+        protected ArrayList<String> doInBackground(Void... params) {
             try {
                 Log.d(LOG_TAG, "Starting fetch");
                 // Create a new RestTemplate instance
@@ -78,16 +75,24 @@ public class GalleryFragment extends Fragment {
                 Log.i("response is {}", gson.toJson(response));
                 Log.d(LOG_TAG, "Finished fetch");
 
-//                try {
-//                    JSONArray arr = new JSONArray(response);
-//                    JSONObject jObj = arr.getJSONObject(0);
-//                    String result = jObj.getString("explanation");
-//
-//                    Log.d("here goes result ---", result);
-//
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
+                try {
+                    JSONObject object = new JSONObject(response);
+
+                    String date  = object.getString("date");
+                    Log.d(LOG_TAG, "date is : " + date);
+
+                    String detail = object.getString("explanation");
+                    Log.d(LOG_TAG, "explanation is : " + detail);
+
+                    String image_path = object.getString("url");
+                    Log.d(LOG_TAG, "image url is : " + image_path);
+
+                    String title = object.getString("title");
+                    Log.d(LOG_TAG, "title is : " + title);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
             } catch (Exception e) {
                 Log.e(LOG_TAG, "Error", e);
