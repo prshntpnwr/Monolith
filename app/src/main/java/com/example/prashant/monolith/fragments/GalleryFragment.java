@@ -9,9 +9,11 @@ import android.view.ViewGroup;
 import android.widget.GridView;
 
 import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.prashant.monolith.R;
 import com.example.prashant.monolith.adapters.GalleryAdapter;
 
@@ -45,7 +47,7 @@ public class GalleryFragment extends Fragment {
     }
 
     public void ImageLoadTask() {
-
+        RequestQueue queue = Volley.newRequestQueue(getContext());
         String url = "https://api.nasa.gov/planetary/apod?date=2017-03-04&hd=True&api_key=DEMO_KEY";
 
         JsonObjectRequest jsObjRequest = new JsonObjectRequest
@@ -69,5 +71,6 @@ public class GalleryFragment extends Fragment {
                         error.printStackTrace();
                     }
                 });
+        queue.add(jsObjRequest);
     }
 }
