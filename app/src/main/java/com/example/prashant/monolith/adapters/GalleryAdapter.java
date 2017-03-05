@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class GalleryAdapter extends BaseAdapter
 {
     private Context mContext;
-    private ArrayList<String> array;
+    private ArrayList<String> array = null;
 
     public GalleryAdapter(Context c, ArrayList<String> paths) {
         mContext= c;
@@ -23,7 +23,7 @@ public class GalleryAdapter extends BaseAdapter
 
     @Override
     public int getCount() {
-        return array.size();
+        return 10;
     }
 
     @Override
@@ -57,5 +57,4 @@ public class GalleryAdapter extends BaseAdapter
                 .into(imageView);
         return imageView;
     }
-
 }
