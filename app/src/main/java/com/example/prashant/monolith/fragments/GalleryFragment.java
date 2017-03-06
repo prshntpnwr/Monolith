@@ -59,22 +59,22 @@ public class GalleryFragment extends Fragment {
 
         GalleryInterface service = retrofit.create(GalleryInterface.class);
 
-        // Fetch a list of the Github repositories.
+        // Fetch a list
         Call<List<GalleryObject>> call =
                 service.respForphoto("fs-opensource");
 
         // Execute the call asynchronously. Get a positive or negative callback.
-        call.enqueue(new Call<List<GalleryObject>>() {
+        call.enqueue(new Callback<List<GalleryObject>>() {
+
             @Override
-            public void onResponse(Call<List<GalleryObject>> call, Response<List<GalleryObject>> response) {
+            public void onResponse(Call<List<GalleryObject>> call, retrofit2.Response<List<GalleryObject>> response) {
                 // The network call was a success and we got a response
                 Log.d("Here goes Response ---", response.toString());
             }
 
             @Override
             public void onFailure(Call<List<GalleryObject>> call, Throwable t) {
-                // the network call was a failure
-                // TODO: handle error
+                    // TODO: handle the error
             }
         });
 
