@@ -54,7 +54,7 @@ public class GalleryFragment extends Fragment {
 
     public void ImageFetchTask() {
 
-        String API_BASE_URL = "https://api.nasa.gov/planetary/apod?date=2017-03-04&hd=True&api_key=DEMO_KEY";
+        String API_BASE_URL = "https://www.nasa.gov/rss/";
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(API_BASE_URL)
@@ -62,4 +62,6 @@ public class GalleryFragment extends Fragment {
                 .addConverterFactory(SimpleXmlConverterFactory.create())
                 .build();
     }
+
+
 }
