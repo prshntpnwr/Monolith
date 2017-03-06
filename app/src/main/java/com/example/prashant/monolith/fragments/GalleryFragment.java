@@ -11,6 +11,7 @@ import com.example.prashant.monolith.R;
 import com.example.prashant.monolith.adapters.GalleryAdapter;
 import com.example.prashant.monolith.objects.GalleryInterface;
 import com.example.prashant.monolith.objects.GalleryObject;
+import com.example.prashant.monolith.objects.Rss;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +19,7 @@ import java.util.List;
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.simplexml.SimpleXmlConverterFactory;
 
@@ -55,24 +57,20 @@ public class GalleryFragment extends Fragment {
                 .addConverterFactory(SimpleXmlConverterFactory.create())
                 .build();
 
-        GalleryInterface service = retrofit.create(GalleryInterface.class);
+        Rss service = retrofit.create(Rss.class);
 
-        // Fetch a list
-        Call<List<GalleryObject>> call =
-                service.respForphoto();
+        Call<List<Rss>> call = service.respForphoto();
 
         // Execute the call asynchronously. Get a positive or negative callback.
-        call.enqueue(new Callback<List<GalleryObject>>() {
-
+        call.enqueue(new Callback<List<Rss>>() {
             @Override
-            public void onResponse(Call<List<GalleryObject>> call, retrofit2.Response<List<GalleryObject>> response) {
-                // The network call was a success and we got a response
-                Log.d("Here goes Response ---", response.toString());
+            public void onResponse(Call<List<Rss>> call, Response<List<Rss>> response) {
+
             }
 
             @Override
-            public void onFailure(Call<List<GalleryObject>> call, Throwable t) {
-                    // TODO: handle the error
+            public void onFailure(Call<List<Rss>> call, Throwable t) {
+
             }
         });
 

@@ -1,5 +1,9 @@
 package com.example.prashant.monolith.objects;
 
+import java.util.List;
+
+import retrofit2.Call;
+
 public class Rss {
 
     private Channel channel;
@@ -31,4 +35,5 @@ public class Rss {
     {
         return "ClassPojo [channel = "+channel+", version = "+version+"]";
     }
+
 }
