@@ -1,8 +1,6 @@
 package com.example.prashant.monolith.objects;
 
-public class Item
-{
-    private Guid guid;
+public class Item {
 
     private String pubDate;
 
@@ -10,21 +8,9 @@ public class Item
 
     private Enclosure enclosure;
 
-    private Source source;
-
     private String description;
 
     private String link;
-
-    public Guid getGuid ()
-    {
-        return guid;
-    }
-
-    public void setGuid (Guid guid)
-    {
-        this.guid = guid;
-    }
 
     public String getPubDate ()
     {
@@ -56,16 +42,6 @@ public class Item
         this.enclosure = enclosure;
     }
 
-    public Source getSource ()
-    {
-        return source;
-    }
-
-    public void setSource (Source source)
-    {
-        this.source = source;
-    }
-
     public String getDescription ()
     {
         return description;
@@ -89,6 +65,6 @@ public class Item
     @Override
     public String toString()
     {
-        return "ClassPojo [guid = "+guid+", pubDate = "+pubDate+", title = "+title+", enclosure = "+enclosure+", source = "+source+", description = "+description+", link = "+link+"]";
+        return "ClassPojo [pubDate = "+pubDate+", title = "+title+", enclosure = "+enclosure+",  description = "+description+", link = "+link+"]";
     }
 }

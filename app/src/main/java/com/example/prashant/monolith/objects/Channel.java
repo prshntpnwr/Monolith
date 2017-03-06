@@ -1,6 +1,8 @@
 package com.example.prashant.monolith.objects;
 
 
+import java.util.ArrayList;
+
 public class Channel {
 
     private String title;
