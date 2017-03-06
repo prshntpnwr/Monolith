@@ -57,7 +57,7 @@ public class GalleryFragment extends Fragment {
                 .addConverterFactory(SimpleXmlConverterFactory.create())
                 .build();
 
-        Rss service = retrofit.create(Rss.class);
+        GalleryInterface service = retrofit.create(GalleryInterface.class);
 
         Call<Rss> call = service.respForphoto();
 
@@ -65,12 +65,12 @@ public class GalleryFragment extends Fragment {
         call.enqueue(new Callback<Rss>() {
             @Override
             public void onResponse(Call<Rss> call, Response<Rss> response) {
-
+                    Log.d("here goes response", response.toString());
             }
 
             @Override
             public void onFailure(Call<Rss> call, Throwable t) {
-
+                    // TODO: handle failure
             }
         });
 
