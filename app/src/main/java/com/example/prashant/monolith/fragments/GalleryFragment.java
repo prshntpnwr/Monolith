@@ -59,17 +59,17 @@ public class GalleryFragment extends Fragment {
 
         Rss service = retrofit.create(Rss.class);
 
-        Call<List<Rss>> call = service.respForphoto();
+        Call<Rss> call = service.respForphoto();
 
         // Execute the call asynchronously. Get a positive or negative callback.
-        call.enqueue(new Callback<List<Rss>>() {
+        call.enqueue(new Callback<Rss>() {
             @Override
-            public void onResponse(Call<List<Rss>> call, Response<List<Rss>> response) {
+            public void onResponse(Call<Rss> call, Response<Rss> response) {
 
             }
 
             @Override
-            public void onFailure(Call<List<Rss>> call, Throwable t) {
+            public void onFailure(Call<Rss> call, Throwable t) {
 
             }
         });
