@@ -34,4 +34,8 @@ dependencies {
 
     // Retrofit XML converter (Simple)
     compile 'com.squareup.retrofit2:converter-simplexml:2.2.0'
+
+    // Retrofit & OkHttp
+    compile 'com.squareup.retrofit:retrofit:1.9.0'
+    compile 'com.squareup.okhttp:okhttp:2.7.2'
 }
