@@ -24,6 +24,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import okhttp3.OkHttpClient;
+import retrofit2.Retrofit;
+import retrofit2.converter.simplexml.SimpleXmlConverterFactory;
+
 public class GalleryFragment extends Fragment {
 
     public GalleryAdapter adapter;
@@ -49,30 +53,13 @@ public class GalleryFragment extends Fragment {
     }
 
     public void ImageFetchTask() {
-        RequestQueue queue = Volley.newRequestQueue(getContext());
-        String url = "https://api.nasa.gov/planetary/apod?date=2017-03-04&hd=True&api_key=DEMO_KEY";
 
-        // Request a string response from the provided URL.
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        Gson gson = new GsonBuilder().create();
-                        List<GalleryObject> result = Arrays.asList(gson.fromJson(response, GalleryObject.class));
+        String API_BASE_URL = "https://api.nasa.gov/planetary/apod?date=2017-03-04&hd=True&api_key=DEMO_KEY";
 
-                        Log.d("PostActivity", result.size() + " loaded.");
-                        for (GalleryObject galleryObject : result) {
-                            Log.i("PostActivity",  galleryObject.getDate());
-                        }
-                    }
-                }, new Response.ErrorListener() {
-
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        error.printStackTrace();
-                    }
-                });
-
-        queue.add(stringRequest);
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(API_BASE_URL)
+                .client(new OkHttpClient())
+                .addConverterFactory(SimpleXmlConverterFactory.create())
+                .build();
     }
 }
