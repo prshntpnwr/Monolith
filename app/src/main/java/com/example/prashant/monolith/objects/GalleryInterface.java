@@ -7,7 +7,6 @@ import retrofit2.Call;
 
 public interface GalleryInterface {
 
-    @GET("/sites/default/files/thumbnails/image/")
-    Call<List<GalleryObject>> respForphoto(
-    );
+    @GET("lg_image_of_the_day.rss")
+    Call<List<GalleryObject>> respForphoto();
 }
