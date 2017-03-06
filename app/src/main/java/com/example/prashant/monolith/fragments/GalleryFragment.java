@@ -49,7 +49,7 @@ public class GalleryFragment extends Fragment {
 
     public void ImageFetchTask() {
 
-        String API_BASE_URL = "https://www.nasa.gov/rss/dyn/lg_image_of_the_day.rss";
+        String API_BASE_URL = "https://www.nasa.gov/rss/dyn/lg_image_of_the_day.rss/";
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(API_BASE_URL)
@@ -61,7 +61,7 @@ public class GalleryFragment extends Fragment {
 
         // Fetch a list
         Call<List<GalleryObject>> call =
-                service.respForphoto("fs-opensource");
+                service.respForphoto();
 
         // Execute the call asynchronously. Get a positive or negative callback.
         call.enqueue(new Callback<List<GalleryObject>>() {
