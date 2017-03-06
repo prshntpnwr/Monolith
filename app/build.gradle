@@ -39,9 +39,11 @@ dependencies {
         exclude group: 'stax', module: 'stax'
     }
 
+//    compile 'com.squareup.retrofit2:converter-gson:2.1.0'
+//    compile ('com.squareup.retrofit2:retrofit:2.1.0')
+
     // Retrofit & OkHttp
     compile 'com.squareup.retrofit:retrofit:1.9.0'
     compile 'com.squareup.okhttp:okhttp:2.7.2'
-
 
 }
