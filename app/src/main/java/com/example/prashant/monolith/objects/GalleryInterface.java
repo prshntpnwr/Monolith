@@ -9,7 +9,7 @@ import retrofit2.http.Path;
 public interface GalleryInterface {
 
     @GET("/sites/default/files/thumbnails/image/")
-    Call<List<GalleryObject>> reposForphoto(
+    Call<List<GalleryObject>> respForphoto(
             @Path("sites") String images
     );
 }

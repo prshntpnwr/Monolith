@@ -8,23 +8,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.example.prashant.monolith.R;
 import com.example.prashant.monolith.adapters.GalleryAdapter;
+import com.example.prashant.monolith.objects.GalleryInterface;
 import com.example.prashant.monolith.objects.GalleryObject;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import okhttp3.OkHttpClient;
+import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Retrofit;
 import retrofit2.converter.simplexml.SimpleXmlConverterFactory;
 
@@ -61,5 +56,27 @@ public class GalleryFragment extends Fragment {
                 .client(new OkHttpClient())
                 .addConverterFactory(SimpleXmlConverterFactory.create())
                 .build();
+
+        GalleryInterface service = retrofit.create(GalleryInterface.class);
+
+        // Fetch a list of the Github repositories.
+        Call<List<GalleryObject>> call =
+                service.respForphoto("fs-opensource");
+
+        // Execute the call asynchronously. Get a positive or negative callback.
+        call.enqueue(new Call<List<GalleryObject>>() {
+            @Override
+            public void onResponse(Call<List<GalleryObject>> call, Response<List<GalleryObject>> response) {
+                // The network call was a success and we got a response
+                Log.d("Here goes Response ---", response.toString());
+            }
+
+            @Override
+            public void onFailure(Call<List<GalleryObject>> call, Throwable t) {
+                // the network call was a failure
+                // TODO: handle error
+            }
+        });
+
     }
 }
