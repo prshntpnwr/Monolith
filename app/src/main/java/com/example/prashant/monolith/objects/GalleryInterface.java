@@ -14,7 +14,7 @@ public interface GalleryInterface {
 //    Call<CoverPhoto> respForphoto();
 
     @retrofit2.http.GET("/search/collections?")
-    Call<ArrayList<CoverPhoto>> result(
+    Call<Results> result(
             @Query("page") int page,
             @Query("query") String tag,
             @Query("client_id") String id

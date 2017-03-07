@@ -13,6 +13,7 @@ import com.example.prashant.monolith.adapters.GalleryAdapter;
 import com.example.prashant.monolith.objects.CoverPhoto;
 import com.example.prashant.monolith.objects.GalleryInterface;
 import com.example.prashant.monolith.objects.GalleryObject;
+import com.example.prashant.monolith.objects.Results;
 
 import java.util.ArrayList;
 
@@ -60,19 +61,19 @@ public class GalleryFragment extends Fragment {
 
         GalleryInterface service = retrofit.create(GalleryInterface.class);
 
-        Call<ArrayList<CoverPhoto>> call = service.result(5, "nasa", "2f12038a9af628b150d141d9532b923e25818d649175c229f4d954b7f1033ef7");
+        Call<Results> call = service.result(5, "nasa", "2f12038a9af628b150d141d9532b923e25818d649175c229f4d954b7f1033ef7");
 
         // Execute the call asynchronously. Get a positive or negative callback.
-        call.enqueue(new Callback<ArrayList<CoverPhoto>>() {
+        call.enqueue(new Callback<Results>() {
 
             @Override
-            public void onResponse(Call<ArrayList<CoverPhoto>> call, Response<ArrayList<CoverPhoto>> response) {
+            public void onResponse(Call<Results> call, Response<Results> response) {
                 Log.d("Response goes here ", response.toString());
-                Log.d("Result goes here ", response.body().get(0).getUrls().getFull().toString());
+                Log.d("Result goes here ", response.body().getResults().get(0).getUrls().getFull().toString());
             }
 
             @Override
-            public void onFailure(Call<ArrayList<CoverPhoto>> call, Throwable t) {
+            public void onFailure(Call<Results> call, Throwable t) {
                 Log.d("No !!!", "Fail to get response");
             }
         });
