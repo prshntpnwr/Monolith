@@ -52,7 +52,7 @@ public class GalleryAdapter extends BaseAdapter
         imageView.setAdjustViewBounds(true);
 
         Picasso.with(mContext)
-                .load("https://www.nasa.gov/sites/default/files/thumbnails/" + array.get(position))
+                .load(array.get(position))
                 .placeholder(R.drawable.bg)
                 .into(imageView);
 
