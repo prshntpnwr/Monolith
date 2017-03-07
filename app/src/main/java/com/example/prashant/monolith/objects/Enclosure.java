@@ -1,7 +1,10 @@
 package com.example.prashant.monolith.objects;
 
+import org.simpleframework.xml.Root;
+
 public class Enclosure {
 
+    @Root(strict=false)
     private String length;
 
     private String type;

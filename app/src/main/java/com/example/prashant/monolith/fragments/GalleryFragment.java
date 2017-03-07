@@ -71,6 +71,7 @@ public class GalleryFragment extends Fragment {
             @Override
             public void onFailure(Call<Rss> call, Throwable t) {
                     // TODO: handle failure
+                Log.d("here goes response", "this is a failure of getting response");
             }
         });
 

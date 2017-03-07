@@ -1,7 +1,10 @@
 package com.example.prashant.monolith.objects;
 
+import org.simpleframework.xml.Root;
 
 import java.util.ArrayList;
+
+@Root(strict=false)
 
 public class Channel {
 

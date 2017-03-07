@@ -1,32 +1,12 @@
 package com.example.prashant.monolith.objects;
 
+import org.simpleframework.xml.Root;
+
 public class GalleryObject {
 
-    private String length;
-
-    private String type;
+    @Root(strict=false)
 
     private String url;
-
-    public String getLength ()
-    {
-        return length;
-    }
-
-    public void setLength (String length)
-    {
-        this.length = length;
-    }
-
-    public String getType ()
-    {
-        return type;
-    }
-
-    public void setType (String type)
-    {
-        this.type = type;
-    }
 
     public String getUrl ()
     {
@@ -41,7 +21,7 @@ public class GalleryObject {
     @Override
     public String toString()
     {
-        return "ClassPojo [length = "+length+", type = "+type+", url = "+url+"]";
+        return "ClassPojo [url = "+url+"]";
     }
 }
 

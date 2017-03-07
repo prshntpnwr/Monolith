@@ -1,10 +1,10 @@
 package com.example.prashant.monolith.objects;
 
-import java.util.List;
-
-import retrofit2.Call;
+import org.simpleframework.xml.Root;
 
 public class Rss {
+
+    @Root(strict=false)
 
     private Channel channel;
 

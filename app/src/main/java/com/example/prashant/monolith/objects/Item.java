@@ -1,6 +1,10 @@
 package com.example.prashant.monolith.objects;
 
+import org.simpleframework.xml.Root;
+
 public class Item {
+
+    @Root(strict=false)
 
     private String pubDate;
 
