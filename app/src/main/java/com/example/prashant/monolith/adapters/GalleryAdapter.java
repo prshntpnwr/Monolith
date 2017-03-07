@@ -55,6 +55,7 @@ public class GalleryAdapter extends BaseAdapter
                 .load("https://www.nasa.gov/sites/default/files/thumbnails/" + array.get(position))
                 .placeholder(R.drawable.bg)
                 .into(imageView);
-        return null;
+
+        return imageView;
     }
 }

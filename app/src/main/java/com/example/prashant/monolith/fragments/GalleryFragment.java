@@ -30,7 +30,7 @@ public class GalleryFragment extends Fragment {
 
     public GalleryAdapter adapter;
     public GridView gridView;
-    public ArrayList<String> imageList;
+    public ArrayList<String> imageList = null;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
