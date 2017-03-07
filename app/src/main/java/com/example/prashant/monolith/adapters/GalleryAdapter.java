@@ -53,7 +53,7 @@ public class GalleryAdapter extends BaseAdapter
 
         Picasso.with(mContext)
                 .load(array.get(position))
-                .placeholder(R.drawable.bg)
+                .placeholder(R.color.colorAccent)
                 .into(imageView);
 
         return imageView;
