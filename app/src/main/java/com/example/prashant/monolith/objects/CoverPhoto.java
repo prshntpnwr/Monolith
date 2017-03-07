@@ -10,7 +10,7 @@ public class CoverPhoto {
 
     @SerializedName("urls")
     @Expose
-    private Urls urls;
+    private Urls urls = null;
     @SerializedName("categories")
 
     public Urls getUrls() {

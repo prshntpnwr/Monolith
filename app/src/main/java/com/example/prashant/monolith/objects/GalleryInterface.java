@@ -16,6 +16,7 @@ public interface GalleryInterface {
     @retrofit2.http.GET("/search/collections?")
     Call<Results> result(
             @Query("page") int page,
+            @Query("per_page") int perPage,
             @Query("query") String tag,
             @Query("client_id") String id
     );

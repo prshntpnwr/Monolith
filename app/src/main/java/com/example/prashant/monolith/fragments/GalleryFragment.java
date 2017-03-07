@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
 
+import com.etsy.android.grid.StaggeredGridView;
 import com.example.prashant.monolith.R;
 import com.example.prashant.monolith.adapters.GalleryAdapter;
 import com.example.prashant.monolith.objects.CoverPhoto;
@@ -27,7 +28,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class GalleryFragment extends Fragment {
 
     public GalleryAdapter adapter;
-    public GridView gridView;
+    public StaggeredGridView gridView;
     public ArrayList<String> imageList;
 
     @Override
@@ -37,8 +38,8 @@ public class GalleryFragment extends Fragment {
 
         imageList = new ArrayList<>();
         adapter = new GalleryAdapter(getContext(), imageList);
-        gridView = (GridView) rootView.findViewById(R.id.grid_view);
-        gridView.setNumColumns(2);
+        gridView = (StaggeredGridView) rootView.findViewById(R.id.grid_view);
+
         gridView.setAdapter(adapter);
         return rootView;
     }
@@ -61,7 +62,7 @@ public class GalleryFragment extends Fragment {
 
         GalleryInterface service = retrofit.create(GalleryInterface.class);
 
-        Call<Results> call = service.result(5, "nasa", "2f12038a9af628b150d141d9532b923e25818d649175c229f4d954b7f1033ef7");
+        Call<Results> call = service.result(1, 50, "nasa", "2f12038a9af628b150d141d9532b923e25818d649175c229f4d954b7f1033ef7");
 
         // Execute the call asynchronously. Get a positive or negative callback.
         call.enqueue(new Callback<Results>() {
@@ -69,7 +70,14 @@ public class GalleryFragment extends Fragment {
             @Override
             public void onResponse(Call<Results> call, Response<Results> response) {
                 Log.d("Response goes here ", response.toString());
-                Log.d("Result goes here ", response.body().getResults().get(0).getUrls().getFull().toString());
+
+                int length = response.body().getResults().size();
+                for (int i = 0; i < length; i++) {
+                    Log.d("Result goes here ", i + " " + response.body().getResults().get(i).getCoverPhoto().getUrls().getFull());
+                    imageList.add(response.body().getResults().get(i).getCoverPhoto().getUrls().getThumb());
+                }
+                adapter = new GalleryAdapter(getContext(), imageList);
+                gridView.setAdapter(adapter);
             }
 
             @Override

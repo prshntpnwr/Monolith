@@ -10,16 +10,16 @@ public class GalleryObject {
 
     @SerializedName("raw")
     @Expose
-    private String raw;
+    private String raw = null;
     @SerializedName("full")
     @Expose
-    private String full;
+    private String full = null;
     @SerializedName("regular")
     @Expose
-    private String regular;
+    private String regular = null;
     @SerializedName("small")
     @Expose
-    private String small;
+    private String small = null;
     @SerializedName("thumb")
     @Expose
     private String thumb;

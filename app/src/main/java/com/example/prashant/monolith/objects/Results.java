@@ -25,13 +25,13 @@ public class Results {
 
     @SerializedName("results")
     @Expose
-    private ArrayList<CoverPhoto> results;
+    private ArrayList<SingleResult> results = null;
 
-    public ArrayList<CoverPhoto> getResults() {
+    public ArrayList<SingleResult> getResults() {
         return results;
     }
 
-    public void setResults(ArrayList<CoverPhoto> results) {
+    public void setResults(ArrayList<SingleResult> results) {
         this.results = results;
     }
 }
