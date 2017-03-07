@@ -60,7 +60,7 @@ public class GalleryFragment extends Fragment {
 
         GalleryInterface service = retrofit.create(GalleryInterface.class);
 
-        Call<CoverPhoto> call = service.respForphoto();
+        Call<CoverPhoto> call = service.result(5, "nasa", "2f12038a9af628b150d141d9532b923e25818d649175c229f4d954b7f1033ef7");
 
         // Execute the call asynchronously. Get a positive or negative callback.
         call.enqueue(new Callback<CoverPhoto>() {

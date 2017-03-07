@@ -1,4 +1,3 @@
-
 package com.example.prashant.monolith.objects;
  
 import com.google.gson.annotations.Expose;
