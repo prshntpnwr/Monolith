@@ -67,6 +67,8 @@ public class GalleryFragment extends Fragment {
             @Override
             public void onResponse(Call<CoverPhoto> call, Response<CoverPhoto> response) {
                 Log.d("Response goes here ", response.toString());
+                Log.d("Result goes here ", response.body().getUrls().getFull().toString());
+
             }
 
             @Override
