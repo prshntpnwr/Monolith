@@ -1,11 +1,12 @@
 package com.example.prashant.monolith.objects;
 
+import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
+@Root(strict=false)
 public class Rss {
 
-    @Root(strict=false)
-
+    @Element
     private Channel channel;
 
     private String version;
@@ -35,5 +36,4 @@ public class Rss {
     {
         return "ClassPojo [channel = "+channel+", version = "+version+"]";
     }
-
 }

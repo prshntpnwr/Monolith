@@ -1,14 +1,18 @@
 package com.example.prashant.monolith.objects;
 
+import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Root;
 
+@Root(strict=false)
 public class Enclosure {
 
-    @Root(strict=false)
+    @Attribute
     private String length;
 
+    @Attribute
     private String type;
 
+    @Attribute
     private String url;
 
     public String getLength ()

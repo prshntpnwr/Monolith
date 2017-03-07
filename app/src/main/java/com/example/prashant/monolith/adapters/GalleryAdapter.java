@@ -23,7 +23,7 @@ public class GalleryAdapter extends BaseAdapter
 
     @Override
     public int getCount() {
-        return 10;
+        return array.size();
     }
 
     @Override
@@ -55,6 +55,6 @@ public class GalleryAdapter extends BaseAdapter
                 .load("http://i.imgur.com/DvpvklR.png")
                 .placeholder(R.drawable.bg)
                 .into(imageView);
-        return imageView;
+        return null;
     }
 }

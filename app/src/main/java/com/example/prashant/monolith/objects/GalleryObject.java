@@ -2,9 +2,8 @@ package com.example.prashant.monolith.objects;
 
 import org.simpleframework.xml.Root;
 
+@Root(strict=false)
 public class GalleryObject {
-
-    @Root(strict=false)
 
     private String url;
 
@@ -21,7 +20,7 @@ public class GalleryObject {
     @Override
     public String toString()
     {
-        return "ClassPojo [url = "+url+"]";
+        return "url = " + url;
     }
 }
 

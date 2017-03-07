@@ -1,15 +1,16 @@
 package com.example.prashant.monolith.objects;
 
+import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
+@Root(strict=false)
 public class Item {
-
-    @Root(strict=false)
 
     private String pubDate;
 
     private String title;
 
+    @Element(required=false)
     private Enclosure enclosure;
 
     private String description;
