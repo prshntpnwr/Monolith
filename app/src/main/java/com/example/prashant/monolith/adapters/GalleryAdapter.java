@@ -16,9 +16,9 @@ public class GalleryAdapter extends BaseAdapter
     private Context mContext;
     private ArrayList<String> array = null;
 
-    public GalleryAdapter(Context c, ArrayList<String> paths) {
+    public GalleryAdapter(Context c, ArrayList<String> images) {
         mContext= c;
-        array = paths;
+        array = images;
     }
 
     @Override
@@ -52,7 +52,7 @@ public class GalleryAdapter extends BaseAdapter
         imageView.setAdjustViewBounds(true);
 
         Picasso.with(mContext)
-                .load("http://i.imgur.com/DvpvklR.png")
+                .load("https://www.nasa.gov/sites/default/files/thumbnails/" + array.get(position))
                 .placeholder(R.drawable.bg)
                 .into(imageView);
         return null;
