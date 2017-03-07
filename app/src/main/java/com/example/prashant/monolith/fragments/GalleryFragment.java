@@ -60,19 +60,19 @@ public class GalleryFragment extends Fragment {
 
         GalleryInterface service = retrofit.create(GalleryInterface.class);
 
-        Call<CoverPhoto> call = service.result(5, "nasa", "2f12038a9af628b150d141d9532b923e25818d649175c229f4d954b7f1033ef7");
+        Call<ArrayList<CoverPhoto>> call = service.result(5, "nasa", "2f12038a9af628b150d141d9532b923e25818d649175c229f4d954b7f1033ef7");
 
         // Execute the call asynchronously. Get a positive or negative callback.
-        call.enqueue(new Callback<CoverPhoto>() {
-            @Override
-            public void onResponse(Call<CoverPhoto> call, Response<CoverPhoto> response) {
-                Log.d("Response goes here ", response.toString());
-                Log.d("Result goes here ", response.body().getUrls().getFull().toString());
+        call.enqueue(new Callback<ArrayList<CoverPhoto>>() {
 
+            @Override
+            public void onResponse(Call<ArrayList<CoverPhoto>> call, Response<ArrayList<CoverPhoto>> response) {
+                Log.d("Response goes here ", response.toString());
+                Log.d("Result goes here ", response.body().get(0).getUrls().getFull().toString());
             }
 
             @Override
-            public void onFailure(Call<CoverPhoto> call, Throwable t) {
+            public void onFailure(Call<ArrayList<CoverPhoto>> call, Throwable t) {
                 Log.d("No !!!", "Fail to get response");
             }
         });

@@ -10,7 +10,7 @@ public class Urls {
  
 @SerializedName("raw")
 @Expose
-private String raw;
+private String raw = null;
 @SerializedName("full")
 @Expose
 private String full;
