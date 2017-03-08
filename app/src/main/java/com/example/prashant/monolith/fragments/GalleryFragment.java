@@ -62,10 +62,16 @@ public class GalleryFragment extends Fragment {
 
         GalleryInterface service = retrofit.create(GalleryInterface.class);
 
-        Call<Results> call = service.result(1, 50, "nasa", "2f12038a9af628b150d141d9532b923e25818d649175c229f4d954b7f1033ef7");
+        Call<Results> call1 = service.result(1, 50, "nasa", "2f12038a9af628b150d141d9532b923e25818d649175c229f4d954b7f1033ef7");
+
+        Call<Results> call2 = service.result(1, 50, "outer space", "2f12038a9af628b150d141d9532b923e25818d649175c229f4d954b7f1033ef7");
+
+        Call<Results> call3 = service.result(1, 50, "space", "2f12038a9af628b150d141d9532b923e25818d649175c229f4d954b7f1033ef7");
+
+        Call<Results> call4 = service.result(1, 50, "Nebula", "2f12038a9af628b150d141d9532b923e25818d649175c229f4d954b7f1033ef7");
 
         // Execute the call asynchronously. Get a positive or negative callback.
-        call.enqueue(new Callback<Results>() {
+        call1.enqueue(new Callback<Results>() {
 
             @Override
             public void onResponse(Call<Results> call, Response<Results> response) {
@@ -73,7 +79,7 @@ public class GalleryFragment extends Fragment {
 
                 int length = response.body().getResults().size();
                 for (int i = 0; i < length; i++) {
-                    Log.d("Result goes here ", i + " " + response.body().getResults().get(i).getCoverPhoto().getUrls().getFull());
+                    Log.d("Result from Nasa", i + " " + response.body().getResults().get(i).getCoverPhoto().getUrls().getFull());
                     imageList.add(response.body().getResults().get(i).getCoverPhoto().getUrls().getThumb());
                 }
                 adapter = new GalleryAdapter(getContext(), imageList);
@@ -82,7 +88,71 @@ public class GalleryFragment extends Fragment {
 
             @Override
             public void onFailure(Call<Results> call, Throwable t) {
-                Log.d("No !!!", "Fail to get response");
+                Log.d("Fail response from", "Nasa");
+            }
+
+        });
+
+        call2.enqueue(new Callback<Results>() {
+
+            @Override
+            public void onResponse(Call<Results> call, Response<Results> response) {
+                Log.d("Response goes here ", response.toString());
+
+                int length = response.body().getResults().size();
+                for (int i = 0; i < length; i++) {
+                    Log.d("Result from outerspace ", i + " " + response.body().getResults().get(i).getCoverPhoto().getUrls().getFull());
+                    imageList.add(response.body().getResults().get(i).getCoverPhoto().getUrls().getThumb());
+                }
+                adapter = new GalleryAdapter(getContext(), imageList);
+                gridView.setAdapter(adapter);
+            }
+
+            @Override
+            public void onFailure(Call<Results> call, Throwable t) {
+                Log.d("Fail response from", "Outer space");
+            }
+        });
+
+        call3.enqueue(new Callback<Results>() {
+
+            @Override
+            public void onResponse(Call<Results> call, Response<Results> response) {
+                Log.d("Response goes here ", response.toString());
+
+                int length = response.body().getResults().size();
+                for (int i = 0; i < length; i++) {
+                    Log.d("Result from space", i + " " + response.body().getResults().get(i).getCoverPhoto().getUrls().getFull());
+                    imageList.add(response.body().getResults().get(i).getCoverPhoto().getUrls().getThumb());
+                }
+                adapter = new GalleryAdapter(getContext(), imageList);
+                gridView.setAdapter(adapter);
+            }
+
+            @Override
+            public void onFailure(Call<Results> call, Throwable t) {
+                Log.d("Fail response from", "space");
+            }
+        });
+
+        call4.enqueue(new Callback<Results>() {
+
+            @Override
+            public void onResponse(Call<Results> call, Response<Results> response) {
+                Log.d("Response goes here ", response.toString());
+
+                int length = response.body().getResults().size();
+                for (int i = 0; i < length; i++) {
+                    Log.d("Result from Nebula ", i + " " + response.body().getResults().get(i).getCoverPhoto().getUrls().getFull());
+                    imageList.add(response.body().getResults().get(i).getCoverPhoto().getUrls().getThumb());
+                }
+                adapter = new GalleryAdapter(getContext(), imageList);
+                gridView.setAdapter(adapter);
+            }
+
+            @Override
+            public void onFailure(Call<Results> call, Throwable t) {
+                Log.d("Fail response from", "Nebula");
             }
         });
     }

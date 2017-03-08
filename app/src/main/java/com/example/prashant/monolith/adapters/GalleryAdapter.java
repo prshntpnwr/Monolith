@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.example.prashant.monolith.R;
 import com.squareup.picasso.Picasso;
 
@@ -54,7 +55,15 @@ public class GalleryAdapter extends BaseAdapter
         Picasso.with(mContext)
                 .load(array.get(position))
                 .placeholder(R.color.colorAccent)
+                .error(R.color.colorPrimaryDark)
                 .into(imageView);
+
+//        Glide.with(mContext)
+//                .load(array.get(position))
+//                .centerCrop()
+//                .placeholder(R.color.colorAccent)
+//                .crossFade()
+//                .into(imageView);
 
         return imageView;
     }
