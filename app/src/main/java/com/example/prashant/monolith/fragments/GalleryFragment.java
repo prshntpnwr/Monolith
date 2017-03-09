@@ -24,6 +24,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class GalleryFragment extends Fragment {
 
+    public static final String TAG = ".GalleryFragment";
+
     public GalleryAdapter adapter;
     public StaggeredGridView gridView;
     public ArrayList<String> imageList;
@@ -96,17 +98,15 @@ public class GalleryFragment extends Fragment {
 
         call_f.enqueue(new Callback<FlickrGalleryObject>() {
 
-            @Override
             public void onResponse(Call<FlickrGalleryObject> call, Response<FlickrGalleryObject> response) {
                 Log.d("Response from flickr", response.toString());
-                Log.d("result from flickr", response.body().getTitle().toString());
 
-//                int length = response.body().
-//                for (int i = 0; i < length; i++) {
-//
-//                }
-
-              // TODO: add response to imageList
+                for (int i = 0; i < response.body().getItems().size(); i++) {
+                    Log.e("onResponse" , i + response.body().getItems().get(i).getLink());
+                    imageList.add(response.body().getItems().get(i).getLink());
+                }
+                adapter = new GalleryAdapter(getContext(), imageList);
+                gridView.setAdapter(adapter);
             }
 
             @Override

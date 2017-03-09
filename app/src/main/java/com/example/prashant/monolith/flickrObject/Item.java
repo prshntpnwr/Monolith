@@ -3,106 +3,111 @@ package com.example.prashant.monolith.flickrObject;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import org.simpleframework.xml.Root;
+
+@Root(strict=false)
 public class Item {
 
-@SerializedName("title")
-@Expose
-private String title;
-@SerializedName("link")
-@Expose
-private String link;
-@SerializedName("media")
-@Expose
-private Media media;
-@SerializedName("date_taken")
-@Expose
-private String dateTaken;
-@SerializedName("description")
-@Expose
-private String description;
-@SerializedName("published")
-@Expose
-private String published;
-@SerializedName("author")
-@Expose
-private String author;
-@SerializedName("author_id")
-@Expose
-private String authorId;
-@SerializedName("tags")
-@Expose
-private String tags;
 
-public String getTitle() {
-return title;
-}
+    @SerializedName("title")
+    @Expose
+    private String title;
+    @SerializedName("link")
+    @Expose
+    private String link;
+    @SerializedName("media")
+    @Expose
+    private Media media;
+    @SerializedName("date_taken")
+    @Expose
+    private String dateTaken;
+    @SerializedName("description")
+    @Expose
+    private String description;
+    @SerializedName("published")
+    @Expose
+    private String published;
+    @SerializedName("author")
+    @Expose
+    private String author;
+    @SerializedName("author_id")
+    @Expose
+    private String authorId;
+    @SerializedName("tags")
+    @Expose
+    private String tags;
 
-public void setTitle(String title) {
-this.title = title;
-}
+    public String getTitle() {
+        return title;
+    }
 
-public String getLink() {
-return link;
-}
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
-public void setLink(String link) {
-this.link = link;
-}
+    public String getLink() {
+        return link;
+    }
 
-public Media getMedia() {
-return media;
-}
+    public void setLink(String link) {
+        this.link = link;
+    }
 
-public void setMedia(Media media) {
-this.media = media;
-}
+    public Media getMedia() {
+        return media;
+    }
 
-public String getDateTaken() {
-return dateTaken;
-}
+    public void setMedia(Media media) {
+        this.media = media;
+    }
 
-public void setDateTaken(String dateTaken) {
-this.dateTaken = dateTaken;
-}
+    public String getDateTaken() {
+        return dateTaken;
+    }
 
-public String getDescription() {
-return description;
-}
+    public void setDateTaken(String dateTaken) {
+        this.dateTaken = dateTaken;
+    }
 
-public void setDescription(String description) {
-this.description = description;
-}
+    public String getDescription() {
+        return description;
+    }
 
-public String getPublished() {
-return published;
-}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-public void setPublished(String published) {
-this.published = published;
-}
+    public String getPublished() {
+        return published;
+    }
 
-public String getAuthor() {
-return author;
-}
+    public void setPublished(String published) {
+        this.published = published;
+    }
 
-public void setAuthor(String author) {
-this.author = author;
-}
+    public String getAuthor() {
+        return author;
+    }
 
-public String getAuthorId() {
-return authorId;
-}
+    public void setAuthor(String author) {
+        this.author = author;
+    }
 
-public void setAuthorId(String authorId) {
-this.authorId = authorId;
-}
+    public String getAuthorId() {
+        return authorId;
+    }
 
-public String getTags() {
-return tags;
-}
+    public void setAuthorId(String authorId) {
+        this.authorId = authorId;
+    }
 
-public void setTags(String tags) {
-this.tags = tags;
-}
+    public String getTags() {
+        return tags;
+    }
+
+    public void setTags(String tags) {
+        this.tags = tags;
+    }
+
 
 }
