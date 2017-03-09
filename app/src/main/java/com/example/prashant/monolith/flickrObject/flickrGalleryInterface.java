@@ -1,13 +1,11 @@
 package com.example.prashant.monolith.flickrObject;
 
-import com.example.prashant.monolith.unsplashObject.Results;
-
 import retrofit2.Call;
 import retrofit2.http.Query;
 
 public interface flickrGalleryInterface {
 
-    @retrofit2.http.GET("")
+    @retrofit2.http.GET("services/feeds/photos_public.gne?format=json")
     Call<Collection> resp(
             @Query("page") int page,
             @Query("per_page") int perPage,

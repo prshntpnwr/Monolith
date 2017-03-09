@@ -52,45 +52,45 @@ public class GalleryFragment extends Fragment {
 
     public void ImageFetchTask() {
 
-        String API_BASE_URL_u = "https://api.unsplash.com/";
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(API_BASE_URL_u)
-                .client(new OkHttpClient())
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        unsplashGalleryInterface service = retrofit.create(unsplashGalleryInterface.class);
-
-        Call<Results> call_u = service.result(1, 50, "nasa", "2f12038a9af628b150d141d9532b923e25818d649175c229f4d954b7f1033ef7");
-
-        call_u.enqueue(new Callback<Results>() {
-
-            @Override
-            public void onResponse(Call<Results> call, Response<Results> response) {
-                Log.d("Response goes here", response.toString());
-
-                int length = response.body().getResults().size();
-                for (int i = 0; i < length; i++) {
-                    Log.d("Result from nasa", i + " " + response.body().getResults().get(i).getCoverPhoto().getUrls().getFull());
-                    imageList.add(response.body().getResults().get(i).getCoverPhoto().getUrls().getThumb());
-                }
-                adapter = new GalleryAdapter(getContext(), imageList);
-                gridView.setAdapter(adapter);
-            }
-
-            @Override
-            public void onFailure(Call<Results> call, Throwable t) {
-                Log.d("Fail response from", "nasa");
-            }
-        });
+//        String API_BASE_URL_u = "https://api.unsplash.com/";
+//
+//        Retrofit retrofit = new Retrofit.Builder()
+//                .baseUrl(API_BASE_URL_u)
+//                .client(new OkHttpClient())
+//                .addConverterFactory(GsonConverterFactory.create())
+//                .build();
+//
+//        unsplashGalleryInterface service = retrofit.create(unsplashGalleryInterface.class);
+//
+//        Call<Results> call_u = service.result(1, 50, "nasa", "2f12038a9af628b150d141d9532b923e25818d649175c229f4d954b7f1033ef7");
+//
+//        call_u.enqueue(new Callback<Results>() {
+//
+//            @Override
+//            public void onResponse(Call<Results> call, Response<Results> response) {
+//                Log.d("Response goes here", response.toString());
+//
+//                int length = response.body().getResults().size();
+//                for (int i = 0; i < length; i++) {
+//                    Log.d("Result from unsplash", i + " " + response.body().getResults().get(i).getCoverPhoto().getUrls().getFull());
+//                    imageList.add(response.body().getResults().get(i).getCoverPhoto().getUrls().getThumb());
+//                }
+//                adapter = new GalleryAdapter(getContext(), imageList);
+//                gridView.setAdapter(adapter);
+//            }
+//
+//            @Override
+//            public void onFailure(Call<Results> call, Throwable t) {
+//                Log.d("Fail response from", "unsplash");
+//            }
+//        });
 
         String API_BASE_URL_f = "https://api.flickr.com/";
 
         Retrofit retrofit_f = new Retrofit.Builder()
                 .baseUrl(API_BASE_URL_f)
                 .client(new OkHttpClient())
-                .addConverterFactory(SimpleXmlConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
         flickrGalleryInterface service_f = retrofit_f.create(flickrGalleryInterface .class);
@@ -101,7 +101,7 @@ public class GalleryFragment extends Fragment {
 
             @Override
             public void onResponse(Call<Collection> call, Response<Collection> response) {
-                Log.d("Response goes here", response.toString());
+                Log.d("Response from flickr", response.toString());
 
               // TODO: add response to imageList
             }
