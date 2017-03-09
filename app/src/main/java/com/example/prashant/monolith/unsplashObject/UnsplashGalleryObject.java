@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 import org.simpleframework.xml.Root;
 
 @Root(strict=false)
-public class unsplashGalleryObject {
+public class UnsplashGalleryObject {
 
     @SerializedName("raw")
     @Expose

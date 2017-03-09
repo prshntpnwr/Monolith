@@ -10,10 +10,7 @@ import android.view.ViewGroup;
 import com.etsy.android.grid.StaggeredGridView;
 import com.example.prashant.monolith.R;
 import com.example.prashant.monolith.adapters.GalleryAdapter;
-import com.example.prashant.monolith.flickrObject.Collection;
-import com.example.prashant.monolith.flickrObject.flickrGalleryInterface;
-import com.example.prashant.monolith.unsplashObject.unsplashGalleryInterface;
-import com.example.prashant.monolith.unsplashObject.Results;
+import com.example.prashant.monolith.flickrObject.FlickrGalleryInterface;
 
 import java.util.ArrayList;
 
@@ -23,7 +20,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.converter.simplexml.SimpleXmlConverterFactory;
 
 public class GalleryFragment extends Fragment {
 
@@ -60,7 +56,7 @@ public class GalleryFragment extends Fragment {
 //                .addConverterFactory(GsonConverterFactory.create())
 //                .build();
 //
-//        unsplashGalleryInterface service = retrofit.create(unsplashGalleryInterface.class);
+//        UnsplashGalleryInterface service = retrofit.create(UnsplashGalleryInterface.class);
 //
 //        Call<Results> call_u = service.result(1, 50, "nasa", "2f12038a9af628b150d141d9532b923e25818d649175c229f4d954b7f1033ef7");
 //
@@ -93,7 +89,7 @@ public class GalleryFragment extends Fragment {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        flickrGalleryInterface service_f = retrofit_f.create(flickrGalleryInterface .class);
+        FlickrGalleryInterface service_f = retrofit_f.create(FlickrGalleryInterface.class);
 
         Call<Collection> call_f = service_f.resp(1, 50, "hubble telescope", "493ae838552615924d866a32c4812a2d");
 
@@ -102,6 +98,11 @@ public class GalleryFragment extends Fragment {
             @Override
             public void onResponse(Call<Collection> call, Response<Collection> response) {
                 Log.d("Response from flickr", response.toString());
+
+//                int length = response.body().
+//                for (int i = 0; i < length; i++) {
+//
+//                }
 
               // TODO: add response to imageList
             }
