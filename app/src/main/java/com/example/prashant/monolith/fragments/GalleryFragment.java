@@ -11,6 +11,7 @@ import com.etsy.android.grid.StaggeredGridView;
 import com.example.prashant.monolith.R;
 import com.example.prashant.monolith.adapters.GalleryAdapter;
 import com.example.prashant.monolith.flickrObject.FlickrGalleryInterface;
+import com.example.prashant.monolith.flickrObject.FlickrGalleryObject;
 
 import java.util.ArrayList;
 
@@ -91,13 +92,14 @@ public class GalleryFragment extends Fragment {
 
         FlickrGalleryInterface service_f = retrofit_f.create(FlickrGalleryInterface.class);
 
-        Call<Collection> call_f = service_f.resp(1, 50, "hubble telescope", "493ae838552615924d866a32c4812a2d");
+        Call<FlickrGalleryObject> call_f = service_f.resp(1, 50, "hubble telescope", "493ae838552615924d866a32c4812a2d");
 
-        call_f.enqueue(new Callback<Collection>() {
+        call_f.enqueue(new Callback<FlickrGalleryObject>() {
 
             @Override
-            public void onResponse(Call<Collection> call, Response<Collection> response) {
+            public void onResponse(Call<FlickrGalleryObject> call, Response<FlickrGalleryObject> response) {
                 Log.d("Response from flickr", response.toString());
+                Log.d("result from flickr", response.body().getTitle().toString());
 
 //                int length = response.body().
 //                for (int i = 0; i < length; i++) {
@@ -108,7 +110,7 @@ public class GalleryFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<Collection> call, Throwable t) {
+            public void onFailure(Call<FlickrGalleryObject> call, Throwable t) {
                 Log.d("Fail response from", "flickr");
             }
         });
