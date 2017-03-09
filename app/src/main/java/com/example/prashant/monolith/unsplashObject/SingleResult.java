@@ -1,4 +1,4 @@
-package com.example.prashant.monolith.objects;
+package com.example.prashant.monolith.unsplashObject;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

@@ -1,4 +1,4 @@
-package com.example.prashant.monolith.objects;
+package com.example.prashant.monolith.unsplashObject;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -6,7 +6,6 @@ import com.google.gson.annotations.SerializedName;
 import org.simpleframework.xml.Root;
 
 import java.util.ArrayList;
-import java.util.List;
 
 @Root(strict=false)
 public class Results {
