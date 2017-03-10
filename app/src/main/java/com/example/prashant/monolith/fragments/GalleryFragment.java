@@ -77,7 +77,7 @@ public class GalleryFragment extends Fragment {
 
         UnsplashGalleryInterface service = retrofit.create(UnsplashGalleryInterface.class);
 
-        Call<Results> call_u = service.result(1, 6, "nasa", "2f12038a9af628b150d141d9532b923e25818d649175c229f4d954b7f1033ef7");
+        Call<Results> call_u = service.result(1, 50, "nasa", "2f12038a9af628b150d141d9532b923e25818d649175c229f4d954b7f1033ef7");
 
         call_u.enqueue(new Callback<Results>() {
 
@@ -88,7 +88,7 @@ public class GalleryFragment extends Fragment {
                 int length = response.body().getResults().size();
                 for (int i = 0; i < length; i++) {
                     Log.d("Result from unsplash", i + " " + response.body().getResults().get(i).getCoverPhoto().getUrls().getFull());
-                    imageList.add(response.body().getResults().get(i).getCoverPhoto().getUrls().getFull());
+                    imageList.add(response.body().getResults().get(i).getCoverPhoto().getUrls().getThumb());
                 }
                 adapter = new GalleryAdapter(getContext(), imageList);
                 gridView.setAdapter(adapter);
