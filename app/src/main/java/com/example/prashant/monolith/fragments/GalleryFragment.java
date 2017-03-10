@@ -51,7 +51,7 @@ public class GalleryFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View v, int position,
                                     long id) {
                 Intent intent = new Intent(getActivity(),ImageActivity.class);
-                intent.putExtra("image", new imageList.get(position));
+                intent.putExtra("image", imageList.get(position));
                 startActivity(intent);
             }
         });
