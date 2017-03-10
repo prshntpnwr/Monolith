@@ -16,6 +16,7 @@ import com.example.prashant.monolith.R;
 import com.example.prashant.monolith.adapters.GalleryAdapter;
 import com.example.prashant.monolith.galleryObjects.Results;
 import com.example.prashant.monolith.galleryObjects.UnsplashGalleryInterface;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
@@ -49,7 +50,9 @@ public class GalleryFragment extends Fragment {
 
             public void onItemClick(AdapterView<?> parent, View v, int position,
                                     long id) {
-                // TODO: send response to detail activity to populate the detail ImageView 
+                Intent intent = new Intent(getActivity(),ImageActivity.class);
+                intent.putExtra("image", new imageList.get(position));
+                startActivity(intent);
             }
         });
 
