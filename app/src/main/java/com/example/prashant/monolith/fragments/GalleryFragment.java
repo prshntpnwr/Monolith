@@ -88,7 +88,7 @@ public class GalleryFragment extends Fragment {
                 int length = response.body().getResults().size();
                 for (int i = 0; i < length; i++) {
                     Log.d("Result from unsplash", i + " " + response.body().getResults().get(i).getCoverPhoto().getUrls().getFull());
-                    imageList.add(response.body().getResults().get(i).getCoverPhoto().getUrls().getThumb());
+                    imageList.add(response.body().getResults().get(i).getCoverPhoto().getUrls().getRegular());
                 }
                 adapter = new GalleryAdapter(getContext(), imageList);
                 gridView.setAdapter(adapter);

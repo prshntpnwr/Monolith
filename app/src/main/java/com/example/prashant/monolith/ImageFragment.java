@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.ShareCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -63,16 +64,25 @@ public class ImageFragment extends Fragment{
 
     private void setupToolbar() {
         if (toolbar != null) {
+//
+//            ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+//            ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//            ((AppCompatActivity) getActivity()).getSupportActionBar().setHomeButtonEnabled(true);
+//            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {/home/prashant/Downloads/Cinephile-master/app/src/main/res/drawable-hdpi/ic_back.png
+//                    ((AppCompatActivity) getActivity()).supportFinishAfterTransition();
+//                }
+//            });
 
-            ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-            ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            ((AppCompatActivity) getActivity()).getSupportActionBar().setHomeButtonEnabled(true);
+            toolbar.setNavigationIcon(ContextCompat.getDrawable(getActivity(), R.drawable.ic_back));
             toolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View view) {
-                    ((AppCompatActivity) getActivity()).supportFinishAfterTransition();
+                public void onClick(View v) {
+                    getActivity().finish();
                 }
             });
+
             toolbar.setTitle("");
         }
     }
