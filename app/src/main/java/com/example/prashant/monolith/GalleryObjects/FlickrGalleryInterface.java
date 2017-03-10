@@ -1,4 +1,4 @@
-package com.example.prashant.monolith.flickrObject;
+package com.example.prashant.monolith.GalleryObjects;
 
 import retrofit2.Call;
 import retrofit2.http.Query;

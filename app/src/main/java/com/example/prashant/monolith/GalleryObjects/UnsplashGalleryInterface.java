@@ -1,4 +1,4 @@
-package com.example.prashant.monolith.unsplashObject;
+package com.example.prashant.monolith.GalleryObjects;
 
 import org.simpleframework.xml.Root;
 
