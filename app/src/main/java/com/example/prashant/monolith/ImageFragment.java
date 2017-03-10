@@ -23,6 +23,32 @@ public class ImageFragment extends Fragment{
     public ImageView imageView;
     public View mRootView;
     public Toolbar toolbar;
+    public Intent intent;
+    public String image;
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        if (savedInstanceState != null) {
+            //Restore the fragment's state here
+            if (!image.isEmpty()) {
+                savedInstanceState.getSerializable("IMAGE");
+            }else {
+                image = null;
+            }
+
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        //Save the fragment's state here
+        image = intent.getStringExtra("image");
+        outState.putSerializable("IMAGE", image);
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -56,10 +82,10 @@ public class ImageFragment extends Fragment{
             return;
         }
 
-        Intent intent = getActivity().getIntent();
+        intent = getActivity().getIntent();
 
         if (intent != null) {
-            String image = intent.getStringExtra("image");
+            image = intent.getStringExtra("image");
 
             Picasso.with(getActivity())
                     .load(image)
