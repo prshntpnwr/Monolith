@@ -19,5 +19,4 @@ public class Media {
     public void setM(String m) {
         this.m = m;
     }
-
 }

@@ -94,7 +94,7 @@ public class GalleryFragment extends Fragment {
 
         FlickrGalleryInterface service_f = retrofit_f.create(FlickrGalleryInterface.class);
 
-        Call<FlickrGalleryObject> call_f = service_f.resp(1, 50, "hubble telescope", "493ae838552615924d866a32c4812a2d");
+        Call<FlickrGalleryObject> call_f = service_f.resp(1, 50, "", "493ae838552615924d866a32c4812a2d");
 
         call_f.enqueue(new Callback<FlickrGalleryObject>() {
 
@@ -102,8 +102,8 @@ public class GalleryFragment extends Fragment {
                 Log.d("Response from flickr", response.toString());
 
                 for (int i = 0; i < response.body().getItems().size(); i++) {
-                    Log.e("onResponse" , i + response.body().getItems().get(i).getLink());
-                    imageList.add(response.body().getItems().get(i).getLink());
+                    Log.d("onResponse" , i + " " + response.body().getItems().get(i).getMedia().getM());
+                    imageList.add(response.body().getItems().get(i).getMedia().getM());
                 }
                 adapter = new GalleryAdapter(getContext(), imageList);
                 gridView.setAdapter(adapter);
