@@ -1,4 +1,4 @@
-package com.example.prashant.monolith.GalleryObjects;
+package com.example.prashant.monolith.galleryObjects;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

@@ -1,4 +1,4 @@
-package com.example.prashant.monolith.GalleryObjects;
+package com.example.prashant.monolith.galleryObjects;
 
 import java.util.List;
 import com.google.gson.annotations.Expose;
@@ -28,7 +28,7 @@ public class FlickrGalleryObject {
     @SerializedName("generator")
     @Expose
     private String generator;
-    
+
     @SerializedName("items")
     @Expose
     private List<Item> items = null;

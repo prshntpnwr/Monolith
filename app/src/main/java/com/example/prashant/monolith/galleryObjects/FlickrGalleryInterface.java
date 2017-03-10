@@ -1,4 +1,4 @@
-package com.example.prashant.monolith.GalleryObjects;
+package com.example.prashant.monolith.galleryObjects;
 
 import retrofit2.Call;
 import retrofit2.http.Query;

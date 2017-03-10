@@ -1,4 +1,4 @@
-package com.example.prashant.monolith.GalleryObjects;
+package com.example.prashant.monolith.galleryObjects;
 
 import org.simpleframework.xml.Root;
 

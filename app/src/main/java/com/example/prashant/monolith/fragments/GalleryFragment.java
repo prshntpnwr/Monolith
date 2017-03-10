@@ -1,17 +1,21 @@
 package com.example.prashant.monolith.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.Toast;
 
 import com.etsy.android.grid.StaggeredGridView;
+import com.example.prashant.monolith.ImageActivity;
 import com.example.prashant.monolith.R;
 import com.example.prashant.monolith.adapters.GalleryAdapter;
-import com.example.prashant.monolith.GalleryObjects.Results;
-import com.example.prashant.monolith.GalleryObjects.UnsplashGalleryInterface;
+import com.example.prashant.monolith.galleryObjects.Results;
+import com.example.prashant.monolith.galleryObjects.UnsplashGalleryInterface;
 
 import java.util.ArrayList;
 
@@ -40,6 +44,15 @@ public class GalleryFragment extends Fragment {
         gridView = (StaggeredGridView) rootView.findViewById(R.id.grid_view);
 
         gridView.setAdapter(adapter);
+
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            public void onItemClick(AdapterView<?> parent, View v, int position,
+                                    long id) {
+                // TODO: send response to detail activity to populate the detail ImageView 
+            }
+        });
+
         return rootView;
     }
 
