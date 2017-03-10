@@ -31,23 +31,43 @@ public class GalleryFragment extends Fragment {
 
     public static final String TAG = ".GalleryFragment";
 
+    public static final String ARG_ITEM_ID = "item_id";
+
     public GalleryAdapter adapter;
     public StaggeredGridView gridView;
     public ArrayList<String> imageList;
 
-    @Override
-    public void onSaveInstanceState(Bundle state) {
-        super.onSaveInstanceState(state);
-        state.putSerializable("ImageList", imageList);
+//    @Override
+//    public void onSaveInstanceState(Bundle state) {
+//        super.onSaveInstanceState(state);
+//        state.putSerializable("ImageList", imageList);
+//    }
+//    @Override
+//    public void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//
+//        if ((savedInstanceState != null)
+//                && (savedInstanceState.getSerializable("ImageList") != null)) {
+//
+//            imageList = (ArrayList<String>) savedInstanceState.getSerializable("ImageList");
+//        }
+//    }
+
+    public static GalleryFragment newInstance(ArrayList<String> imageList) {
+
+        GalleryFragment  fragment = new GalleryFragment();
+        Bundle args = new Bundle();
+        args.putSerializable(ARG_ITEM_ID, imageList);
+        fragment.setArguments(args);
+        return fragment;
     }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if ((savedInstanceState != null)
-                && (savedInstanceState.getSerializable("ImageList") != null)) {
-
-            imageList = (ArrayList<String>) savedInstanceState.getSerializable("ImageList");
+        if (getArguments() != null) {
+            imageList = (ArrayList<String>) getArguments().getSerializable(ARG_ITEM_ID);
         }
     }
 
