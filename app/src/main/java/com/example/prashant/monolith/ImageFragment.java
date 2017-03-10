@@ -70,7 +70,6 @@ public class ImageFragment extends Fragment{
                 @Override
                 public void onClick(View v) {
                     getActivity().finish();
-
                 }
             });
 

@@ -6,13 +6,6 @@
     android:layout_height="match_parent"
     tools:context = "com.example.prashant.monolith.ImageFragment">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/detail_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        app:contentInsetStart="@dimen/activity_horizontal_margin"
-        app:layout_collapseMode="parallax"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
     <ImageView
         android:id="@+id/image"
@@ -20,7 +13,16 @@
         android:layout_height="match_parent"
         android:scaleType="centerCrop"/>
 
-        <android.support.design.widget.FloatingActionButton
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/detail_toolbar"
+        android:layout_marginTop="24dp"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:contentInsetStart="@dimen/activity_horizontal_margin"
+        app:layout_collapseMode="parallax"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+
+    <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
