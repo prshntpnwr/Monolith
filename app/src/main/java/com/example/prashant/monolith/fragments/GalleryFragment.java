@@ -36,6 +36,22 @@ public class GalleryFragment extends Fragment {
     public ArrayList<String> imageList;
 
     @Override
+    public void onSaveInstanceState(Bundle state) {
+        super.onSaveInstanceState(state);
+        state.putSerializable("ImageList", imageList);
+    }
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        if ((savedInstanceState != null)
+                && (savedInstanceState.getSerializable("ImageList") != null)) {
+
+            imageList = (ArrayList<String>) savedInstanceState.getSerializable("ImageList");
+        }
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_gallery, container, false);
@@ -62,7 +78,13 @@ public class GalleryFragment extends Fragment {
     @Override
     public void onStart() {
         ImageFetchTask();
+        Log.d(TAG, "onStart is called");
         super.onStart();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
     }
 
     public void ImageFetchTask() {
@@ -77,7 +99,7 @@ public class GalleryFragment extends Fragment {
 
         UnsplashGalleryInterface service = retrofit.create(UnsplashGalleryInterface.class);
 
-        Call<Results> call_u = service.result(1, 50, "nasa", "2f12038a9af628b150d141d9532b923e25818d649175c229f4d954b7f1033ef7");
+        Call<Results> call_u = service.result(1, 6, "nasa", "2f12038a9af628b150d141d9532b923e25818d649175c229f4d954b7f1033ef7");
 
         call_u.enqueue(new Callback<Results>() {
 
