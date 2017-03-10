@@ -37,39 +37,25 @@ public class GalleryFragment extends Fragment {
     public StaggeredGridView gridView;
     public ArrayList<String> imageList = null;
 
-//    @Override
-//    public void onSaveInstanceState(Bundle state) {
-//        super.onSaveInstanceState(state);
-//        state.putSerializable("ImageList", imageList);
-//    }
-//    @Override
-//    public void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//
-//        if ((savedInstanceState != null)
-//                && (savedInstanceState.getSerializable("ImageList") != null)) {
-//
-//            imageList = (ArrayList<String>) savedInstanceState.getSerializable("ImageList");
-//        }
-//    }
-
-    public static GalleryFragment newInstance(ArrayList<String> imageList) {
-
-        GalleryFragment  fragment = new GalleryFragment();
-        Bundle args = new Bundle();
-        args.putSerializable(ARG_ITEM_ID, imageList);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
 
-        if (getArguments() != null) {
+        if (savedInstanceState != null) {
+            //Restore the fragment's state here
             imageList = (ArrayList<String>) getArguments().getSerializable(ARG_ITEM_ID);
         }
     }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        //Save the fragment's state here
+        super.onSaveInstanceState(outState);
+        outState.putSerializable("ImageList", imageList);
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -97,8 +83,9 @@ public class GalleryFragment extends Fragment {
 
     @Override
     public void onStart() {
-        ImageFetchTask();
-        Log.d(TAG, "onStart is called");
+        if (imageList.isEmpty()) {
+            ImageFetchTask();
+        }
         super.onStart();
     }
 
@@ -130,7 +117,7 @@ public class GalleryFragment extends Fragment {
                 int length = response.body().getResults().size();
                 for (int i = 0; i < length; i++) {
                     Log.d("Result from unsplash", i + " " + response.body().getResults().get(i).getCoverPhoto().getUrls().getFull());
-                    imageList.add(response.body().getResults().get(i).getCoverPhoto().getUrls().getRegular());
+                    imageList.add(response.body().getResults().get(i).getCoverPhoto().getUrls().getFull());
                 }
                 adapter = new GalleryAdapter(getContext(), imageList);
                 gridView.setAdapter(adapter);
