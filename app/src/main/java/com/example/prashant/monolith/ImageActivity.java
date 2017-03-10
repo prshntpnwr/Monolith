@@ -20,5 +20,4 @@ public class ImageActivity extends AppCompatActivity {
                     .commit();
         }
     }
-
 }

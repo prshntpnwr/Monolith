@@ -2,13 +2,14 @@ package com.example.prashant.monolith.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Toast;
 
 import com.etsy.android.grid.StaggeredGridView;
 import com.example.prashant.monolith.ImageActivity;
@@ -16,7 +17,6 @@ import com.example.prashant.monolith.R;
 import com.example.prashant.monolith.adapters.GalleryAdapter;
 import com.example.prashant.monolith.galleryObjects.Results;
 import com.example.prashant.monolith.galleryObjects.UnsplashGalleryInterface;
-import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
@@ -35,7 +35,7 @@ public class GalleryFragment extends Fragment {
 
     public GalleryAdapter adapter;
     public StaggeredGridView gridView;
-    public ArrayList<String> imageList;
+    public ArrayList<String> imageList = null;
 
 //    @Override
 //    public void onSaveInstanceState(Bundle state) {
@@ -98,6 +98,7 @@ public class GalleryFragment extends Fragment {
     @Override
     public void onStart() {
         ImageFetchTask();
+
         Log.d(TAG, "onStart is called");
         super.onStart();
     }
