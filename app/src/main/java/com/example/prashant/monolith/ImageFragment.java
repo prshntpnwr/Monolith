@@ -29,6 +29,7 @@ public class ImageFragment extends Fragment{
 
         mRootView = inflater.inflate(R.layout.fragment_image, container, false);
         toolbar = (Toolbar) mRootView.findViewById(R.id.detail_toolbar);
+
         imageView = (ImageView)mRootView.findViewById(R.id.image);
 
         mRootView.findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
@@ -38,8 +39,8 @@ public class ImageFragment extends Fragment{
             }
         });
 
-        setupToolbar();
         bindViews();
+        setupToolbar();
 
         return mRootView;
     }
@@ -62,6 +63,7 @@ public class ImageFragment extends Fragment{
 
     private void setupToolbar() {
         if (toolbar != null) {
+
             ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
             ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             ((AppCompatActivity) getActivity()).getSupportActionBar().setHomeButtonEnabled(true);

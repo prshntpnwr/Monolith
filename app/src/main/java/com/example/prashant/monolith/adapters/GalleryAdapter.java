@@ -54,8 +54,8 @@ public class GalleryAdapter extends BaseAdapter
 
         Picasso.with(mContext)
                 .load(array.get(position))
-                .placeholder(R.color.colorAccent)
-                .error(R.color.colorPrimaryDark)
+                .placeholder(R.color.accent)
+                .error(R.color.primary_dark)
                 .into(imageView);
 
 //        Glide.with(mContext)

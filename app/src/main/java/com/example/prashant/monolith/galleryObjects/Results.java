@@ -53,7 +53,6 @@ public class Results {
         public void setUrls(Urls urls) {
             this.urls = urls;
         }
-
     }
 
     @Root(strict=false)
@@ -114,6 +113,5 @@ public class Results {
         public void setThumb(String thumb) {
             this.thumb = thumb;
         }
-
     }
 }
