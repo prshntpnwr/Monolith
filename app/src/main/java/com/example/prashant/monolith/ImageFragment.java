@@ -69,7 +69,8 @@ public class ImageFragment extends Fragment{
 
     private void setupToolbar() {
         if (toolbar != null) {
-            toolbar.setNavigationIcon(ContextCompat.getDrawable(getActivity(), R.drawable.ic_back));
+            toolbar.setNavigationIcon(ContextCompat
+                    .getDrawable(getActivity(), R.drawable.ic_back));
             toolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

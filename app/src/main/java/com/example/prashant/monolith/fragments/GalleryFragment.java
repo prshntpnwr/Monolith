@@ -98,7 +98,6 @@ public class GalleryFragment extends Fragment {
     @Override
     public void onStart() {
         ImageFetchTask();
-
         Log.d(TAG, "onStart is called");
         super.onStart();
     }
