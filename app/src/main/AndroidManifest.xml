@@ -27,7 +27,7 @@
         </activity>
 
         <provider
-            android:authorities="com.example.prashant.monolith"
+            android:authorities="com.example.prashant.monolith.data"
             android:name=".data.GalleryProvider"
             android:exported="false"
             android:syncable="true"/>

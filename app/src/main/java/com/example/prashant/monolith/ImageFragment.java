@@ -116,6 +116,7 @@ public class ImageFragment extends Fragment {
     }
 
     public void loadDataToDB () {
+        Log.d(TAG, "loadDataToDB is been called :)");
         Uri uri = GalleryContract.GalleryEntry.CONTENT_URI;
         ContentValues contentValues = new ContentValues();
         //contentValues.put(GalleryContract.GalleryEntry.COLUMN_IMAGE_PATH, );
