@@ -53,18 +53,18 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
         // will fix this soon
         ImageView imageView=holder.image;
 
-        final Bundle bundle = new Bundle();
-//        //put some tag and ?
-//        bundle.putSerializable(IMAGE_TAG, "");
-        bundle.putInt(POSITION, position);
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent=new Intent(view.getContext(), ImageActivity.class);
-                intent.putExtras(bundle);
-                view.getContext().startActivity(intent);
-            }
-        });
+//        final Bundle bundle = new Bundle();
+////        //put some tag and ?
+////        bundle.putSerializable(IMAGE_TAG, "");
+//        bundle.putInt(POSITION, position);
+//        imageView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent=new Intent(view.getContext(), ImageActivity.class);
+//                intent.putExtras(bundle);
+//                view.getContext().startActivity(intent);
+//            }
+//        });
 
         //load images using picasso
         Picasso.with(mContext).load(mCursor.getString(position))

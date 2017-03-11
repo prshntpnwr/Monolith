@@ -55,14 +55,14 @@ public class GalleryFragment extends Fragment implements
         getLoaderManager().initLoader(0, null, this);
     }
 
-    public static GalleryFragment newInstance(long itemId, int position) {
-        Bundle arguments = new Bundle();
-        arguments.putLong(ARG_ITEM_ID, itemId);
-        arguments.putInt(ARG_ITEM_POSITION, position);
-        GalleryFragment fragment = new GalleryFragment();
-        fragment.setArguments(arguments);
-        return fragment;
-    }
+//    public static GalleryFragment newInstance(long itemId, int position) {
+//        Bundle arguments = new Bundle();
+//        arguments.putLong(ARG_ITEM_ID, itemId);
+//        arguments.putInt(ARG_ITEM_POSITION, position);
+//        GalleryFragment fragment = new GalleryFragment();
+//        fragment.setArguments(arguments);
+//        return fragment;
+//    }
 
 //    @Override
 //    public void onSaveInstanceState(Bundle outState) {
@@ -78,10 +78,10 @@ public class GalleryFragment extends Fragment implements
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_gallery, container, false);
-        adapter = new GalleryAdapter(mCursor);
+//        adapter = new GalleryAdapter(mCursor);
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
 
-        mRecyclerView.setAdapter(adapter);
+//        mRecyclerView.setAdapter(adapter);
 
 //        recyclerView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 //
@@ -93,10 +93,10 @@ public class GalleryFragment extends Fragment implements
 //            }
 //        });
 //
-        if (getArguments().containsKey(ARG_ITEM_ID)) {
-            mImageId = getArguments().getLong(ARG_ITEM_ID);
-            mPosition = getArguments().getInt(ARG_ITEM_POSITION);
-        }
+//        if (getArguments().containsKey(ARG_ITEM_ID)) {
+//            mImageId = getArguments().getLong(ARG_ITEM_ID);
+//            mPosition = getArguments().getInt(ARG_ITEM_POSITION);
+//        }
 
         return rootView;
     }
@@ -226,7 +226,7 @@ public class GalleryFragment extends Fragment implements
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        GalleryAdapter adapter = new GalleryAdapter(mCursor);
+        GalleryAdapter adapter = new GalleryAdapter(getContext(), data);
         adapter.setHasStableIds(true);
         mRecyclerView.setAdapter(adapter);
         int columnCount = getResources().getInteger(R.integer.list_column_count);
