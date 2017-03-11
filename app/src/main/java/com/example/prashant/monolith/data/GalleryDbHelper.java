@@ -25,8 +25,8 @@ public class GalleryDbHelper extends SQLiteOpenHelper{
 
         final String SQL_CREATE_Gallery_TABLE = "CREATE TABLE " + GalleryEntry.TABLE_NAME + " (" +
                 GalleryEntry.COLUMN_IMAGE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                GalleryEntry.COLUMN_IMAGE_PATH + " TEXT NOT NULL, " +
-                GalleryEntry.COLUMN_IMAGE_STATUS + " INTEGER NOT NULL " + ");";
+                GalleryEntry.COLUMN_IMAGE_PATH + " TEXT, " +
+                GalleryEntry.COLUMN_IMAGE_STATUS + " INTEGER" + ");";
 
         sqLiteDatabase.execSQL(SQL_CREATE_Gallery_TABLE);
     }

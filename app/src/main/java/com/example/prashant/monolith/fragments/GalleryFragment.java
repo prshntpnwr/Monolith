@@ -1,6 +1,10 @@
 package com.example.prashant.monolith.fragments;
 
+import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -15,6 +19,7 @@ import com.etsy.android.grid.StaggeredGridView;
 import com.example.prashant.monolith.ImageActivity;
 import com.example.prashant.monolith.R;
 import com.example.prashant.monolith.adapters.GalleryAdapter;
+import com.example.prashant.monolith.data.GalleryContract;
 import com.example.prashant.monolith.galleryObjects.Results;
 import com.example.prashant.monolith.galleryObjects.UnsplashGalleryInterface;
 
@@ -29,7 +34,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class GalleryFragment extends Fragment {
 
-    public static final String TAG = ".GalleryFragment";
+    private final String TAG = GalleryFragment.class.getSimpleName();
 
     public static final String ARG_ITEM_ID = "item_id";
 
@@ -160,4 +165,5 @@ public class GalleryFragment extends Fragment {
 //            }
 //        });
     }
+
 }

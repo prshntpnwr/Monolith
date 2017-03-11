@@ -1,6 +1,5 @@
 package com.example.prashant.monolith.data;
 
-import android.content.ContentProvider;
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.net.Uri;
@@ -13,12 +12,12 @@ public class GalleryContract {
     // content authority is the package name for the app, which is guaranteed to be unique on the
     // device.
 
-    public static final String CONTENT_AUTHORITY = "com.example.prashant.monolith.data";
+    public static final String CONTENT_AUTHORITY = GalleryContract.class.getPackage().getName();
 
     // Use CONTENT_AUTHORITY to create the base of all URI's which apps will use to contact
     // the content provider.
 
-    public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY + "/images");
+    public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
 
     public static final String PATH_IMAGE = "images";
 

@@ -1,19 +1,29 @@
 package com.example.prashant.monolith;
 
 
+import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.example.prashant.monolith.data.GalleryContract;
 import com.squareup.picasso.Picasso;
 
-public class ImageFragment extends Fragment{
+public class ImageFragment extends Fragment {
+
+    private static final String TAG = ImageFragment.class.getSimpleName();
+
 
     public ImageFragment() {
     }
@@ -53,23 +63,25 @@ public class ImageFragment extends Fragment{
         @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+            mRootView = inflater.inflate(R.layout.fragment_image, container, false);
+            toolbar = (Toolbar) mRootView.findViewById(R.id.detail_toolbar);
 
-        mRootView = inflater.inflate(R.layout.fragment_image, container, false);
-        toolbar = (Toolbar) mRootView.findViewById(R.id.detail_toolbar);
+            imageView = (ImageView) mRootView.findViewById(R.id.image);
 
-        imageView = (ImageView)mRootView.findViewById(R.id.image);
+            final FloatingActionButton fab = (FloatingActionButton) mRootView.findViewById(R.id.fab);
 
-        mRootView.findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // TODO: image sharing
-            }
-        });
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    // TODO: add image/details to db
+                    loadDataToDB();
+                    fab.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_like));
+                }
+            });
 
-        bindViews();
-        setupToolbar();
-
-        return mRootView;
+            bindViews();
+            setupToolbar();
+            return mRootView;
     }
 
     private void bindViews() {
@@ -100,6 +112,36 @@ public class ImageFragment extends Fragment{
             });
 
             toolbar.setTitle("");
+        }
+    }
+
+    public void loadDataToDB () {
+        Uri uri = GalleryContract.GalleryEntry.CONTENT_URI;
+        ContentValues contentValues = new ContentValues();
+        //contentValues.put(GalleryContract.GalleryEntry.COLUMN_IMAGE_PATH, );
+        contentValues.put(GalleryContract.GalleryEntry.COLUMN_IMAGE_STATUS, 1);
+
+        try {
+            ContentResolver resolver = getContext().getContentResolver();
+
+            resolver.insert(uri, contentValues);
+            Cursor cursor = resolver.query(uri, new String[]{
+                    GalleryContract.GalleryEntry.COLUMN_IMAGE_STATUS, null, null}
+                    , null, null, null);
+
+            if (cursor != null) {
+                cursor.moveToFirst();
+                while (cursor.moveToNext()) {
+                    Log.d(TAG, "Cursor data :  " + cursor.getString(0));
+
+                    if (cursor.isAfterLast())
+                        break;
+                }
+            }
+            cursor.close();
+
+        } catch (Error error) {
+            Log.e(TAG, "Insertion failed :( " + error.getCause());
         }
     }
 }

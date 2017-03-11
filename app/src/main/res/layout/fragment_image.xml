@@ -29,7 +29,6 @@
             android:layout_marginRight="16dp"
             android:layout_marginBottom="48dp"
             app:fabSize="normal"
-            android:layout_gravity="bottom|end"
-            app:srcCompat="@android:drawable/ic_menu_share" />
+            android:layout_gravity="bottom|end" />
 
 </android.support.design.widget.CoordinatorLayout>
