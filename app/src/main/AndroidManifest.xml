@@ -24,9 +24,13 @@
         <activity
             android:name=".ImageActivity"
             android:theme="@style/AppTheme.Detail">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.prashant.monolith.MainActivity" />
         </activity>
+
+        <provider
+            android:authorities="com.example.prashant.monolith"
+            android:name=".data.GalleryProvider"
+            android:exported="false"
+            android:syncable="true"/>
+
     </application>
 </manifest>

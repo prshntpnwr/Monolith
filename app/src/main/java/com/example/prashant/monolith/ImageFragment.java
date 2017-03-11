@@ -4,9 +4,7 @@ package com.example.prashant.monolith;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.ShareCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,10 +32,7 @@ public class ImageFragment extends Fragment{
             //Restore the fragment's state here
             if (!image.isEmpty()) {
                 savedInstanceState.getSerializable("IMAGE");
-            }else {
-                image = null;
             }
-
         }
     }
 

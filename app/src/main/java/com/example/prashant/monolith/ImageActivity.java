@@ -1,7 +1,6 @@
 package com.example.prashant.monolith;
 
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.WindowManager;
 
@@ -9,26 +8,17 @@ public class ImageActivity extends AppCompatActivity {
 
     public static String Fragment_tag = "current_fragment";
 
-
-//    public void onCreate(Bundle savedInstanceState) {
-//        if (savedInstanceState != null) {
-//            //Restore the fragment's instance
-//            mContent = getSupportFragmentManager().getFragment(savedInstanceState, Fragment_tag);
-//
-//        }
-//    }
-
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        outState.putString("title", "Some Text");
+        outState.putString(Fragment_tag, "Some Text");
     }
 
     //Here you can restore saved data in onSaveInstanceState Bundle
     public void onRestoreInstanceState(Bundle savedInstanceState){
         if(savedInstanceState!=null){
-            String SomeText = savedInstanceState.getString("title");
+            String SomeText = savedInstanceState.getString(Fragment_tag);
         }
     }
 
