@@ -13,16 +13,17 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.example.prashant.monolith.ImageActivity;
 import com.example.prashant.monolith.R;
 import com.example.prashant.monolith.data.GalleryLoader;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
-
 public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHolder> {
     private Cursor mCursor;
+    private Context mContext;
 
-    public GalleryAdapter(Cursor cursor) {
+    public GalleryAdapter(Context context, Cursor cursor) {
+        mContext = context;
         mCursor = cursor;
     }
 
@@ -37,7 +38,8 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
 
     @Override
     public GalleryAdapter.ViewHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
-        LayoutInflater inflater = LayoutInflater.from();
+        //
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
 
         View view= inflater.inflate(R.layout.gridview_item, parent, false);
         ViewHolder viewHolder = new ViewHolder(view);
@@ -49,24 +51,26 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
     public void onBindViewHolder(final GalleryAdapter.ViewHolder holder, final int position) {
 
         // will fix this soon
-//        ImageView imageView=holder.image;
-//        final Bundle args = new Bundle();
-//        args.putSerializable(IMAGE_TAG, "");
-//        args.putInt(POSITION, position);
-//        imageView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent=new Intent(view.getContext(), ImageActivity.class);
-//                intent.putExtras(args);
-//                view.getContext().startActivity(intent);
-//            }
-//        });
-//
-//        //load images using picasso
-//        Picasso.with().load(mCursor.get(position))
-//                .error(R.drawable.sample)
-//                .into(imageView);
+        ImageView imageView=holder.image;
 
+        final Bundle bundle = new Bundle();
+//        //put some tag and ?
+//        bundle.putSerializable(IMAGE_TAG, "");
+        bundle.putInt(POSITION, position);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(view.getContext(), ImageActivity.class);
+                intent.putExtras(bundle);
+                view.getContext().startActivity(intent);
+            }
+        });
+
+        //load images using picasso
+        Picasso.with(mContext).load(mCursor.getString(position))
+                .placeholder(R.color.accent)
+                .error(R.color.primary_dark)
+                .into(imageView);
     }
 
     @Override
@@ -74,16 +78,13 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
         return mCursor.getCount();
     }
 
-
     public static class ViewHolder extends RecyclerView.ViewHolder  {
         public ImageView image;
 
         public ViewHolder(View itemView) {
             super(itemView);
-
             image=(ImageView) itemView.findViewById(R.id.image);
         }
-
     }
 }
 
