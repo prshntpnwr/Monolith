@@ -35,7 +35,7 @@ public class GalleryFragment extends Fragment {
 
     public GalleryAdapter adapter;
     public StaggeredGridView gridView;
-    public ArrayList<String> imageList = null;
+    public ArrayList<String> imageList = new ArrayList<>();
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -45,8 +45,6 @@ public class GalleryFragment extends Fragment {
             //Restore the fragment's state here
             if (!imageList.isEmpty()) {
                 imageList = (ArrayList<String>) savedInstanceState.getSerializable(ARG_ITEM_ID);
-            }else {
-                imageList = null;
             }
         }
     }
@@ -57,7 +55,7 @@ public class GalleryFragment extends Fragment {
 
         //Save the fragment's state here
         super.onSaveInstanceState(outState);
-        outState.putSerializable("ImageList", imageList);
+        outState.putSerializable(ARG_ITEM_ID, imageList);
     }
 
 
@@ -65,8 +63,6 @@ public class GalleryFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_gallery, container, false);
-
-        imageList = new ArrayList<>();
         adapter = new GalleryAdapter(getContext(), imageList);
         gridView = (StaggeredGridView) rootView.findViewById(R.id.grid_view);
 
