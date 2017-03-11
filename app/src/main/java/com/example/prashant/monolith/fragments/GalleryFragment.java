@@ -1,9 +1,11 @@
 package com.example.prashant.monolith.fragments;
 
+import android.content.ContentProvider;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -41,6 +43,7 @@ public class GalleryFragment extends Fragment {
     public GalleryAdapter adapter;
     public StaggeredGridView gridView;
     public ArrayList<String> imageList = new ArrayList<>();
+    private Cursor mCursor;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -83,6 +86,8 @@ public class GalleryFragment extends Fragment {
             }
         });
 
+
+
         return rootView;
     }
 
@@ -111,48 +116,57 @@ public class GalleryFragment extends Fragment {
 
         UnsplashGalleryInterface service = retrofit.create(UnsplashGalleryInterface.class);
 
-        Call<Results> call_u = service.result(1, 50, "nasa", "2f12038a9af628b150d141d9532b923e25818d649175c229f4d954b7f1033ef7");
+        Call<Results> call_u = service.result(1, 30, "nasa", "2f12038a9af628b150d141d9532b923e25818d649175c229f4d954b7f1033ef7");
 
         call_u.enqueue(new Callback<Results>() {
 
             @Override
             public void onResponse(Call<Results> call, Response<Results> response) {
                 Log.d("Response goes here", response.toString());
+                String result;
+
+                int deleteRows = getContext().getContentResolver()
+                        .delete(GalleryContract.GalleryEntry.CONTENT_URI, null, null);
+
+                Log.d("deleted rows ", Integer.toString(deleteRows));
 
                 int length = response.body().getResults().size();
                 for (int i = 0; i < length; i++) {
-                    Log.d("Result from unsplash", i + " " + response.body().getResults().get(i).getCoverPhoto().getUrls().getFull());
-                    String result = response.body().getResults().get(i).getCoverPhoto().getUrls().getRegular();
+                    Log.d("Result from unsplash", i + " " + response.body().getResults()
+                            .get(i).getCoverPhoto().getUrls().getRegular());
+
+                    result = response.body().getResults().get(i).getCoverPhoto().getUrls().getRegular();
 
                     Uri uri = GalleryContract.GalleryEntry.CONTENT_URI;
                     ContentValues contentValues = new ContentValues();
+                    ContentResolver resolver = getContext().getContentResolver();
+
                     contentValues.put(GalleryContract.GalleryEntry.COLUMN_IMAGE_PATH, result);
                     contentValues.put(GalleryContract.GalleryEntry.COLUMN_IMAGE_STATUS, 1);
+                    resolver.insert(uri, contentValues);
+                     mCursor = resolver.query(uri, new String[]{
+                            GalleryContract.GalleryEntry.COLUMN_IMAGE_PATH,
+                            GalleryContract.GalleryEntry.COLUMN_IMAGE_STATUS},
+                             null,
+                             null,
+                             null);
+                }
 
-                    try {
-                        ContentResolver resolver = getContext().getContentResolver();
+                try {
+                    if (mCursor != null) {
+                        while (mCursor.moveToNext()) {
 
-                        resolver.insert(uri, contentValues);
-                        Cursor cursor = resolver.query(uri, new String[]{
-                                        GalleryContract.GalleryEntry.COLUMN_IMAGE_PATH,
-                                        GalleryContract.GalleryEntry.COLUMN_IMAGE_STATUS}
-                                , null, null, null);
+                            Log.d(TAG, "Data from Cursor :  " + mCursor.getString(0));
+                            imageList.add(mCursor.getString(0));
 
-                        if (cursor != null) {
-                            cursor.moveToFirst();
-                            while (cursor.moveToNext()) {
-                                Log.d(TAG, "Cursor data :  " + cursor.getString(0));
-                                imageList.add(cursor.getString(0));
-
-                                if (cursor.isAfterLast())
-                                    break;
-                            }
+                            if (mCursor.isAfterLast())
+                                break;
                         }
-                        cursor.close();
-
-                    } catch (Error error) {
-                        Log.e(TAG, "Insertion failed :( " + error.getCause());
+                        mCursor.moveToFirst();
                     }
+                    mCursor.close();
+                } catch (Error error) {
+                    Log.e(TAG, "Insertion failed :( " + error.getCause());
                 }
 
                 adapter = new GalleryAdapter(getContext(), imageList);
@@ -196,5 +210,6 @@ public class GalleryFragment extends Fragment {
 //            }
 //        });
     }
+
 
 }

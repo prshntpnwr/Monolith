@@ -20,6 +20,8 @@ import java.util.HashMap;
 
 import com.example.prashant.monolith.data.GalleryContract.GalleryEntry;
 
+import static com.example.prashant.monolith.data.GalleryContract.GalleryEntry.TABLE_NAME;
+
 public class GalleryProvider extends ContentProvider {
 
     // The URI Matcher used by this content provider.
@@ -70,7 +72,7 @@ public class GalleryProvider extends ContentProvider {
         Cursor retCursor;
         switch (sUriMatcher.match(uri)) {
             case IMAGE:
-                retCursor = db.query(GalleryEntry.TABLE_NAME,
+                retCursor = db.query(TABLE_NAME,
                 projection,
                 selection,
                 selectionArgs,
@@ -79,7 +81,7 @@ public class GalleryProvider extends ContentProvider {
                 break;
             case IMAGE_ID:
 //              long _id = ContentUris.parseId(uri);
-                retCursor = db.query(GalleryEntry.TABLE_NAME,
+                retCursor = db.query(TABLE_NAME,
                         projection,
                         selection,
                         selectionArgs,
@@ -100,7 +102,7 @@ public class GalleryProvider extends ContentProvider {
         final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
         final int match = sUriMatcher.match(uri);
         Uri returnUri;
-        long _id = db.insert(GalleryEntry.TABLE_NAME, null, values);
+        long _id = db.insert(TABLE_NAME, null, values);
 
         switch (match) {
             case IMAGE:
@@ -131,7 +133,7 @@ public class GalleryProvider extends ContentProvider {
 
         switch (match) {
             case IMAGE:
-                rowDeleted = db.delete(GalleryEntry.TABLE_NAME, selection, selectionArgs);
+                rowDeleted = db.delete(TABLE_NAME, selection, selectionArgs);
                 break;
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
@@ -152,7 +154,7 @@ public class GalleryProvider extends ContentProvider {
 
         switch (match) {
             case IMAGE:
-                rowUpdated = db.update(GalleryEntry.TABLE_NAME, values, selection,
+                rowUpdated = db.update(TABLE_NAME, values, selection,
                     selectionArgs);
                 break;
             default:
@@ -164,6 +166,13 @@ public class GalleryProvider extends ContentProvider {
         }
 
         return rowUpdated;
+    }
+
+    public void deleteAll(@NonNull Uri uri) {
+        SQLiteDatabase db = mOpenHelper.getWritableDatabase();
+        db.delete(TABLE_NAME,null,null);
+        getContext().getContentResolver().notifyChange(uri, null);
+        db.close();
     }
 
 //    @NonNull
