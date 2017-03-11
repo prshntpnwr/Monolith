@@ -1,5 +1,6 @@
 package com.example.prashant.monolith;
 
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -16,7 +17,6 @@ import com.squareup.picasso.Picasso;
 public class ImageFragment extends Fragment {
 
     private static final String TAG = ImageFragment.class.getSimpleName();
-
 
     public ImageFragment() {
     }

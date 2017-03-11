@@ -56,4 +56,6 @@ dependencies {
 
     compile 'com.firebase:firebase-jobdispatcher-with-gcm-dep:0.5.2'
 
+    compile 'com.android.support:recyclerview-v7:25.2.0'
+
 }

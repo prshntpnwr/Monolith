@@ -7,17 +7,19 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-
-import com.etsy.android.grid.StaggeredGridView;
-import com.example.prashant.monolith.ImageActivity;
 import com.example.prashant.monolith.R;
 import com.example.prashant.monolith.adapters.GalleryAdapter;
 import com.example.prashant.monolith.data.GalleryContract;
+import com.example.prashant.monolith.data.GalleryLoader;
 import com.example.prashant.monolith.galleryObjects.Results;
 import com.example.prashant.monolith.galleryObjects.UnsplashGalleryInterface;
 
@@ -30,58 +32,71 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class GalleryFragment extends Fragment {
+public class GalleryFragment extends Fragment implements
+        LoaderManager.LoaderCallbacks<Cursor>{
 
     private final String TAG = GalleryFragment.class.getSimpleName();
 
     public static final String ARG_ITEM_ID = "item_id";
+    public static final String ARG_ITEM_POSITION = "position";
 
     public GalleryAdapter adapter;
-    public StaggeredGridView gridView;
+    private RecyclerView mRecyclerView;
     public ArrayList<String> imageList = new ArrayList<>();
     private Cursor mCursor;
+    private long mImageId;
+    private int mPosition;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        if (savedInstanceState != null) {
-            //Restore the fragment's state here
-            if (!imageList.isEmpty()) {
-                imageList = (ArrayList<String>) savedInstanceState.getSerializable(ARG_ITEM_ID);
-            }
-        }
+        //initialize loader here
+        getLoaderManager().initLoader(0, null, this);
     }
 
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-
-        //Save the fragment's state here
-        super.onSaveInstanceState(outState);
-        outState.putSerializable(ARG_ITEM_ID, imageList);
+    public static GalleryFragment newInstance(long itemId, int position) {
+        Bundle arguments = new Bundle();
+        arguments.putLong(ARG_ITEM_ID, itemId);
+        arguments.putInt(ARG_ITEM_POSITION, position);
+        GalleryFragment fragment = new GalleryFragment();
+        fragment.setArguments(arguments);
+        return fragment;
     }
+
+//    @Override
+//    public void onSaveInstanceState(Bundle outState) {
+//        super.onSaveInstanceState(outState);
+//
+//        //Save the fragment's state here
+//        super.onSaveInstanceState(outState);
+//        outState.putSerializable(ARG_ITEM_ID, imageList);
+//    }
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_gallery, container, false);
-        adapter = new GalleryAdapter(getContext(), imageList);
-        gridView = (StaggeredGridView) rootView.findViewById(R.id.grid_view);
+        adapter = new GalleryAdapter(mCursor);
+        mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
 
-        gridView.setAdapter(adapter);
+        mRecyclerView.setAdapter(adapter);
 
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            public void onItemClick(AdapterView<?> parent, View v, int position,
-                                    long id) {
-                Intent intent = new Intent(getActivity(), ImageActivity.class);
-                intent.putExtra("image", imageList.get(position));
-                startActivity(intent);
-            }
-        });
-
+//        recyclerView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//
+//            public void onItemClick(AdapterView<?> parent, View v, int position,
+//                                    long id) {
+//                Intent intent = new Intent(getActivity(), ImageActivity.class);
+//                intent.putExtra("image", imageList.get(position));
+//                startActivity(intent);
+//            }
+//        });
+//
+        if (getArguments().containsKey(ARG_ITEM_ID)) {
+            mImageId = getArguments().getLong(ARG_ITEM_ID);
+            mPosition = getArguments().getInt(ARG_ITEM_POSITION);
+        }
 
         return rootView;
     }
@@ -163,9 +178,6 @@ public class GalleryFragment extends Fragment {
                 } catch (Error error) {
                     Log.e(TAG, "Insertion failed :( " + error.getCause());
                 }
-
-                adapter = new GalleryAdapter(getContext(), imageList);
-                gridView.setAdapter(adapter);
             }
 
             @Override
@@ -207,4 +219,24 @@ public class GalleryFragment extends Fragment {
     }
 
 
+    @Override
+    public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
+        return GalleryLoader.newAllArticlesInstance(this.getContext());
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        GalleryAdapter adapter = new GalleryAdapter(mCursor);
+        adapter.setHasStableIds(true);
+        mRecyclerView.setAdapter(adapter);
+        int columnCount = getResources().getInteger(R.integer.list_column_count);
+        StaggeredGridLayoutManager sglm =
+                new StaggeredGridLayoutManager(columnCount, StaggeredGridLayoutManager.VERTICAL);
+        mRecyclerView.setLayoutManager(sglm);
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+        mRecyclerView.setAdapter(null);
+    }
 }

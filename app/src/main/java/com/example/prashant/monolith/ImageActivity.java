@@ -16,8 +16,8 @@ public class ImageActivity extends AppCompatActivity {
     }
 
     //Here you can restore saved data in onSaveInstanceState Bundle
-    public void onRestoreInstanceState(Bundle savedInstanceState){
-        if(savedInstanceState!=null){
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+        if (savedInstanceState != null) {
             String SomeText = savedInstanceState.getString(Fragment_tag);
         }
     }
@@ -31,10 +31,11 @@ public class ImageActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
                 WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
-        if (savedInstanceState == null){
+        if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.image_container, new ImageFragment())
                     .commit();
         }
     }
+
 }
