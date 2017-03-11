@@ -126,7 +126,6 @@ public class GalleryFragment extends Fragment {
 
                     Uri uri = GalleryContract.GalleryEntry.CONTENT_URI;
                     ContentValues contentValues = new ContentValues();
-//                    contentValues.put(GalleryContract.GalleryEntry.COLUMN_IMAGE_ID, i);
                     contentValues.put(GalleryContract.GalleryEntry.COLUMN_IMAGE_PATH, result);
                     contentValues.put(GalleryContract.GalleryEntry.COLUMN_IMAGE_STATUS, 1);
 
@@ -136,10 +135,7 @@ public class GalleryFragment extends Fragment {
                         resolver.insert(uri, contentValues);
                         Cursor cursor = resolver.query(uri, new String[]{
                                         GalleryContract.GalleryEntry.COLUMN_IMAGE_PATH,
-                                        null,
                                         GalleryContract.GalleryEntry.COLUMN_IMAGE_STATUS}
-//                                        GalleryContract.GalleryEntry.COLUMN_IMAGE_ID,
-//
                                 , null, null, null);
 
                         if (cursor != null) {

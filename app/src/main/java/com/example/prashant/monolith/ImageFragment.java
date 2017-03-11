@@ -115,35 +115,4 @@ public class ImageFragment extends Fragment {
             toolbar.setTitle("");
         }
     }
-
-//    public void loadDataToDB () {
-//        Log.d(TAG, "loadDataToDB is been called :)");
-//        Uri uri = GalleryContract.GalleryEntry.CONTENT_URI;
-//        ContentValues contentValues = new ContentValues();
-//        //contentValues.put(GalleryContract.GalleryEntry.COLUMN_IMAGE_PATH, );
-//        contentValues.put(GalleryContract.GalleryEntry.COLUMN_IMAGE_STATUS, 1);
-//
-//        try {
-//            ContentResolver resolver = getContext().getContentResolver();
-//
-//            resolver.insert(uri, contentValues);
-//            Cursor cursor = resolver.query(uri, new String[]{
-//                    GalleryContract.GalleryEntry.COLUMN_IMAGE_STATUS, null, null}
-//                    , null, null, null);
-//
-//            if (cursor != null) {
-//                cursor.moveToFirst();
-//                while (cursor.moveToNext()) {
-//                    Log.d(TAG, "Cursor data :  " + cursor.getString(0));
-//
-//                    if (cursor.isAfterLast())
-//                        break;
-//                }
-//            }
-//            cursor.close();
-//
-//        } catch (Error error) {
-//            Log.e(TAG, "Insertion failed :( " + error.getCause());
-//        }
-//    }
 }
