@@ -1,22 +1,13 @@
 package com.example.prashant.monolith.data;
 
 import android.content.ContentProvider;
-import android.content.ContentProviderOperation;
-import android.content.ContentProviderResult;
-import android.content.ContentUris;
 import android.content.ContentValues;
-import android.content.OperationApplicationException;
 import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 import android.support.annotation.NonNull;
-import android.text.TextUtils;
-
-import java.util.ArrayList;
-import java.util.HashMap;
 
 import com.example.prashant.monolith.data.GalleryContract.GalleryEntry;
 
@@ -43,10 +34,8 @@ public class GalleryProvider extends ContentProvider {
         return matcher;
     }
 
-
     @Override
     public boolean onCreate() {
-
         mOpenHelper = new GalleryDbHelper(getContext());
         return true;
     }
@@ -73,11 +62,11 @@ public class GalleryProvider extends ContentProvider {
         switch (sUriMatcher.match(uri)) {
             case IMAGE:
                 retCursor = db.query(TABLE_NAME,
-                projection,
-                selection,
-                selectionArgs,
-                null, null,
-                sortOrder);
+                        projection,
+                        selection,
+                        selectionArgs,
+                        null, null,
+                        sortOrder);
                 break;
             case IMAGE_ID:
 //              long _id = ContentUris.parseId(uri);
@@ -108,8 +97,7 @@ public class GalleryProvider extends ContentProvider {
             case IMAGE:
                 if (_id > 0) {
                     returnUri = GalleryEntry.buildGalleryUri(_id);
-                }
-                else {
+                } else {
                     throw new SQLException("Failed to add a record into " + uri);
                 }
                 break;
@@ -129,7 +117,7 @@ public class GalleryProvider extends ContentProvider {
         final int match = sUriMatcher.match(uri);
         int rowDeleted;
 
-        if ( null == selection ) selection = "1";
+        if (null == selection) selection = "1";
 
         switch (match) {
             case IMAGE:
@@ -155,7 +143,7 @@ public class GalleryProvider extends ContentProvider {
         switch (match) {
             case IMAGE:
                 rowUpdated = db.update(TABLE_NAME, values, selection,
-                    selectionArgs);
+                        selectionArgs);
                 break;
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
@@ -166,13 +154,6 @@ public class GalleryProvider extends ContentProvider {
         }
 
         return rowUpdated;
-    }
-
-    public void deleteAll(@NonNull Uri uri) {
-        SQLiteDatabase db = mOpenHelper.getWritableDatabase();
-        db.delete(TABLE_NAME,null,null);
-        getContext().getContentResolver().notifyChange(uri, null);
-        db.close();
     }
 
 //    @NonNull

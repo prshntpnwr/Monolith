@@ -1,23 +1,16 @@
 package com.example.prashant.monolith;
 
-
-import android.content.ContentResolver;
-import android.content.ContentValues;
 import android.content.Intent;
-import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.example.prashant.monolith.data.GalleryContract;
 import com.squareup.picasso.Picasso;
 
 public class ImageFragment extends Fragment {
@@ -60,29 +53,29 @@ public class ImageFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
-        @Override
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-            mRootView = inflater.inflate(R.layout.fragment_image, container, false);
-            toolbar = (Toolbar) mRootView.findViewById(R.id.detail_toolbar);
+        mRootView = inflater.inflate(R.layout.fragment_image, container, false);
+        toolbar = (Toolbar) mRootView.findViewById(R.id.detail_toolbar);
 
-            imageView = (ImageView) mRootView.findViewById(R.id.image);
+        imageView = (ImageView) mRootView.findViewById(R.id.image);
 
-            final FloatingActionButton fab = (FloatingActionButton) mRootView.findViewById(R.id.fab);
-            fab.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_like_outline));
+        final FloatingActionButton fab = (FloatingActionButton) mRootView.findViewById(R.id.fab);
+        fab.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_like_outline));
 
-            fab.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    // TODO: add image/details to db
-                   // loadDataToDB();
-                    fab.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_like));
-                }
-            });
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // TODO: add image/details to db
+                // loadDataToDB();
+                fab.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_like));
+            }
+        });
 
-            bindViews();
-            setupToolbar();
-            return mRootView;
+        bindViews();
+        setupToolbar();
+        return mRootView;
     }
 
     private void bindViews() {

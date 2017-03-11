@@ -1,15 +1,11 @@
 package com.example.prashant.monolith.fragments;
 
-import android.content.ContentProvider;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -87,7 +83,6 @@ public class GalleryFragment extends Fragment {
         });
 
 
-
         return rootView;
     }
 
@@ -144,12 +139,12 @@ public class GalleryFragment extends Fragment {
                     contentValues.put(GalleryContract.GalleryEntry.COLUMN_IMAGE_PATH, result);
                     contentValues.put(GalleryContract.GalleryEntry.COLUMN_IMAGE_STATUS, 1);
                     resolver.insert(uri, contentValues);
-                     mCursor = resolver.query(uri, new String[]{
-                            GalleryContract.GalleryEntry.COLUMN_IMAGE_PATH,
-                            GalleryContract.GalleryEntry.COLUMN_IMAGE_STATUS},
-                             null,
-                             null,
-                             null);
+                    mCursor = resolver.query(uri, new String[]{
+                                    GalleryContract.GalleryEntry.COLUMN_IMAGE_PATH,
+                                    GalleryContract.GalleryEntry.COLUMN_IMAGE_STATUS},
+                            null,
+                            null,
+                            null);
                 }
 
                 try {
