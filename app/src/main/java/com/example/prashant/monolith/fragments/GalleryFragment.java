@@ -77,7 +77,7 @@ public class GalleryFragment extends Fragment {
 
             public void onItemClick(AdapterView<?> parent, View v, int position,
                                     long id) {
-                Intent intent = new Intent(getActivity(),ImageActivity.class);
+                Intent intent = new Intent(getActivity(), ImageActivity.class);
                 intent.putExtra("image", imageList.get(position));
                 startActivity(intent);
             }
@@ -122,8 +122,43 @@ public class GalleryFragment extends Fragment {
                 int length = response.body().getResults().size();
                 for (int i = 0; i < length; i++) {
                     Log.d("Result from unsplash", i + " " + response.body().getResults().get(i).getCoverPhoto().getUrls().getFull());
-                    imageList.add(response.body().getResults().get(i).getCoverPhoto().getUrls().getRegular());
+                    String result = response.body().getResults().get(i).getCoverPhoto().getUrls().getRegular();
+
+                    Uri uri = GalleryContract.GalleryEntry.CONTENT_URI;
+                    ContentValues contentValues = new ContentValues();
+//                    contentValues.put(GalleryContract.GalleryEntry.COLUMN_IMAGE_ID, i);
+                    contentValues.put(GalleryContract.GalleryEntry.COLUMN_IMAGE_PATH, result);
+                    contentValues.put(GalleryContract.GalleryEntry.COLUMN_IMAGE_STATUS, 1);
+
+                    try {
+                        ContentResolver resolver = getContext().getContentResolver();
+
+                        resolver.insert(uri, contentValues);
+                        Cursor cursor = resolver.query(uri, new String[]{
+                                        GalleryContract.GalleryEntry.COLUMN_IMAGE_PATH,
+                                        null,
+                                        GalleryContract.GalleryEntry.COLUMN_IMAGE_STATUS}
+//                                        GalleryContract.GalleryEntry.COLUMN_IMAGE_ID,
+//
+                                , null, null, null);
+
+                        if (cursor != null) {
+                            cursor.moveToFirst();
+                            while (cursor.moveToNext()) {
+                                Log.d(TAG, "Cursor data :  " + cursor.getString(0));
+                                imageList.add(cursor.getString(0));
+
+                                if (cursor.isAfterLast())
+                                    break;
+                            }
+                        }
+                        cursor.close();
+
+                    } catch (Error error) {
+                        Log.e(TAG, "Insertion failed :( " + error.getCause());
+                    }
                 }
+
                 adapter = new GalleryAdapter(getContext(), imageList);
                 gridView.setAdapter(adapter);
             }
