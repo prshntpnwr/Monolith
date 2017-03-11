@@ -39,7 +39,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
     @Override
     public GalleryAdapter.ViewHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
         //
-        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        LayoutInflater inflater = LayoutInflater.from(mContext);
 
         View view= inflater.inflate(R.layout.gridview_item, parent, false);
         ViewHolder viewHolder = new ViewHolder(view);
@@ -51,7 +51,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
     public void onBindViewHolder(final GalleryAdapter.ViewHolder holder, final int position) {
 
         // will fix this soon
-        ImageView imageView=holder.image;
+        ImageView imageView = holder.image;
 
 //        final Bundle bundle = new Bundle();
 ////        //put some tag and ?
@@ -67,7 +67,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
 //        });
 
         //load images using picasso
-        Picasso.with(mContext).load(mCursor.getString(position))
+        Picasso.with(mContext).load(mCursor.getString(GalleryLoader.Query.COLUMN_IMAGE_PATH))
                 .placeholder(R.color.accent)
                 .error(R.color.primary_dark)
                 .into(imageView);
@@ -83,7 +83,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
 
         public ViewHolder(View itemView) {
             super(itemView);
-            image=(ImageView) itemView.findViewById(R.id.image);
+            image=(ImageView) itemView.findViewById(R.id.picture);
         }
     }
 }
