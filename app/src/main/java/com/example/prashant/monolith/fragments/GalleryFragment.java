@@ -2,13 +2,11 @@ package com.example.prashant.monolith.fragments;
 
 import android.content.ContentResolver;
 import android.content.ContentValues;
-import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
-import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -16,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import com.example.prashant.monolith.R;
 import com.example.prashant.monolith.adapters.GalleryAdapter;
 import com.example.prashant.monolith.data.GalleryContract;
@@ -33,19 +32,13 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class GalleryFragment extends Fragment implements
-        LoaderManager.LoaderCallbacks<Cursor>{
+        LoaderManager.LoaderCallbacks<Cursor> {
 
     private final String TAG = GalleryFragment.class.getSimpleName();
 
-    public static final String ARG_ITEM_ID = "item_id";
-    public static final String ARG_ITEM_POSITION = "position";
-
-    public GalleryAdapter adapter;
     private RecyclerView mRecyclerView;
     public ArrayList<String> imageList = new ArrayList<>();
     private Cursor mCursor;
-    private long mImageId;
-    private int mPosition;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -55,48 +48,12 @@ public class GalleryFragment extends Fragment implements
         getLoaderManager().initLoader(0, null, this);
     }
 
-//    public static GalleryFragment newInstance(long itemId, int position) {
-//        Bundle arguments = new Bundle();
-//        arguments.putLong(ARG_ITEM_ID, itemId);
-//        arguments.putInt(ARG_ITEM_POSITION, position);
-//        GalleryFragment fragment = new GalleryFragment();
-//        fragment.setArguments(arguments);
-//        return fragment;
-//    }
-
-//    @Override
-//    public void onSaveInstanceState(Bundle outState) {
-//        super.onSaveInstanceState(outState);
-//
-//        //Save the fragment's state here
-//        super.onSaveInstanceState(outState);
-//        outState.putSerializable(ARG_ITEM_ID, imageList);
-//    }
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_gallery, container, false);
-//        adapter = new GalleryAdapter(mCursor);
+
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
-
-//        mRecyclerView.setAdapter(adapter);
-
-//        recyclerView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//
-//            public void onItemClick(AdapterView<?> parent, View v, int position,
-//                                    long id) {
-//                Intent intent = new Intent(getActivity(), ImageDetailActivity.class);
-//                intent.putExtra("image", imageList.get(position));
-//                startActivity(intent);
-//            }
-//        });
-//
-//        if (getArguments().containsKey(ARG_ITEM_ID)) {
-//            mImageId = getArguments().getLong(ARG_ITEM_ID);
-//            mPosition = getArguments().getInt(ARG_ITEM_POSITION);
-//        }
 
         return rootView;
     }
