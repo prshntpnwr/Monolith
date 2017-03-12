@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/image_container"
-    tools:context=".ImageActivity"
+    tools:context=".ImageDetailActivity"
     tools:ignore="MergeRootFrame">
 
 </FrameLayout>

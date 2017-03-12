@@ -22,7 +22,7 @@
         </activity>
 
         <activity
-            android:name=".ImageActivity"
+            android:name=".ImageDetailActivity"
             android:theme="@style/AppTheme.Detail">
         </activity>
 

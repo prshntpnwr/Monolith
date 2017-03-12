@@ -3,18 +3,14 @@ package com.example.prashant.monolith.adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
-import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
-import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
-import com.example.prashant.monolith.ImageActivity;
 import com.example.prashant.monolith.R;
+import com.example.prashant.monolith.data.GalleryContract;
 import com.example.prashant.monolith.data.GalleryLoader;
 import com.squareup.picasso.Picasso;
 
@@ -42,31 +38,28 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
         LayoutInflater inflater = LayoutInflater.from(mContext);
 
         View view= inflater.inflate(R.layout.gridview_item, parent, false);
-        ViewHolder viewHolder = new ViewHolder(view);
+        final ViewHolder vh = new ViewHolder(view);
 
-        return viewHolder;
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_VIEW,
+                        GalleryContract.GalleryEntry.buildGalleryUri(
+                                getItemId(vh.getAdapterPosition())));
+
+                mContext.startActivity(intent);
+                }
+        });
+
+        return vh;
     }
 
     @Override
     public void onBindViewHolder(final GalleryAdapter.ViewHolder holder, final int position) {
 
-        // will fix this soon
         ImageView imageView = holder.image;
 
-//        final Bundle bundle = new Bundle();
-////        //put some tag and ?
-////        bundle.putSerializable(IMAGE_TAG, "");
-//        bundle.putInt(POSITION, position);
-//        imageView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent=new Intent(view.getContext(), ImageActivity.class);
-//                intent.putExtras(bundle);
-//                view.getContext().startActivity(intent);
-//            }
-//        });
-
-        //load images using picasso
+        //loading images using picasso
         Picasso.with(mContext).load(mCursor.getString(GalleryLoader.Query.COLUMN_IMAGE_PATH))
                 .placeholder(R.color.accent)
                 .error(R.color.primary_dark)
@@ -83,7 +76,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
 
         public ViewHolder(View itemView) {
             super(itemView);
-            image=(ImageView) itemView.findViewById(R.id.picture);
+            image = (ImageView) itemView.findViewById(R.id.picture);
         }
     }
 }
