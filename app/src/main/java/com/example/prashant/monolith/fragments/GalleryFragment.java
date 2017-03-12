@@ -183,7 +183,7 @@ public class GalleryFragment extends Fragment implements
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        GalleryAdapter adapter = new GalleryAdapter(getContext(), data);
+        GalleryAdapter adapter = new GalleryAdapter( data);
         adapter.setHasStableIds(true);
         mRecyclerView.setAdapter(adapter);
         int columnCount = getResources().getInteger(R.integer.list_column_count);

@@ -16,10 +16,8 @@ import com.squareup.picasso.Picasso;
 
 public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHolder> {
     private Cursor mCursor;
-    private Context mContext;
 
-    public GalleryAdapter(Context context, Cursor cursor) {
-        mContext = context;
+    public GalleryAdapter(Cursor cursor) {
         mCursor = cursor;
     }
 
@@ -29,15 +27,12 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
         return mCursor.getLong(GalleryLoader.Query.COLUMN_IMAGE_ID);
     }
 
-    private static final String IMAGE_TAG = "Id";
-    private static final String POSITION = "position";
-
     @Override
     public GalleryAdapter.ViewHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
-        //
-        LayoutInflater inflater = LayoutInflater.from(mContext);
 
-        View view= inflater.inflate(R.layout.gridview_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.gridview_item, parent, false);
+        
         final ViewHolder vh = new ViewHolder(view);
 
         view.setOnClickListener(new View.OnClickListener() {
@@ -47,7 +42,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
                         GalleryContract.GalleryEntry.buildGalleryUri(
                                 getItemId(vh.getAdapterPosition())));
 
-                mContext.startActivity(intent);
+                parent.getContext().startActivity(intent);
                 }
         });
 
@@ -60,7 +55,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
         ImageView imageView = holder.image;
 
         //loading images using picasso
-        Picasso.with(mContext).load(mCursor.getString(GalleryLoader.Query.COLUMN_IMAGE_PATH))
+        Picasso.with(holder.image.getContext()).load(mCursor.getString(GalleryLoader.Query.COLUMN_IMAGE_PATH))
                 .placeholder(R.color.accent)
                 .error(R.color.primary_dark)
                 .into(imageView);
