@@ -3,10 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.prashant.monolith">
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
 
     <application
         android:allowBackup="true"
@@ -26,21 +24,19 @@
 
         <activity
             android:name=".ImageDetailActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter tools:ignore="GoogleAppIndexingWarning">
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <data android:mimeType="vnd.android.cursor.item/vnd.com.example.prashant.monolith.images" />
-            </intent-filter>
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
+            android:theme="@style/AppTheme.Detail">
+        <intent-filter>
+            <action android:name="android.intent.action.VIEW" />
+            <category android:name="android.intent.category.DEFAULT" />
+            <data android:mimeType="vnd.android.cursor.item/vnd.com.example.prashant.monolith.images"/>
+        </intent-filter>
         </activity>
 
         <provider
+            android:authorities="com.example.prashant.monolith.data"
             android:name=".data.GalleryProvider"
-            android:authorities="com.example.prashant.monolith"
-            android:exported="false" />
+            android:exported="false"
+            android:syncable="true"/>
 
         <service
             android:exported="false"

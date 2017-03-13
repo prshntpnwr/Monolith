@@ -55,6 +55,8 @@ public class ImageDetailFragment extends Fragment implements LoaderManager.Loade
             mItemPosition = getArguments().getInt(ARG_ITEM_POSITION);
         }
 
+        Log.e(TAG, "onCreate: " + getActivity().getIntent().getStringExtra("URL"));
+
         setHasOptionsMenu(true);
     }
 
@@ -91,12 +93,6 @@ public class ImageDetailFragment extends Fragment implements LoaderManager.Loade
             }
         });
 
-        Bundle extras = getActivity().getIntent().getExtras();
-        image_url = extras.getString("image");
-
-        Log.d("image url is here", image_url);
-
-
         bindViews();
         setupToolbar();
         return mRootView;
@@ -114,7 +110,7 @@ public class ImageDetailFragment extends Fragment implements LoaderManager.Loade
             mRootView.setVisibility(View.VISIBLE);
             mRootView.animate().alpha(1);
 
-            Picasso.with(this.getContext()).load(mCursor.getString(GalleryLoader.Query.COLUMN_IMAGE_PATH))
+            Picasso.with(this.getContext()).load(getActivity().getIntent().getStringExtra("URL"))
                     .placeholder(R.color.accent)
                     .error(R.color.primary_dark)
                     .into(imageView);

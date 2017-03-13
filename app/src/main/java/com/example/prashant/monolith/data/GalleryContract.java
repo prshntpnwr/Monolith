@@ -4,7 +4,6 @@ import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.net.Uri;
 import android.provider.BaseColumns;
-import android.util.Log;
 
 public class GalleryContract {
 
@@ -13,9 +12,7 @@ public class GalleryContract {
     // content authority is the package name for the app, which is guaranteed to be unique on the
     // device.
 
-    //public static final String CONTENT_AUTHORITY = GalleryContract.class.getPackage().getName();
-
-    public static final String CONTENT_AUTHORITY = "com.example.prashant.monolith";
+    public static final String CONTENT_AUTHORITY = GalleryContract.class.getPackage().getName();
 
     // Use CONTENT_AUTHORITY to create the base of all URI's which apps will use to contact
     // the content provider.
@@ -26,24 +23,15 @@ public class GalleryContract {
 
     public static final class GalleryEntry implements BaseColumns {
 
-//        lets try something different
-        public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.com.example.prashant.monolith.images";
-        public static final String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/vnd.com.example.prashant.monolith.images";
-
-//        public static final String CONTENT_TYPE =
-//                ContentResolver.CURSOR_DIR_BASE_TYPE + "/vnd" + CONTENT_AUTHORITY + PATH_IMAGE;
-//
-//        public static final String CONTENT_ITEM_TYPE =
-//                ContentResolver.CURSOR_ITEM_BASE_TYPE + "/vnd" + CONTENT_AUTHORITY + PATH_IMAGE;
-
+        //path to the gallery table
         public static final Uri CONTENT_URI =
                BASE_CONTENT_URI.buildUpon().appendPath(PATH_IMAGE).build();
-//
-//        public static final String CONTENT_TYPE =
-//                ContentResolver.CURSOR_DIR_BASE_TYPE + "/vnd" + CONTENT_AUTHORITY + PATH_IMAGE;
-//
-//        public static final String CONTENT_ITEM_TYPE =
-//                ContentResolver.CURSOR_ITEM_BASE_TYPE + "/vnd" + CONTENT_AUTHORITY + PATH_IMAGE;
+
+        public static final String CONTENT_TYPE =
+                ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + PATH_IMAGE;
+
+        public static final String CONTENT_ITEM_TYPE =
+                ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + PATH_IMAGE;
 
         public static final String TABLE_NAME = "gallery";
 
@@ -58,5 +46,8 @@ public class GalleryContract {
             return ContentUris.withAppendedId(CONTENT_URI, id);
         }
 
+        public static long getItemId(Uri itemUri) {
+            return Long.parseLong(itemUri.getPathSegments().get(1));
+        }
     }
 }
