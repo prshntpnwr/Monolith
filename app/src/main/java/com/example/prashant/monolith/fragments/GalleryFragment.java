@@ -90,7 +90,7 @@ public class GalleryFragment extends Fragment implements
             @Override
             public void onResponse(Call<Results> call, Response<Results> response) {
                 Log.d("Response goes here", response.toString());
-                String result;
+                String reg;
 
                 int deleteRows = getContext().getContentResolver()
                         .delete(GalleryContract.GalleryEntry.CONTENT_URI, null, null);
@@ -102,14 +102,15 @@ public class GalleryFragment extends Fragment implements
                     Log.d("Result from unsplash", i + " " + response.body().getResults()
                             .get(i).getCoverPhoto().getUrls().getRegular());
 
-                    result = response.body().getResults().get(i).getCoverPhoto().getUrls().getThumb();
+                    reg = response.body().getResults().get(i).getCoverPhoto().getUrls().getRegular();
 
                     Uri uri = GalleryContract.GalleryEntry.CONTENT_URI;
                     ContentValues contentValues = new ContentValues();
                     ContentResolver resolver = getContext().getContentResolver();
 
-                    contentValues.put(GalleryContract.GalleryEntry.COLUMN_IMAGE_PATH, result);
+                    contentValues.put(GalleryContract.GalleryEntry.COLUMN_IMAGE_PATH, reg);
                     contentValues.put(GalleryContract.GalleryEntry.COLUMN_IMAGE_STATUS, 1);
+
                     resolver.insert(uri, contentValues);
                     mCursor = resolver.query(uri, new String[]{
                                     GalleryContract.GalleryEntry.COLUMN_IMAGE_PATH,

@@ -29,7 +29,7 @@ public class GalleryLoader extends CursorLoader {
         };
 
         int COLUMN_IMAGE_ID = 0;
-        int COLUMN_IMAGE_PATH = 1;
-        int COLUMN_IMAGE_STATUS= 2;
+        int COLUMN_IMAGE_PATH= 1;
+        int COLUMN_IMAGE_STATUS = 2;
     }
 }

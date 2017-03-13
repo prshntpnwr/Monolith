@@ -47,15 +47,17 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 mCursor.moveToPosition(vh.getAdapterPosition());
                 Intent intent = new Intent(parent.getContext(), ImageDetailActivity.class);
-                intent.putExtra("URL",mCursor.getString(mCursor.getColumnIndex(GalleryContract.GalleryEntry.COLUMN_IMAGE_PATH)));
+                intent.putExtra("URL", mCursor.getString(mCursor.getColumnIndex(GalleryContract.GalleryEntry.COLUMN_IMAGE_PATH)));
+                intent.putExtra("Postion" , GalleryContract.GalleryEntry.buildGalleryUri(
+                               getItemId(vh.getAdapterPosition())));
                 parent.getContext().startActivity(intent);
 
-//                parent.getContext().startActivity(new Intent(Intent.ACTION_VIEW,
-//                        GalleryContract.GalleryEntry.buildGalleryUri(getItemId(vh.getAdapterPosition()))));
-//
+//                Intent intent = new Intent(Intent.ACTION_VIEW,
+//                        GalleryContract.GalleryEntry.buildGalleryUri(
+//                                getItemId(vh.getAdapterPosition())));
+//                parent.getContext().startActivity(intent);
 
 //                Log.d("hello there ", Long.toString(vh.getAdapterPosition()));
 //

@@ -25,11 +25,11 @@
         <activity
             android:name=".ImageDetailActivity"
             android:theme="@style/AppTheme.Detail">
-        <intent-filter>
-            <action android:name="android.intent.action.VIEW" />
-            <category android:name="android.intent.category.DEFAULT" />
-            <data android:mimeType="vnd.android.cursor.item/vnd.com.example.prashant.monolith.images"/>
-        </intent-filter>
+        <!--<intent-filter>-->
+            <!--<action android:name="android.intent.action.VIEW" />-->
+            <!--<category android:name="android.intent.category.DEFAULT" />-->
+            <!--<data android:mimeType="vnd.android.cursor.item/vnd.com.example.prashant.monolith.images"/>-->
+        <!--</intent-filter>-->
         </activity>
 
         <provider

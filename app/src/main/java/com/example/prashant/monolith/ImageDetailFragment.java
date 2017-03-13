@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.example.prashant.monolith.data.GalleryContract;
 import com.example.prashant.monolith.data.GalleryLoader;
 import com.squareup.picasso.Picasso;
 
@@ -49,11 +50,11 @@ public class ImageDetailFragment extends Fragment implements LoaderManager.Loade
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        if (getArguments().containsKey(ARG_ITEM_ID)) {
-            mItemId = getArguments().getLong(ARG_ITEM_ID);
-            mItemPosition = getArguments().getInt(ARG_ITEM_POSITION);
-        }
+//
+//        if (getArguments().containsKey(ARG_ITEM_ID)) {
+//            mItemId = getArguments().getLong(ARG_ITEM_ID);
+//            mItemPosition = getArguments().getInt(ARG_ITEM_POSITION);
+//        }
 
         Log.e(TAG, "onCreate: " + getActivity().getIntent().getStringExtra("URL"));
 
@@ -63,10 +64,7 @@ public class ImageDetailFragment extends Fragment implements LoaderManager.Loade
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        // In support library r8, calling initLoader for a fragment in a FragmentPagerAdapter in
-        // the fragment's onCreate may cause the same LoaderManager to be dealt to multiple
-        // fragments because their mIndex is -1 (haven't been added to the activity yet). Thus,
-        // we do this in onActivityCreated.
+
         getLoaderManager().initLoader(0, null, this);
     }
 
@@ -86,9 +84,9 @@ public class ImageDetailFragment extends Fragment implements LoaderManager.Loade
                 // TODO: add image/details to db
                 fab.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_like));
 
-//              if (mCursor.getInt(GalleryLoader.Query.COLUMN_IMAGE_STATUS) == 1) {
-//                      fab.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_like_outline));
-//              }else fab.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_like));
+              if (mCursor.getInt(GalleryLoader.Query.COLUMN_IMAGE_STATUS) == 1) {
+                      fab.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_like_outline));
+              }else fab.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_like));
 
             }
         });
@@ -99,25 +97,32 @@ public class ImageDetailFragment extends Fragment implements LoaderManager.Loade
     }
 
     private void bindViews() {
-        if (mRootView == null) {
-            return;
-        }
 
         ImageView imageView = (ImageView) mRootView.findViewById(R.id.image);
 
-        if (mCursor != null) {
-            mRootView.setAlpha(0);
-            mRootView.setVisibility(View.VISIBLE);
-            mRootView.animate().alpha(1);
-
-            Picasso.with(this.getContext()).load(getActivity().getIntent().getStringExtra("URL"))
-                    .placeholder(R.color.accent)
-                    .error(R.color.primary_dark)
-                    .into(imageView);
-        } else {
-            mRootView.setVisibility(View.GONE);
-            imageView.setColorFilter(R.color.photo_placeholder);
-        }
+        Picasso.with(this.getContext()).load(getActivity().getIntent().getStringExtra("URL"))
+                .placeholder(R.color.accent)
+                .error(R.color.primary_dark)
+                .into(imageView);
+//        if (mRootView == null) {
+//            return;
+//        }
+//
+//        ImageView imageView = (ImageView) mRootView.findViewById(R.id.image);
+//
+//        if (mCursor != null) {
+//            mRootView.setAlpha(0);
+//            mRootView.setVisibility(View.VISIBLE);
+//            mRootView.animate().alpha(1);
+//
+//            Picasso.with(this.getContext()).load(getActivity().getIntent().getStringExtra("URL"))
+//                    .placeholder(R.color.accent)
+//                    .error(R.color.primary_dark)
+//                    .into(imageView);
+//        } else {
+//            mRootView.setVisibility(View.GONE);
+//            imageView.setColorFilter(R.color.photo_placeholder);
+//        }
     }
 
     private void setupToolbar() {
