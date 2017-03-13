@@ -50,10 +50,10 @@ public class ImageDetailFragment extends Fragment implements LoaderManager.Loade
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-//        if (getArguments().containsKey(ARG_ITEM_ID)) {
-//            mItemId = getArguments().getLong(ARG_ITEM_ID);
-//            mItemPosition = getArguments().getInt(ARG_ITEM_POSITION);
-//        }
+        if (getArguments().containsKey(ARG_ITEM_ID)) {
+            mItemId = getArguments().getLong(ARG_ITEM_ID);
+            mItemPosition = getArguments().getInt(ARG_ITEM_POSITION);
+        }
 
         setHasOptionsMenu(true);
     }
@@ -76,7 +76,9 @@ public class ImageDetailFragment extends Fragment implements LoaderManager.Loade
 
         final FloatingActionButton fab = (FloatingActionButton) mRootView.findViewById(R.id.fab);
 
-        fab.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_like_outline));
+//        if (mCursor.getInt(GalleryLoader.Query.COLUMN_IMAGE_STATUS) == 1) {
+//            fab.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_like_outline));
+//        }else fab.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_like));
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
