@@ -33,20 +33,15 @@ public class ImageDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         onRestoreInstanceState(savedInstanceState);
         setContentView(R.layout.activity_image_detail);
-//
-//        Intent intent = getIntent();
-//        Parcelable[] image_url = intent.getParcelableArrayExtra("image_url");
-//
-//        Log.d("imageurl detailactivity", String.valueOf(image_url));
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
                 WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-//
-//        if (savedInstanceState == null) {
-//            getSupportFragmentManager().beginTransaction()
-//                    .replace(R.id.image_container, new ImageDetailFragment())
-//                    .commit();
-//        }
+
+        if (savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.image_container, new ImageDetailFragment())
+                    .commit();
+        }
     }
 
 }

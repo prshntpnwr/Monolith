@@ -102,7 +102,7 @@ public class GalleryFragment extends Fragment implements
                     Log.d("Result from unsplash", i + " " + response.body().getResults()
                             .get(i).getCoverPhoto().getUrls().getRegular());
 
-                    result = response.body().getResults().get(i).getCoverPhoto().getUrls().getThumb();
+                    result = response.body().getResults().get(i).getCoverPhoto().getUrls().getRegular();
 
                     Uri uri = GalleryContract.GalleryEntry.CONTENT_URI;
                     ContentValues contentValues = new ContentValues();

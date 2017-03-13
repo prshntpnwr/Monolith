@@ -26,19 +26,13 @@ public class GalleryContract {
 
     public static final class GalleryEntry implements BaseColumns {
 
-//        lets try something different
         public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.com.example.prashant.monolith.images";
         public static final String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/vnd.com.example.prashant.monolith.images";
 
-//        public static final String CONTENT_TYPE =
-//                ContentResolver.CURSOR_DIR_BASE_TYPE + "/vnd" + CONTENT_AUTHORITY + PATH_IMAGE;
-//
-//        public static final String CONTENT_ITEM_TYPE =
-//                ContentResolver.CURSOR_ITEM_BASE_TYPE + "/vnd" + CONTENT_AUTHORITY + PATH_IMAGE;
 
         public static final Uri CONTENT_URI =
                BASE_CONTENT_URI.buildUpon().appendPath(PATH_IMAGE).build();
-//
+
 //        public static final String CONTENT_TYPE =
 //                ContentResolver.CURSOR_DIR_BASE_TYPE + "/vnd" + CONTENT_AUTHORITY + PATH_IMAGE;
 //
@@ -55,8 +49,8 @@ public class GalleryContract {
 
         public static Uri buildGalleryUri(long id) {
             //ContentUris.withAppendedId() is a helper method to create an id-based URI
-            return ContentUris.withAppendedId(CONTENT_URI, id);
+            //return ContentUris.withAppendedId(CONTENT_URI, id);
+            return BASE_CONTENT_URI.buildUpon().appendPath("images").appendPath(Long.toString(id)).build();
         }
-
     }
 }

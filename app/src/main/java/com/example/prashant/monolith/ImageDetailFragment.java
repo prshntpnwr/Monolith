@@ -50,10 +50,10 @@ public class ImageDetailFragment extends Fragment implements LoaderManager.Loade
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (getArguments().containsKey(ARG_ITEM_ID)) {
-            mItemId = getArguments().getLong(ARG_ITEM_ID);
-            mItemPosition = getArguments().getInt(ARG_ITEM_POSITION);
-        }
+//        if (getArguments().containsKey(ARG_ITEM_ID)) {
+//            mItemId = getArguments().getLong(ARG_ITEM_ID);
+//            mItemPosition = getArguments().getInt(ARG_ITEM_POSITION);
+//        }
 
         setHasOptionsMenu(true);
     }
@@ -90,12 +90,6 @@ public class ImageDetailFragment extends Fragment implements LoaderManager.Loade
 
             }
         });
-
-        Bundle extras = getActivity().getIntent().getExtras();
-        image_url = extras.getString("image");
-
-        Log.d("image url is here", image_url);
-
 
         bindViews();
         setupToolbar();

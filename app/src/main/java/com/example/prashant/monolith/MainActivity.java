@@ -57,14 +57,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        MimeTypeMap mime = MimeTypeMap.getSingleton();
-//        String mt = mime.getMimeTypeFromExtension("sgf");
-//        Log.d("mime", mt);
-
-//        if( savedInstanceState != null ){
-//            mViewPager.setCurrentItem(savedInstanceState.getInt(POSITION));
-//        }
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
