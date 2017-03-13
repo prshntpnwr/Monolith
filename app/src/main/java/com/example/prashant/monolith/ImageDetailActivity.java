@@ -1,8 +1,14 @@
 package com.example.prashant.monolith;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.WindowManager;
+
+import java.net.URL;
 
 public class ImageDetailActivity extends AppCompatActivity {
 
@@ -27,15 +33,20 @@ public class ImageDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         onRestoreInstanceState(savedInstanceState);
         setContentView(R.layout.activity_image_detail);
+//
+//        Intent intent = getIntent();
+//        Parcelable[] image_url = intent.getParcelableArrayExtra("image_url");
+//
+//        Log.d("imageurl detailactivity", String.valueOf(image_url));
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
                 WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-
-        if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.image_container, new ImageDetailFragment())
-                    .commit();
-        }
+//
+//        if (savedInstanceState == null) {
+//            getSupportFragmentManager().beginTransaction()
+//                    .replace(R.id.image_container, new ImageDetailFragment())
+//                    .commit();
+//        }
     }
 
 }

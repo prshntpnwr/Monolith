@@ -31,12 +31,11 @@ public class ImageDetailFragment extends Fragment implements LoaderManager.Loade
     private int mItemPosition;
     private long mItemId;
     private Cursor mCursor;
+    private String image_url;
 
    // public ImageView imageView;
     public View mRootView;
     public Toolbar toolbar;
-    public Intent intent;
-    public String image;
 
     public static ImageDetailFragment newInstance(long itemId, int position) {
         Bundle arguments = new Bundle();
@@ -59,10 +58,6 @@ public class ImageDetailFragment extends Fragment implements LoaderManager.Loade
         setHasOptionsMenu(true);
     }
 
-    /*public ArticleDetailActivity getActivityCast() {
-        return (ArticleDetailActivity) getActivity();
-    }*/
-
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -80,16 +75,27 @@ public class ImageDetailFragment extends Fragment implements LoaderManager.Loade
         toolbar = (Toolbar) mRootView.findViewById(R.id.detail_toolbar);
 
         final FloatingActionButton fab = (FloatingActionButton) mRootView.findViewById(R.id.fab);
+
         fab.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_like_outline));
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // TODO: add image/details to db
-                // loadDataToDB();
                 fab.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_like));
+
+//              if (mCursor.getInt(GalleryLoader.Query.COLUMN_IMAGE_STATUS) == 1) {
+//                      fab.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_like_outline));
+//              }else fab.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_like));
+
             }
         });
+
+        Bundle extras = getActivity().getIntent().getExtras();
+        image_url = extras.getString("image");
+
+        Log.d("image url is here", image_url);
+
 
         bindViews();
         setupToolbar();
