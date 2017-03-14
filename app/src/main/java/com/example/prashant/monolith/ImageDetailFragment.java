@@ -1,6 +1,5 @@
 package com.example.prashant.monolith;
 
-import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -124,7 +123,8 @@ public class ImageDetailFragment extends Fragment implements LoaderManager.Loade
             Log.d("image goes here", mCursor.getString(GalleryLoader.Query.COLUMN_IMAGE_PATH));
         } else {
             mRootView.setVisibility(View.GONE);
-            imageView.setColorFilter(R.color.photo_placeholder);
+            //cause a purplish hue
+//            imageView.setColorFilter(R.color.photo_placeholder);
         }
     }
 
