@@ -1,8 +1,10 @@
 package com.example.prashant.monolith;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.ContextCompat;
@@ -13,9 +15,15 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.prashant.monolith.data.GalleryLoader;
+import com.hlab.fabrevealmenu.enums.Direction;
+import com.hlab.fabrevealmenu.listeners.OnFABMenuSelectedListener;
 import com.hlab.fabrevealmenu.model.FABMenuItem;
 import com.hlab.fabrevealmenu.view.FABRevealMenu;
 import com.squareup.picasso.Picasso;
@@ -30,8 +38,8 @@ public class ImageDetailFragment extends Fragment implements LoaderManager.Loade
     public static final String ARG_ITEM_POSITION = "item_position";
 
     private ArrayList<FABMenuItem> items;
-    //private String[] mDirectionStrings = {"Direction - LEFT", "Direction - UP"};
-   // private Direction currentDirection = Direction.LEFT;
+    private String[] mDirectionStrings = {"Direction - LEFT", "Direction - UP"};
+    private Direction currentDirection = Direction.LEFT;
 
     public ImageDetailFragment() {
     }
@@ -80,13 +88,55 @@ public class ImageDetailFragment extends Fragment implements LoaderManager.Loade
         toolbar = (Toolbar) mRootView.findViewById(R.id.detail_toolbar);
 
         final FloatingActionButton fab = (FloatingActionButton) mRootView.findViewById(R.id.fab);
-        final FABRevealMenu fabMenu = (FABRevealMenu) mRootView.findViewById(R.id.fab_menu);
+        final FABRevealMenu fabMenu = (FABRevealMenu) mRootView.findViewById(R.id.fabMenu);
+//
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//            }
+//        });
 
+        try {
+            if (fab != null && fabMenu != null) {
+                setFabMenu(fabMenu);
+                fabMenu.bindAncherView(fab);
+                fabMenu.setOnFABMenuSelectedListener(this);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-        fab.setOnClickListener(new View.OnClickListener() {
+        mRootView.findViewById(R.id.textView).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO: add image/details to db
+                Toast.makeText(getActivity(), "text view is clicked", Toast.LENGTH_SHORT).show();
+//                Intent i = new Intent(getActivity(), ScrollingActivity.class);
+//                startActivity(i);
+            }
+        });
+
+        Spinner spDirections = (Spinner) mRootView.findViewById(R.id.spDirection);
+        spDirections.setAdapter(new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_dropdown_item, mDirectionStrings));
+        spDirections.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+                if (fabMenu != null) {
+                    if (position == 0 && currentDirection != Direction.LEFT) {
+                        currentDirection = Direction.LEFT;
+                        fabMenu.setMenuDirection(Direction.LEFT);
+                    } else if (position == 1 && currentDirection != Direction.UP) {
+                        currentDirection = Direction.UP;
+                        fabMenu.setMenuDirection(Direction.UP);
+                    }
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                if (fabMenu != null) {
+                    fabMenu.setMenuDirection(Direction.LEFT);
+                }
             }
         });
 
@@ -95,11 +145,15 @@ public class ImageDetailFragment extends Fragment implements LoaderManager.Loade
         return mRootView;
     }
 
-//    @Override
-//    public void onStop() {
-//        super.onStop();
-//        mCursor.close();
-//    }
+    @Override
+    public void onMenuItemSelected(View view) {
+        int id = (int) view.getTag();
+        if (id == R.id.fab_wallpaper) {
+            Toast.makeText(getActivity(), "wallpaper Selected", Toast.LENGTH_SHORT).show();
+        } else if (id == R.id.fab_share) {
+            Toast.makeText(getActivity(), "Image Selected", Toast.LENGTH_SHORT).show();
+        }
+    }
 
     private void bindViews() {
         if (mRootView == null) {

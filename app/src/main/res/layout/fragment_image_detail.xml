@@ -22,29 +22,9 @@
         app:layout_collapseMode="parallax"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
-    <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            app:pressedTranslationZ="6dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginBottom="48dp"
-            app:fabSize="normal"
-            android:src="@drawable/ic_back"
-            android:layout_gravity="bottom|end" />
-
-    <com.hlab.fabrevealmenu.view.FABRevealMenu
-        android:id="@+id/fab_menu"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_centerInParent="true"
-        app:animateItems="true"
-        app:menuBackgroundColor="@color/accent"
-        app:menuDirection="left"
-        app:menuTitleTextColor="@color/accent"
-        app:showOverlay="true"
-        app:showTitle="true"
-        app:overlayBackground="@color/accent"
-        app:menuCustomView="@menu/fab_menu"/>
+   <include
+       layout="@layout/fab_layout"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"/>
 
 </android.support.design.widget.CoordinatorLayout>
