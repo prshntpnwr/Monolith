@@ -54,6 +54,7 @@ public class ImageDetailActivity extends AppCompatActivity
 
         getSupportLoaderManager().initLoader(0, null, this);
 
+        // TODO: add animation to viewPager 
         mPager = (ViewPager) findViewById(R.id.pager);
         mPagerAdapter = new MyPagerAdapter(getSupportFragmentManager());
         mPager.setAdapter(mPagerAdapter);

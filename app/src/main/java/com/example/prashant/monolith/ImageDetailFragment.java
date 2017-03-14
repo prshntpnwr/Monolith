@@ -7,6 +7,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
+import android.support.v4.app.ShareCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.Loader;
 import android.support.v7.widget.Toolbar;
@@ -37,10 +38,9 @@ public class ImageDetailFragment extends Fragment implements
 
     public static final String ARG_ITEM_ID = "item_id";
     public static final String ARG_ITEM_POSITION = "item_position";
+    private static final String Monolith_SHARE_HASHTAG = " #MonolithApp";
 
     private ArrayList<FABMenuItem> items;
-    private String[] mDirectionStrings = {"Direction - LEFT", "Direction - UP"};
-    private Direction currentDirection = Direction.LEFT;
 
     public ImageDetailFragment() {
     }
@@ -91,12 +91,12 @@ public class ImageDetailFragment extends Fragment implements
         final FloatingActionButton fab = (FloatingActionButton) mRootView.findViewById(R.id.fab);
         final FABRevealMenu fabMenu = (FABRevealMenu) mRootView.findViewById(R.id.fabMenu);
 
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//            }
+//        });
 
         try {
             if (fabMenu != null) {
@@ -118,8 +118,19 @@ public class ImageDetailFragment extends Fragment implements
         int id = (int) view.getTag();
         if (id == R.id.fab_wallpaper) {
             Toast.makeText(getActivity(), "Wallpaper Selected", Toast.LENGTH_SHORT).show();
+
+
         } else if (id == R.id.fab_share) {
-            Toast.makeText(getActivity(), "Share Selected", Toast.LENGTH_SHORT).show();
+            try {
+                startActivity(Intent.createChooser(ShareCompat.IntentBuilder.from(getActivity())
+                        .setType("image/jpeg")
+                        .setText(mCursor.getString(GalleryLoader.Query.COLUMN_IMAGE_PATH) + "\n\n"  + Monolith_SHARE_HASHTAG)
+                        .getIntent(), getString(R.string.action_share)));
+
+               // Toast.makeText(getActivity(), "Image share successfully ", Toast.LENGTH_SHORT).show();
+            }catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
