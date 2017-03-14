@@ -30,7 +30,8 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class ImageDetailFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
+public class ImageDetailFragment extends Fragment implements
+        LoaderManager.LoaderCallbacks<Cursor>, OnFABMenuSelectedListener   {
 
     private static final String TAG = ImageDetailFragment.class.getSimpleName();
 
@@ -89,14 +90,14 @@ public class ImageDetailFragment extends Fragment implements LoaderManager.Loade
 
         final FloatingActionButton fab = (FloatingActionButton) mRootView.findViewById(R.id.fab);
         final FABRevealMenu fabMenu = (FABRevealMenu) mRootView.findViewById(R.id.fabMenu);
-//
+
 //        fab.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
-//
+//                // TODO: add image/details to db
 //            }
 //        });
-
+//
         try {
             if (fab != null && fabMenu != null) {
                 setFabMenu(fabMenu);
@@ -110,9 +111,7 @@ public class ImageDetailFragment extends Fragment implements LoaderManager.Loade
         mRootView.findViewById(R.id.textView).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getActivity(), "text view is clicked", Toast.LENGTH_SHORT).show();
-//                Intent i = new Intent(getActivity(), ScrollingActivity.class);
-//                startActivity(i);
+                Toast.makeText(getActivity(), "text view Selected", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -149,9 +148,9 @@ public class ImageDetailFragment extends Fragment implements LoaderManager.Loade
     public void onMenuItemSelected(View view) {
         int id = (int) view.getTag();
         if (id == R.id.fab_wallpaper) {
-            Toast.makeText(getActivity(), "wallpaper Selected", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Wallpaper Selected", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.fab_share) {
-            Toast.makeText(getActivity(), "Image Selected", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Share Selected", Toast.LENGTH_SHORT).show();
         }
     }
 
