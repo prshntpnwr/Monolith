@@ -58,6 +58,6 @@ dependencies {
 
     compile 'com.android.support:recyclerview-v7:25.2.0'
 
-    compile 'com.bowyer.app:fabtransitionlayout:0.4.0@aar'
+    compile 'com.hlab.fabrevealmenu:fab-reveal-menu:1.0.1'
 
 }

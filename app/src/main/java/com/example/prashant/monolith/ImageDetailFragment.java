@@ -10,12 +10,17 @@ import android.support.v4.content.Loader;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.example.prashant.monolith.data.GalleryLoader;
+import com.hlab.fabrevealmenu.model.FABMenuItem;
+import com.hlab.fabrevealmenu.view.FABRevealMenu;
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
 
 public class ImageDetailFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
@@ -23,6 +28,10 @@ public class ImageDetailFragment extends Fragment implements LoaderManager.Loade
 
     public static final String ARG_ITEM_ID = "item_id";
     public static final String ARG_ITEM_POSITION = "item_position";
+
+    private ArrayList<FABMenuItem> items;
+    //private String[] mDirectionStrings = {"Direction - LEFT", "Direction - UP"};
+   // private Direction currentDirection = Direction.LEFT;
 
     public ImageDetailFragment() {
     }
@@ -70,26 +79,27 @@ public class ImageDetailFragment extends Fragment implements LoaderManager.Loade
         mRootView = inflater.inflate(R.layout.fragment_image_detail, container, false);
         toolbar = (Toolbar) mRootView.findViewById(R.id.detail_toolbar);
 
-        final FloatingActionButton fab = (FloatingActionButton) mRootView.findViewById(R.id.fab);
-
-        fab.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_like_outline));
-//        if (mCursor.getInt(GalleryLoader.Query.COLUMN_IMAGE_STATUS) == 1) {
-//            fab.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_like_outline));
-//        }else fab.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_like));
-
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // TODO: add image/details to db
-                fab.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_like));
-
-                //implement later
-//              if (mCursor.getInt(GalleryLoader.Query.COLUMN_IMAGE_STATUS) == 1) {
-//                      fab.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_like_outline));
-//              }else fab.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_like));
-
-            }
-        });
+        final FABRevealMenu fabMenu = (FABRevealMenu) mRootView.findViewById(R.id.fab_image_detail);
+        fabMenu.setMenu(R.menu.image_detail_fab);
+//        final FloatingActionButton fab = (FloatingActionButton) mRootView.findViewById(R.id.fab);
+//        fab.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_like_outline));
+////        if (mCursor.getInt(GalleryLoader.Query.COLUMN_IMAGE_STATUS) == 1) {
+////            fab.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_like_outline));
+////        }else fab.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_like));
+//
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                // TODO: add image/details to db
+//                fab.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_like));
+//
+//                //implement later
+////              if (mCursor.getInt(GalleryLoader.Query.COLUMN_IMAGE_STATUS) == 1) {
+////                      fab.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_like_outline));
+////              }else fab.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_like));
+//
+//            }
+//        });
 
         bindViews();
         setupToolbar();
@@ -110,8 +120,10 @@ public class ImageDetailFragment extends Fragment implements LoaderManager.Loade
         ImageView imageView = (ImageView) mRootView.findViewById(R.id.image);
 
         if (mCursor != null) {
-//            mRootView.setAlpha(0);
             mRootView.setVisibility(View.VISIBLE);
+
+            //cause screen refresh
+//            mRootView.setAlpha(0);
 //            mRootView.animate().alpha(1);
 
 //            for explicit intent
@@ -130,7 +142,7 @@ public class ImageDetailFragment extends Fragment implements LoaderManager.Loade
         } else {
             mRootView.setVisibility(View.GONE);
             //cause a purplish hue
-//            imageView.setColorFilter(R.color.photo_placeholder);
+//           imageView.setColorFilter(R.color.photo_placeholder);
         }
     }
 
