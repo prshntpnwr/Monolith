@@ -82,13 +82,6 @@ public class ImageDetailActivity extends AppCompatActivity
                 mSelectedItemId = mStartId;
             }
         }
-
-//
-//        if (savedInstanceState == null) {
-//            getSupportFragmentManager().beginTransaction()
-//                    .replace(R.id.image_container, new ImageDetailFragment())
-//                    .commit();
-//        }
     }
 
     @Override
@@ -108,6 +101,8 @@ public class ImageDetailActivity extends AppCompatActivity
             while (!mCursor.isAfterLast()) {
                 if (mCursor.getLong(GalleryLoader.Query.COLUMN_IMAGE_ID) == mStartId) {
                     final int position = mCursor.getPosition();
+//                    mCursor = cursor;
+//                    mPagerAdapter.notifyDataSetChanged();
                     mPager.setCurrentItem(position, false);
                     break;
                 }

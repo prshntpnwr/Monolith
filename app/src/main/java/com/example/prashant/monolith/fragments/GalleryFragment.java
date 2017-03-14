@@ -119,22 +119,23 @@ public class GalleryFragment extends Fragment implements
                             null);
                 }
 
-                try {
-                    if (mCursor != null) {
-                        while (mCursor.moveToNext()) {
-
-                            Log.d(TAG, "Data from Cursor :  " + mCursor.getString(0));
-                            imageList.add(mCursor.getString(0));
-
-                            if (mCursor.isAfterLast())
-                                break;
-                        }
-                        mCursor.moveToFirst();
-                    }
-                    mCursor.close();
-                } catch (Error error) {
-                    Log.e(TAG, "Insertion failed :( " + error.getCause());
-                }
+                //for testing our added images properly
+//                try {
+//                    if (mCursor != null) {
+//                        while (mCursor.moveToNext()) {
+//
+//                            Log.d(TAG, "Data from Cursor :  " + mCursor.getString(0));
+//                            imageList.add(mCursor.getString(0));
+//
+//                            if (mCursor.isAfterLast())
+//                                break;
+//                        }
+//                        mCursor.moveToFirst();
+//                    }
+//                    mCursor.close();
+//                } catch (Error error) {
+//                    Log.e(TAG, "Insertion failed :( " + error.getCause());
+//                }
             }
 
             @Override

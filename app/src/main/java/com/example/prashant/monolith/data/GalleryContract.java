@@ -50,6 +50,7 @@ public class GalleryContract {
         public static Uri buildGalleryUri(long id) {
             //ContentUris.withAppendedId() is a helper method to create an id-based URI
             return ContentUris.withAppendedId(CONTENT_URI, id);
+            //return BASE_CONTENT_URI.buildUpon().appendPath("images").appendPath(Long.toString(id)).build();
         }
         public static long getItemId(Uri itemUri) {
             return Long.parseLong(itemUri.getPathSegments().get(1));

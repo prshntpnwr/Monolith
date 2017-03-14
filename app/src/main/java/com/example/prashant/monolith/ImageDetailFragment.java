@@ -61,10 +61,7 @@ public class ImageDetailFragment extends Fragment implements LoaderManager.Loade
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        // In support library r8, calling initLoader for a fragment in a FragmentPagerAdapter in
-        // the fragment's onCreate may cause the same LoaderManager to be dealt to multiple
-        // fragments because their mIndex is -1 (haven't been added to the activity yet). Thus,
-        // we do this in onActivityCreated.
+
         getLoaderManager().initLoader(0, null, this);
     }
 
@@ -76,6 +73,7 @@ public class ImageDetailFragment extends Fragment implements LoaderManager.Loade
 
         final FloatingActionButton fab = (FloatingActionButton) mRootView.findViewById(R.id.fab);
 
+        fab.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_like_outline));
 //        if (mCursor.getInt(GalleryLoader.Query.COLUMN_IMAGE_STATUS) == 1) {
 //            fab.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_like_outline));
 //        }else fab.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_like));
@@ -86,6 +84,7 @@ public class ImageDetailFragment extends Fragment implements LoaderManager.Loade
                 // TODO: add image/details to db
                 fab.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_like));
 
+                //implement later
 //              if (mCursor.getInt(GalleryLoader.Query.COLUMN_IMAGE_STATUS) == 1) {
 //                      fab.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_like_outline));
 //              }else fab.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_like));
@@ -110,10 +109,19 @@ public class ImageDetailFragment extends Fragment implements LoaderManager.Loade
             mRootView.setVisibility(View.VISIBLE);
             mRootView.animate().alpha(1);
 
+//            for explicit intent
+//            Picasso.with(this.getContext()).load(getActivity().getIntent().getStringExtra("URL"))
+//                    .placeholder(R.color.accent)
+//                    .error(R.color.primary_dark)
+//                    .into(imageView);
+
+            mCursor.moveToPosition(mItemPosition);
             Picasso.with(this.getContext()).load(mCursor.getString(GalleryLoader.Query.COLUMN_IMAGE_PATH))
                     .placeholder(R.color.accent)
                     .error(R.color.primary_dark)
                     .into(imageView);
+
+            Log.d("image goes here", mCursor.getString(GalleryLoader.Query.COLUMN_IMAGE_PATH));
         } else {
             mRootView.setVisibility(View.GONE);
             imageView.setColorFilter(R.color.photo_placeholder);
