@@ -132,7 +132,7 @@ public class GalleryFragment extends Fragment implements
 //                        }
 //                        mCursor.moveToFirst();
 //                    }
-//                    mCursor.close();
+//
 //                } catch (Error error) {
 //                    Log.e(TAG, "Insertion failed :( " + error.getCause());
 //                }

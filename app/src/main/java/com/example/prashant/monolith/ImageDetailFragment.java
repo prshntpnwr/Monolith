@@ -1,7 +1,11 @@
 package com.example.prashant.monolith;
 
+import android.app.WallpaperManager;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -29,6 +33,9 @@ import com.hlab.fabrevealmenu.model.FABMenuItem;
 import com.hlab.fabrevealmenu.view.FABRevealMenu;
 import com.squareup.picasso.Picasso;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.ArrayList;
 
 public class ImageDetailFragment extends Fragment implements
@@ -117,13 +124,26 @@ public class ImageDetailFragment extends Fragment implements
     public void onMenuItemSelected(View view) {
         int id = (int) view.getTag();
         if (id == R.id.fab_wallpaper) {
-            Toast.makeText(getActivity(), "Wallpaper Selected", Toast.LENGTH_SHORT).show();
+
+            String wallpaper = mCursor.getString(GalleryLoader.Query.COLUMN_IMAGE_PATH);
+            WallpaperManager wallpaperManager = WallpaperManager.getInstance(getContext());
+            Bitmap result= null;
+            try {
+                result = Picasso.with(getContext())
+                        .load(wallpaper)
+                        .get();
+                wallpaperManager.setBitmap(result);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            Toast.makeText(getActivity(), "Wallpaper set successfully! ", Toast.LENGTH_SHORT).show();
 
         } else if (id == R.id.fab_share) {
             try {
                 startActivity(Intent.createChooser(ShareCompat.IntentBuilder.from(getActivity())
                         .setType("text/plain")
-                        .setText(mCursor.getString(GalleryLoader.Query.COLUMN_IMAGE_PATH) + "\n\n"  + Monolith_SHARE_HASHTAG)
+                        .setText(mCursor.getString(GalleryLoader.Query.COLUMN_IMAGE_PATH) + "\n\n"
+                                + Monolith_SHARE_HASHTAG)
                         .getIntent(), getString(R.string.action_share)));
 
                // Toast.makeText(getActivity(), "Image share successfully ", Toast.LENGTH_SHORT).show();
