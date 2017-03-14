@@ -79,27 +79,16 @@ public class ImageDetailFragment extends Fragment implements LoaderManager.Loade
         mRootView = inflater.inflate(R.layout.fragment_image_detail, container, false);
         toolbar = (Toolbar) mRootView.findViewById(R.id.detail_toolbar);
 
-        final FABRevealMenu fabMenu = (FABRevealMenu) mRootView.findViewById(R.id.fab_image_detail);
-        fabMenu.setMenu(R.menu.image_detail_fab);
-//        final FloatingActionButton fab = (FloatingActionButton) mRootView.findViewById(R.id.fab);
-//        fab.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_like_outline));
-////        if (mCursor.getInt(GalleryLoader.Query.COLUMN_IMAGE_STATUS) == 1) {
-////            fab.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_like_outline));
-////        }else fab.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_like));
-//
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                // TODO: add image/details to db
-//                fab.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_like));
-//
-//                //implement later
-////              if (mCursor.getInt(GalleryLoader.Query.COLUMN_IMAGE_STATUS) == 1) {
-////                      fab.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_like_outline));
-////              }else fab.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_like));
-//
-//            }
-//        });
+        final FloatingActionButton fab = (FloatingActionButton) mRootView.findViewById(R.id.fab);
+        final FABRevealMenu fabMenu = (FABRevealMenu) mRootView.findViewById(R.id.fab_menu);
+
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // TODO: add image/details to db
+            }
+        });
 
         bindViews();
         setupToolbar();
