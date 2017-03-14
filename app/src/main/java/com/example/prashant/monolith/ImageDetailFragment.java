@@ -50,7 +50,7 @@ public class ImageDetailFragment extends Fragment implements
     private Cursor mCursor;
     private String image_url;
 
-   // public ImageView imageView;
+    public ImageView imageView;
     public View mRootView;
     public Toolbar toolbar;
 
@@ -91,53 +91,22 @@ public class ImageDetailFragment extends Fragment implements
         final FloatingActionButton fab = (FloatingActionButton) mRootView.findViewById(R.id.fab);
         final FABRevealMenu fabMenu = (FABRevealMenu) mRootView.findViewById(R.id.fabMenu);
 
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                // TODO: add image/details to db
-//            }
-//        });
-//
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
         try {
-            if (fab != null && fabMenu != null) {
-                setFabMenu(fabMenu);
+            if (fabMenu != null) {
+               // setFabMenu(fabMenu);
                 fabMenu.bindAncherView(fab);
                 fabMenu.setOnFABMenuSelectedListener(this);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        mRootView.findViewById(R.id.textView).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(getActivity(), "text view Selected", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        Spinner spDirections = (Spinner) mRootView.findViewById(R.id.spDirection);
-        spDirections.setAdapter(new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_dropdown_item, mDirectionStrings));
-        spDirections.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
-                if (fabMenu != null) {
-                    if (position == 0 && currentDirection != Direction.LEFT) {
-                        currentDirection = Direction.LEFT;
-                        fabMenu.setMenuDirection(Direction.LEFT);
-                    } else if (position == 1 && currentDirection != Direction.UP) {
-                        currentDirection = Direction.UP;
-                        fabMenu.setMenuDirection(Direction.UP);
-                    }
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-                if (fabMenu != null) {
-                    fabMenu.setMenuDirection(Direction.LEFT);
-                }
-            }
-        });
 
         bindViews();
         setupToolbar();
@@ -159,7 +128,7 @@ public class ImageDetailFragment extends Fragment implements
             return;
         }
 
-        ImageView imageView = (ImageView) mRootView.findViewById(R.id.image);
+        imageView = (ImageView) mRootView.findViewById(R.id.image);
 
         if (mCursor != null) {
             mRootView.setVisibility(View.VISIBLE);
