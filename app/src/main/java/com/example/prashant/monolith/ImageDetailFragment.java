@@ -119,11 +119,10 @@ public class ImageDetailFragment extends Fragment implements
         if (id == R.id.fab_wallpaper) {
             Toast.makeText(getActivity(), "Wallpaper Selected", Toast.LENGTH_SHORT).show();
 
-
         } else if (id == R.id.fab_share) {
             try {
                 startActivity(Intent.createChooser(ShareCompat.IntentBuilder.from(getActivity())
-                        .setType("image/jpeg")
+                        .setType("text/plain")
                         .setText(mCursor.getString(GalleryLoader.Query.COLUMN_IMAGE_PATH) + "\n\n"  + Monolith_SHARE_HASHTAG)
                         .getIntent(), getString(R.string.action_share)));
 
