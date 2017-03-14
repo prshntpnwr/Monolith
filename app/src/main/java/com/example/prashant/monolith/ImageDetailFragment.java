@@ -96,6 +96,12 @@ public class ImageDetailFragment extends Fragment implements LoaderManager.Loade
         return mRootView;
     }
 
+//    @Override
+//    public void onStop() {
+//        super.onStop();
+//        mCursor.close();
+//    }
+
     private void bindViews() {
         if (mRootView == null) {
             return;
@@ -104,9 +110,9 @@ public class ImageDetailFragment extends Fragment implements LoaderManager.Loade
         ImageView imageView = (ImageView) mRootView.findViewById(R.id.image);
 
         if (mCursor != null) {
-            mRootView.setAlpha(0);
+//            mRootView.setAlpha(0);
             mRootView.setVisibility(View.VISIBLE);
-            mRootView.animate().alpha(1);
+//            mRootView.animate().alpha(1);
 
 //            for explicit intent
 //            Picasso.with(this.getContext()).load(getActivity().getIntent().getStringExtra("URL"))
