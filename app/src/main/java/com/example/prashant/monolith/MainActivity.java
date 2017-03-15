@@ -124,7 +124,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             //try adding refresh and fetch data again
             case R.id.fab_refresh:
                 GalleryFragment galleryFragment = new GalleryFragment();
-                galleryFragment.ImageFetchTask();
+                galleryFragment.ImageFetchTask(this);
                 Toast.makeText(this, "Refresh", Toast.LENGTH_SHORT).show();
                 break;
             default:

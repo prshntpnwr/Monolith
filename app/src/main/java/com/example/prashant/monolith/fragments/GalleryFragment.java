@@ -2,6 +2,7 @@ package com.example.prashant.monolith.fragments;
 
 import android.content.ContentResolver;
 import android.content.ContentValues;
+import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -73,7 +74,7 @@ public class GalleryFragment extends Fragment implements
     @Override
     public void onStart() {
         if (imageList.isEmpty()) {
-            ImageFetchTask();
+            ImageFetchTask(getContext());
         }
         super.onStart();
     }
@@ -83,7 +84,7 @@ public class GalleryFragment extends Fragment implements
         super.onDestroyView();
     }
 
-    public void ImageFetchTask() {
+    public void ImageFetchTask(final Context context) {
 
         String API_BASE_URL = "https://api.unsplash.com/";
 
@@ -95,7 +96,7 @@ public class GalleryFragment extends Fragment implements
 
         UnsplashGalleryInterface service = retrofit.create(UnsplashGalleryInterface.class);
 
-        Call<Results> call = service.result(1, 30, "nasa", "9f671b78439c845b8713077b5d4552b328269f4090c4372784bfcb51f1b90eb4");
+        Call<Results> call = service.result(1, 30, "space", "2f12038a9af628b150d141d9532b923e25818d649175c229f4d954b7f1033ef7");
 
         call.enqueue(new Callback<Results>() {
 
@@ -111,14 +112,14 @@ public class GalleryFragment extends Fragment implements
 
                 int length = response.body().getResults().size();
                 for (int i = 0; i < length; i++) {
-                    Log.d(TAG + " Result from unsplash ", i + " " + response.body().getResults()
+                    Log.d( TAG + " Result from unsplash ", i + " " + response.body().getResults()
                             .get(i).getCoverPhoto().getUrls().getRegular());
 
                     result = response.body().getResults().get(i).getCoverPhoto().getUrls().getRegular();
 
                     Uri uri = GalleryContract.GalleryEntry.CONTENT_URI;
                     ContentValues contentValues = new ContentValues();
-                    ContentResolver resolver = getContext().getContentResolver();
+                    ContentResolver resolver = context.getContentResolver();
 
                     contentValues.put(GalleryContract.GalleryEntry.COLUMN_IMAGE_PATH, result);
                     contentValues.put(GalleryContract.GalleryEntry.COLUMN_IMAGE_STATUS, 1);
@@ -129,13 +130,7 @@ public class GalleryFragment extends Fragment implements
                             null,
                             null,
                             null);
-                }mCursor.close();
-//                try {
-//                    mCursor.close();
-//                } catch (Exception e){
-//                    e.printStackTrace();
-//                }
-
+                } mCursor.close();
 
                 //for testing our added images properly
 //                try {
@@ -143,7 +138,7 @@ public class GalleryFragment extends Fragment implements
 //                        while (mCursor.moveToNext()) {
 //
 //                            Log.d(TAG, "Data from Cursor :  " + mCursor.getString(0));
-//                            //imageList.add(mCursor.getString(0));
+//                            imageList.add(mCursor.getString(0));
 //
 //                            if (mCursor.isAfterLast())
 //                                break;
