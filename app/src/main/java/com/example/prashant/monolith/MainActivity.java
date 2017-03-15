@@ -121,14 +121,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Toast.makeText(this, "Page", Toast.LENGTH_SHORT).show();
                 break;
 
+            //try adding refresh and fetch data again
             case R.id.fab_refresh:
+                GalleryFragment galleryFragment = new GalleryFragment();
+                galleryFragment.ImageFetchTask();
                 Toast.makeText(this, "Refresh", Toast.LENGTH_SHORT).show();
                 break;
             default:
-                // no-op
         }
     }
-
 
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
