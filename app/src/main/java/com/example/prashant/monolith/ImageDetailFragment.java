@@ -103,8 +103,8 @@ public class ImageDetailFragment extends Fragment implements
         mRootView = inflater.inflate(R.layout.fragment_image_detail, container, false);
         toolbar = (Toolbar) mRootView.findViewById(R.id.detail_toolbar);
 
-        final FloatingActionButton fab = (FloatingActionButton) mRootView.findViewById(R.id.fab);;
-        final FABRevealMenu fabMenu = (FABRevealMenu) mRootView.findViewById(R.id.fabMenu);;
+        final FloatingActionButton fab = (FloatingActionButton) mRootView.findViewById(R.id.fab);
+        final FABRevealMenu fabMenu = (FABRevealMenu) mRootView.findViewById(R.id.fabMenu);
 
 //        fab.setOnClickListener(new View.OnClickListener() {
 //            @Override

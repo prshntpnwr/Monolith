@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/fab_page"
+        android:icon="@drawable/ic_page"
+        android:title="Page" />
+
+    <item
+        android:id="@+id/fab_refresh"
+        android:icon="@drawable/ic_refresh"
+        android:title="Refresh" />
+</menu>

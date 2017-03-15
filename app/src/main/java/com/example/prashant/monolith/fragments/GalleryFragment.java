@@ -5,6 +5,8 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
@@ -21,6 +23,7 @@ import com.example.prashant.monolith.data.GalleryContract;
 import com.example.prashant.monolith.data.GalleryLoader;
 import com.example.prashant.monolith.galleryObjects.Results;
 import com.example.prashant.monolith.galleryObjects.UnsplashGalleryInterface;
+import com.joaquimley.faboptions.FabOptions;
 
 import java.util.ArrayList;
 
@@ -51,11 +54,20 @@ public class GalleryFragment extends Fragment implements
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_gallery, container, false);
+        View mRootView = inflater.inflate(R.layout.fragment_gallery, container, false);
 
-        mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
+        mRecyclerView = (RecyclerView) mRootView.findViewById(R.id.recycler_view);
 
-        return rootView;
+////        FloatingActionButton fab = (FloatingActionButton) mRootView.findViewById(R.id.fab);
+//        fabOptions.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+//            }
+//        });
+
+        return mRootView;
     }
 
     @Override
@@ -73,33 +85,33 @@ public class GalleryFragment extends Fragment implements
 
     public void ImageFetchTask() {
 
-        String API_BASE_URL_u = "https://api.unsplash.com/";
+        String API_BASE_URL = "https://api.unsplash.com/";
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(API_BASE_URL_u)
+                .baseUrl(API_BASE_URL)
                 .client(new OkHttpClient())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
         UnsplashGalleryInterface service = retrofit.create(UnsplashGalleryInterface.class);
 
-        Call<Results> call_u = service.result(1, 30, "nasa", "2f12038a9af628b150d141d9532b923e25818d649175c229f4d954b7f1033ef7");
+        Call<Results> call = service.result(1, 30, "nasa", "2f12038a9af628b150d141d9532b923e25818d649175c229f4d954b7f1033ef7");
 
-        call_u.enqueue(new Callback<Results>() {
+        call.enqueue(new Callback<Results>() {
 
             @Override
             public void onResponse(Call<Results> call, Response<Results> response) {
-                Log.d("Response goes here", response.toString());
+                Log.d(TAG + " Response goes here ", response.toString());
                 String result;
 
                 int deleteRows = getContext().getContentResolver()
                         .delete(GalleryContract.GalleryEntry.CONTENT_URI, null, null);
 
-                Log.d("deleted rows ", Integer.toString(deleteRows));
+                Log.d(TAG + " deleted rows ", Integer.toString(deleteRows));
 
                 int length = response.body().getResults().size();
                 for (int i = 0; i < length; i++) {
-                    Log.d("Result from unsplash", i + " " + response.body().getResults()
+                    Log.d( TAG + " Result from unsplash ", i + " " + response.body().getResults()
                             .get(i).getCoverPhoto().getUrls().getRegular());
 
                     result = response.body().getResults().get(i).getCoverPhoto().getUrls().getRegular();
@@ -117,7 +129,7 @@ public class GalleryFragment extends Fragment implements
                             null,
                             null,
                             null);
-                }
+                } mCursor.close();
 
                 //for testing our added images properly
 //                try {
@@ -140,7 +152,7 @@ public class GalleryFragment extends Fragment implements
 
             @Override
             public void onFailure(Call<Results> call, Throwable t) {
-                Log.d("Fail response from", "unsplash");
+                Log.d(TAG + " Fail response from", "unsplash");
             }
         });
 
