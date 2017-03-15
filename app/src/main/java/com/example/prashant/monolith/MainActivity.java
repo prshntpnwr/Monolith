@@ -1,6 +1,7 @@
 
 package com.example.prashant.monolith;
 
+import android.content.Context;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -124,7 +125,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             //try adding refresh and fetch data again
             case R.id.fab_refresh:
                 GalleryFragment galleryFragment = new GalleryFragment();
-                galleryFragment.ImageFetchTask(this);
+                galleryFragment.ImageFetchTask(this.getApplication());
                 Toast.makeText(this, "Refresh", Toast.LENGTH_SHORT).show();
                 break;
             default:

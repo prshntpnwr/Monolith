@@ -43,6 +43,7 @@ public class GalleryFragment extends Fragment implements
     private RecyclerView mRecyclerView;
     public ArrayList<String> imageList = new ArrayList<>();
     private Cursor mCursor;
+    public Context mContext;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -96,7 +97,7 @@ public class GalleryFragment extends Fragment implements
 
         UnsplashGalleryInterface service = retrofit.create(UnsplashGalleryInterface.class);
 
-        Call<Results> call = service.result(1, 30, "space", "2f12038a9af628b150d141d9532b923e25818d649175c229f4d954b7f1033ef7");
+        Call<Results> call = service.result(1, 30, "nasa", "2f12038a9af628b150d141d9532b923e25818d649175c229f4d954b7f1033ef7");
 
         call.enqueue(new Callback<Results>() {
 
@@ -105,7 +106,7 @@ public class GalleryFragment extends Fragment implements
                 Log.d(TAG + " Response goes here ", response.toString());
                 String result;
 
-                int deleteRows = getContext().getContentResolver()
+                int deleteRows = context.getContentResolver()
                         .delete(GalleryContract.GalleryEntry.CONTENT_URI, null, null);
 
                 Log.d(TAG + " deleted rows ", Integer.toString(deleteRows));
@@ -119,7 +120,7 @@ public class GalleryFragment extends Fragment implements
 
                     Uri uri = GalleryContract.GalleryEntry.CONTENT_URI;
                     ContentValues contentValues = new ContentValues();
-                    ContentResolver resolver = context.getContentResolver();
+                    final ContentResolver resolver = context.getContentResolver();
 
                     contentValues.put(GalleryContract.GalleryEntry.COLUMN_IMAGE_PATH, result);
                     contentValues.put(GalleryContract.GalleryEntry.COLUMN_IMAGE_STATUS, 1);
@@ -130,7 +131,7 @@ public class GalleryFragment extends Fragment implements
                             null,
                             null,
                             null);
-                } mCursor.close();
+                }
 
                 //for testing our added images properly
 //                try {
