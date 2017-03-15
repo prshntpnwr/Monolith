@@ -39,11 +39,10 @@
         android:layout_height="match_parent"
         android:layout_centerInParent="true"
         app:animateItems="true"
-        app:menuBackgroundColor="@color/primary_dark"
         app:menuDirection="left"
         app:menuRes="@menu/fab_menu"
         app:menuTitleTextColor="@color/colorWhite"
         app:showOverlay="true"
-        app:showTitle="true"/>
+        app:showTitle="true" />
 
 </android.support.design.widget.CoordinatorLayout>
