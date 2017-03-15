@@ -118,7 +118,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.fab_page:
-                GalleryFragment.
                 Toast.makeText(this, "Page", Toast.LENGTH_SHORT).show();
                 break;
 
