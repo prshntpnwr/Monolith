@@ -81,6 +81,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         FabOptions fabOptions = (FabOptions) findViewById(R.id.fab_options);
         fabOptions.setButtonsMenu(R.menu.gallery_fab);
+        fabOptions.setOnClickListener(this);
 //
 //        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 //        fab.setOnClickListener(new View.OnClickListener() {
@@ -117,6 +118,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.fab_page:
+                GalleryFragment.
                 Toast.makeText(this, "Page", Toast.LENGTH_SHORT).show();
                 break;
 
