@@ -23,6 +23,8 @@ import com.example.prashant.monolith.fragments.ArticleFragment;
 import com.example.prashant.monolith.fragments.GalleryFragment;
 import com.joaquimley.faboptions.FabOptions;
 
+import java.util.Arrays;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     /**
@@ -43,6 +45,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ViewPager mViewPager;
     private TabLayout tabLayout;
     public static String POSITION = "position";
+    public String tag;
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
@@ -119,7 +122,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.fab_page:
-               String[] response = DialogSelection();
+                DialogSelection();
+       //        String response = DialogSelection();
+       //         Log.d(TAG + "Response from dialogbox", response);
 
                 break;
 
@@ -150,30 +155,38 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    public String[] DialogSelection() {
-        final String[] mCategory = {"Nasa", "Space", "Earth", "Galaxy", "Universe"};
-        final String[] tag = new String[1];
+    public String DialogSelection() {
+
+        String[] mCategory = new String[]{
+                "Nasa",
+                "Space",
+                "Earth",
+                "Galaxy",
+                "Universe"
+        };
+
         new AlertDialog.Builder(this)
                 .setTitle("Select a category")
                 .setSingleChoiceItems(mCategory, 0, null)
                 .setPositiveButton("ok", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         int selectedPosition = ((AlertDialog) dialog).getListView().getCheckedItemPosition();
+
                         if (selectedPosition == 0){
-                            tag[0] = "NASA";
-                            Log.d("TAG" , "NASA");}
+                            tag = "NASA";
+                            Log.d("TAG" , tag);}
                         else if (selectedPosition == 1){
-                            tag[0] = "Space";
-                            Log.d("TAG" , "Space");}
+                            tag = "Space";
+                            Log.d("TAG" , tag);}
                         else if (selectedPosition == 2){
-                            tag[0] = "Earth";
-                            Log.d("TAG" , "Earth");}
+                            tag = "Earth";
+                            Log.d("TAG" , tag);}
                         else if (selectedPosition == 3){
-                            tag[0] = "Galaxy";
-                            Log.d("TAG" , "Galaxy");}
+                            tag = "Galaxy";
+                            Log.d("TAG" , tag);}
                         else if (selectedPosition == 4){
-                            tag[0] = "Universe";
-                            Log.d("TAG" , "Universe");}
+                             tag = "Universe";
+                            Log.d("TAG" , tag);}
                     }
                 })
                 .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
@@ -183,6 +196,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     }
                 })
                 .show();
+        Log.d(TAG, " tag inside dialog box is : " + this.tag);
         return tag;
     }
 
