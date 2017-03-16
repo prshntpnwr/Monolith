@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ViewPager mViewPager;
     private TabLayout tabLayout;
     public static String POSITION = "position";
-    public static final String pref = "key";
+    //public static final String pref = "key";
     public String tag;
 
     @Override
@@ -125,8 +125,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (v.getId()) {
             case R.id.fab_page:
                 DialogSelection();
-                SharedPreferences sharedPreferences = getPreferences(MODE_PRIVATE);
-                int savedPref = sharedPreferences.getInt(tag, 0);
+
+                SharedPreferences sharedPref = getPreferences(MODE_PRIVATE);
+                int defaultValue = getResources().getInteger(0);
+                long savedPref = sharedPref.getInt(getString(R.string.key), defaultValue);
 
                 if (savedPref == 0){
                     tag = "Nasa";
@@ -143,6 +145,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 else if (savedPref == 4){
                     tag = "Universe";
                     Log.d("TAG" , tag);}
+
+                Log.d(TAG + "tag in onClick : ", tag);
                 break;
 
             //try adding refresh and fetch data again
@@ -174,13 +178,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void DialogSelection() {
 
-        String[] mCategory = new String[]{
-                "Nasa",
-                "Space",
-                "Earth",
-                "Galaxy",
-                "Universe"
-        };
+        String [] mCategory = getResources().getStringArray(R.array.Category);
 
         new AlertDialog.Builder(this)
                 .setTitle("Select a category")
@@ -188,7 +186,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .setPositiveButton("ok", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         int selectedPosition = ((AlertDialog) dialog).getListView().getCheckedItemPosition();
-                        SavePreferences(pref, selectedPosition);
+
+                        SharedPreferences sharedPref = getPreferences(MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPref.edit();
+                        editor.putInt(getString(R.string.key), selectedPosition);
+                        editor.apply();
+
+                        //SavePreferences(pref, selectedPosition);
                     }
                 })
                 .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
@@ -200,12 +204,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .show();
     }
 
-    private void SavePreferences(String key, int value) {
-        SharedPreferences sharedPreferences = getPreferences(MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt(key, value);
-        editor.apply();
-    }
+    //   private void SavePreferences(String key, int value) {
+//        SharedPreferences sharedPreferences = getPreferences(MODE_PRIVATE);
+//        SharedPreferences.Editor editor = sharedPreferences.edit();
+//        editor.putInt(key, value);
+//        editor.apply();
+//    }
 
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
