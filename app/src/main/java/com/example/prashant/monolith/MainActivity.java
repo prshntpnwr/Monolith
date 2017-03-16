@@ -3,6 +3,7 @@ package com.example.prashant.monolith;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -45,6 +46,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ViewPager mViewPager;
     private TabLayout tabLayout;
     public static String POSITION = "position";
+    public static final String pref = "key";
     public String tag;
 
     @Override
@@ -123,9 +125,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (v.getId()) {
             case R.id.fab_page:
                 DialogSelection();
-       //        String response = DialogSelection();
-       //         Log.d(TAG + "Response from dialogbox", response);
+                SharedPreferences sharedPreferences = getPreferences(MODE_PRIVATE);
+                int savedPref = sharedPreferences.getInt(tag, 0);
 
+                if (savedPref == 0){
+                    tag = "Nasa";
+                    Log.d("TAG" , tag);}
+                else if (savedPref == 1){
+                    tag = "Space";
+                    Log.d("TAG" , tag);}
+                else if (savedPref == 2){
+                    tag = "Earth";
+                    Log.d("TAG" , tag);}
+                else if (savedPref == 3){
+                    tag = "Galaxy";
+                    Log.d("TAG" , tag);}
+                else if (savedPref == 4){
+                    tag = "Universe";
+                    Log.d("TAG" , tag);}
                 break;
 
             //try adding refresh and fetch data again
@@ -155,7 +172,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    public String DialogSelection() {
+    public void DialogSelection() {
 
         String[] mCategory = new String[]{
                 "Nasa",
@@ -167,26 +184,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         new AlertDialog.Builder(this)
                 .setTitle("Select a category")
-                .setSingleChoiceItems(mCategory, 0, null)
+                .setSingleChoiceItems(mCategory, 1, null)
                 .setPositiveButton("ok", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         int selectedPosition = ((AlertDialog) dialog).getListView().getCheckedItemPosition();
-
-                        if (selectedPosition == 0){
-                            tag = "NASA";
-                            Log.d("TAG" , tag);}
-                        else if (selectedPosition == 1){
-                            tag = "Space";
-                            Log.d("TAG" , tag);}
-                        else if (selectedPosition == 2){
-                            tag = "Earth";
-                            Log.d("TAG" , tag);}
-                        else if (selectedPosition == 3){
-                            tag = "Galaxy";
-                            Log.d("TAG" , tag);}
-                        else if (selectedPosition == 4){
-                             tag = "Universe";
-                            Log.d("TAG" , tag);}
+                        SavePreferences(pref, selectedPosition);
                     }
                 })
                 .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
@@ -196,8 +198,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     }
                 })
                 .show();
-        Log.d(TAG, " tag inside dialog box is : " + this.tag);
-        return tag;
+    }
+
+    private void SavePreferences(String key, int value) {
+        SharedPreferences sharedPreferences = getPreferences(MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(key, value);
+        editor.apply();
     }
 
     /**
