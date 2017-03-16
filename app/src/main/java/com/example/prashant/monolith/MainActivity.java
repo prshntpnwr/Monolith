@@ -1,10 +1,10 @@
 
 package com.example.prashant.monolith;
 
-import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -17,14 +17,13 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.webkit.MimeTypeMap;
 import android.widget.Toast;
 
 import com.example.prashant.monolith.fragments.ArticleFragment;
 import com.example.prashant.monolith.fragments.GalleryFragment;
 import com.joaquimley.faboptions.FabOptions;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -119,17 +118,63 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.fab_page:
-                Toast.makeText(this, "Page", Toast.LENGTH_SHORT).show();
+                DialogSelection();
+//                Toast.makeText(this, "Page", Toast.LENGTH_SHORT).show();
                 break;
 
             //try adding refresh and fetch data again
             case R.id.fab_refresh:
+                // TODO: animate Refresh
+
                 GalleryFragment galleryFragment = new GalleryFragment();
-                galleryFragment.ImageFetchTask(this.getApplication());
+                galleryFragment.ImageFetchTask(this);
+
+//                final ProgressDialog progress = new ProgressDialog(this);
+//                progress.setTitle("Refreshing");
+//                progress.setMessage("Please wait...");
+//                progress.show();
+//                Runnable progressRunnable = new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        progress.cancel();
+//                    }
+//                };
+//                Handler pdCanceller = new Handler();
+//                pdCanceller.postDelayed(progressRunnable, 3000);
+
                 Toast.makeText(this, "Refresh", Toast.LENGTH_SHORT).show();
                 break;
+
             default:
         }
+    }
+
+    public void DialogSelection() {
+        final String[] mTestArray = {"Nasa", "Space", "Earth", "Galaxy", "Universe"};
+        new AlertDialog.Builder(this)
+                .setTitle("Select a category")
+                .setSingleChoiceItems(mTestArray, 0, null)
+                .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        int selectedPosition = ((AlertDialog) dialog).getListView().getCheckedItemPosition();
+                        if (selectedPosition == 0)
+                            Log.d("TAG" , "NASA");
+                        else if (selectedPosition == 1)
+                            Log.d("TAG" , "Space");
+                        else if (selectedPosition == 2)
+                            Log.d("TAG" , "Earth");
+                        else if (selectedPosition == 3)
+                            Log.d("TAG" , "Universe");
+                    }
+                })
+                .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // do nothing
+                        dialog.cancel();
+                    }
+                })
+                .show();
+        //return tag;
     }
 
     /**
