@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      */
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private View.OnClickListener mListener;
+    private final String TAG = MainActivity.class.getSimpleName();
 
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -118,8 +119,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.fab_page:
-                DialogSelection();
-//                Toast.makeText(this, "Page", Toast.LENGTH_SHORT).show();
+               String[] response = DialogSelection();
+
                 break;
 
             //try adding refresh and fetch data again
@@ -149,22 +150,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    public void DialogSelection() {
-        final String[] mTestArray = {"Nasa", "Space", "Earth", "Galaxy", "Universe"};
+    public String[] DialogSelection() {
+        final String[] mCategory = {"Nasa", "Space", "Earth", "Galaxy", "Universe"};
+        final String[] tag = new String[1];
         new AlertDialog.Builder(this)
                 .setTitle("Select a category")
-                .setSingleChoiceItems(mTestArray, 0, null)
+                .setSingleChoiceItems(mCategory, 0, null)
                 .setPositiveButton("ok", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         int selectedPosition = ((AlertDialog) dialog).getListView().getCheckedItemPosition();
-                        if (selectedPosition == 0)
-                            Log.d("TAG" , "NASA");
-                        else if (selectedPosition == 1)
-                            Log.d("TAG" , "Space");
-                        else if (selectedPosition == 2)
-                            Log.d("TAG" , "Earth");
-                        else if (selectedPosition == 3)
-                            Log.d("TAG" , "Universe");
+                        if (selectedPosition == 0){
+                            tag[0] = "NASA";
+                            Log.d("TAG" , "NASA");}
+                        else if (selectedPosition == 1){
+                            tag[0] = "Space";
+                            Log.d("TAG" , "Space");}
+                        else if (selectedPosition == 2){
+                            tag[0] = "Earth";
+                            Log.d("TAG" , "Earth");}
+                        else if (selectedPosition == 3){
+                            tag[0] = "Galaxy";
+                            Log.d("TAG" , "Galaxy");}
+                        else if (selectedPosition == 4){
+                            tag[0] = "Universe";
+                            Log.d("TAG" , "Universe");}
                     }
                 })
                 .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
@@ -174,7 +183,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     }
                 })
                 .show();
-        //return tag;
+        return tag;
     }
 
     /**
