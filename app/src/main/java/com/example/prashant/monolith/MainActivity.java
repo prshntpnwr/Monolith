@@ -127,7 +127,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 DialogSelection();
 
                 SharedPreferences sharedPref = getPreferences(MODE_PRIVATE);
-                int defaultValue = getResources().getInteger(0);
+                int defaultValue = 1;
                 long savedPref = sharedPref.getInt(getString(R.string.key), defaultValue);
 
                 if (savedPref == 0){
