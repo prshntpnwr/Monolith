@@ -3,12 +3,9 @@ package com.example.prashant.monolith.fragments;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
@@ -25,7 +22,6 @@ import com.example.prashant.monolith.data.GalleryContract;
 import com.example.prashant.monolith.data.GalleryLoader;
 import com.example.prashant.monolith.galleryObjects.Results;
 import com.example.prashant.monolith.galleryObjects.UnsplashGalleryInterface;
-import com.joaquimley.faboptions.FabOptions;
 
 import java.util.ArrayList;
 
@@ -63,8 +59,7 @@ public class GalleryFragment extends Fragment implements
         mRecyclerView = (RecyclerView) mRootView.findViewById(R.id.recycler_view);
 
         int mTag = getArguments().getInt("query_param");
-
-        Log.d(TAG + "onCreate tag :", String.valueOf(mTag));
+//        Log.d(TAG + "onCreate tag :", String.valueOf(mTag));
 ////        FloatingActionButton fab = (FloatingActionButton) mRootView.findViewById(R.id.fab);
 //        fabOptions.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -117,7 +112,7 @@ public class GalleryFragment extends Fragment implements
 
                 int length = response.body().getResults().size();
                 for (int i = 0; i < length; i++) {
-                    Log.d( TAG + " Result from unsplash ", i + " " + response.body().getResults()
+                    Log.d(TAG + " Result from unsplash ", i + " " + response.body().getResults()
                             .get(i).getCoverPhoto().getUrls().getRegular());
 
                     result = response.body().getResults().get(i).getCoverPhoto().getUrls().getRegular();
@@ -203,7 +198,7 @@ public class GalleryFragment extends Fragment implements
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        GalleryAdapter adapter = new GalleryAdapter( data);
+        GalleryAdapter adapter = new GalleryAdapter(data);
         adapter.setHasStableIds(true);
         mRecyclerView.setAdapter(adapter);
         int columnCount = getResources().getInteger(R.integer.list_column_count);

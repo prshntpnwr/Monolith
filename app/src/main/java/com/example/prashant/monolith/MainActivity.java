@@ -23,6 +23,7 @@ import com.example.prashant.monolith.fragments.ArticleFragment;
 import com.example.prashant.monolith.fragments.GalleryFragment;
 import com.joaquimley.faboptions.FabOptions;
 
+import java.security.PublicKey;
 import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -36,7 +37,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      * {@link android.support.v4.app.FragmentStatePagerAdapter}.
      */
     private SectionsPagerAdapter mSectionsPagerAdapter;
-    private View.OnClickListener mListener;
     private final String TAG = MainActivity.class.getSimpleName();
 
     /**
@@ -45,7 +45,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ViewPager mViewPager;
     private TabLayout tabLayout;
     public static String POSITION = "position";
-    //public static final String pref = "key";
     public String tag;
     private int savedPref;
 
@@ -142,8 +141,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             default:
         }
-
-      //  Log.d(TAG + "tag in onClick : ", tag);
     }
 
     public void DialogSelection() {
@@ -208,6 +205,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             bundle.putInt("query_param", savedPref);
             GalleryFragment galleryFragment = new GalleryFragment();
             galleryFragment.setArguments(bundle);
+
         }
     };
 
