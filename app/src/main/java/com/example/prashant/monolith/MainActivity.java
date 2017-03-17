@@ -26,7 +26,7 @@ import com.joaquimley.faboptions.FabOptions;
 import java.security.PublicKey;
 import java.util.Arrays;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, SharedPreferences.OnSharedPreferenceChangeListener {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -87,7 +87,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         FabOptions fabOptions = (FabOptions) findViewById(R.id.fab_options);
         fabOptions.setButtonsMenu(R.menu.gallery_fab);
         fabOptions.setOnClickListener(this);
-
     }
 
     @Override
@@ -159,10 +158,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         editor.putInt(getString(R.string.key), selectedPosition);
                         editor.apply();
 
-                        //read from sharePreferences
-                        //SharedPreferences sharedPref = getPreferences(MODE_PRIVATE);
-                        int defaultValue = 0;
-                        savedPref = sharedPref.getInt(getString(R.string.key), defaultValue);
+                        Bundle bundle = new Bundle();
+                        bundle.putInt("query_param", selectedPosition);
+                        GalleryFragment galleryFragment = new GalleryFragment();
+                        galleryFragment.setArguments(bundle);
+
+//                        //read from sharePreferences
+//                        //SharedPreferences sharedPref = getPreferences(MODE_PRIVATE);
+//                        int defaultValue = 0;
+//                        savedPref = sharedPref.getInt(getString(R.string.key), defaultValue);
 
                         //check this condition in Gallery Fragment
 //                        if (savedPref == 0){
@@ -198,27 +202,41 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .show();
     }
 
-    SharedPreferences.OnSharedPreferenceChangeListener mPrefListner = new SharedPreferences.OnSharedPreferenceChangeListener(){
-        public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
-            savedPref = Integer.valueOf(String.valueOf(prefs));
-            Bundle bundle = new Bundle();
-            bundle.putInt("query_param", savedPref);
-            GalleryFragment galleryFragment = new GalleryFragment();
-            galleryFragment.setArguments(bundle);
-
-        }
-    };
+//    SharedPreferences.OnSharedPreferenceChangeListener mPrefListner = new SharedPreferences.OnSharedPreferenceChangeListener(){
+//        public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
+//            savedPref = Integer.valueOf(String.valueOf(prefs));
+//            Bundle bundle = new Bundle();
+//            bundle.putInt("query_param", savedPref);
+//            GalleryFragment galleryFragment = new GalleryFragment();
+//            galleryFragment.setArguments(bundle);
+//
+////            getSupportFragmentManager().beginTransaction()
+////                    .replace(R.id.main_content, new GalleryFragment())
+////                    .commit();
+//
+//        }
+//    };
+//
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//        getSharedPreferences(getString(R.string.key), savedPref).registerOnSharedPreferenceChangeListener(mPrefListner);
+//    }
+//
+//    @Override
+//    protected void onPause() {
+//        super.onPause();
+//        getSharedPreferences(getString(R.string.key), savedPref).unregisterOnSharedPreferenceChangeListener(mPrefListner);
+//    }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        getSharedPreferences(getString(R.string.key), savedPref).registerOnSharedPreferenceChangeListener(mPrefListner);
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        getSharedPreferences(getString(R.string.key), savedPref).unregisterOnSharedPreferenceChangeListener(mPrefListner);
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        savedPref = Integer.valueOf(String.valueOf(sharedPreferences));
+        Log.d(TAG + "onSharedPreference", String.valueOf(savedPref));
+        Bundle bundle = new Bundle();
+        bundle.putInt("query_param", savedPref);
+        GalleryFragment galleryFragment = new GalleryFragment();
+        galleryFragment.setArguments(bundle);
     }
 
     /**

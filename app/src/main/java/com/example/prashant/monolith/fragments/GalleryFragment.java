@@ -3,6 +3,7 @@ package com.example.prashant.monolith.fragments;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -33,7 +34,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class GalleryFragment extends Fragment implements
-        LoaderManager.LoaderCallbacks<Cursor> {
+        LoaderManager.LoaderCallbacks<Cursor>, SharedPreferences.OnSharedPreferenceChangeListener{
 
     private final String TAG = GalleryFragment.class.getSimpleName();
 
@@ -42,6 +43,7 @@ public class GalleryFragment extends Fragment implements
     LoaderManager.LoaderCallbacks callbacks;
     private Cursor mCursor;
     public Context mContext;
+    private int mTag;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -58,8 +60,14 @@ public class GalleryFragment extends Fragment implements
 
         mRecyclerView = (RecyclerView) mRootView.findViewById(R.id.recycler_view);
 
-        int mTag = getArguments().getInt("query_param");
-//        Log.d(TAG + "onCreate tag :", String.valueOf(mTag));
+        //causing NPE
+//        try{
+//            int mTag = getArguments().getInt("query_param");
+//            Log.d(TAG + "onCreate tag :", String.valueOf(mTag));
+//        }catch (Exception e){
+//            e.printStackTrace();
+//        }
+
 ////        FloatingActionButton fab = (FloatingActionButton) mRootView.findViewById(R.id.fab);
 //        fabOptions.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -68,6 +76,7 @@ public class GalleryFragment extends Fragment implements
 //                        .setAction("Action", null).show();
 //            }
 //        });
+        
         return mRootView;
     }
 
@@ -85,6 +94,23 @@ public class GalleryFragment extends Fragment implements
     }
 
     public void ImageFetchTask(final Context context) {
+        String query_tag = null;
+
+        if (mTag == 0){
+            query_tag = "stars";
+            Log.d("TAG" , query_tag);}
+        else if (mTag == 1){
+            query_tag = "Nasa";
+            Log.d("TAG" , query_tag);}
+        else if (mTag == 2){
+            query_tag = "Earth";
+            Log.d("TAG" , query_tag);}
+        else if (mTag == 3){
+            query_tag = "night-sky";
+            Log.d("TAG" , query_tag);}
+        else if (mTag == 4){
+            query_tag = "Nebula";
+            Log.d("TAG" , query_tag);}
 
         String API_BASE_URL = "https://api.unsplash.com/";
 
@@ -96,7 +122,7 @@ public class GalleryFragment extends Fragment implements
 
         UnsplashGalleryInterface service = retrofit.create(UnsplashGalleryInterface.class);
 
-        Call<Results> call = service.result(1, 30, "earth", "2f12038a9af628b150d141d9532b923e25818d649175c229f4d954b7f1033ef7");
+        Call<Results> call = service.result(1, 30, query_tag, "2f12038a9af628b150d141d9532b923e25818d649175c229f4d954b7f1033ef7");
 
         call.enqueue(new Callback<Results>() {
 
@@ -210,5 +236,10 @@ public class GalleryFragment extends Fragment implements
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
         mRecyclerView.setAdapter(null);
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        mTag = getArguments().getInt("query_param");
     }
 }
