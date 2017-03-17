@@ -1,4 +1,3 @@
-
 package com.example.prashant.monolith;
 
 import android.content.DialogInterface;
@@ -50,12 +49,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public String tag;
     private int savedPref;
 
-    SharedPreferences.OnSharedPreferenceChangeListener mPrefListner = new SharedPreferences.OnSharedPreferenceChangeListener(){
-        public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
-            savedPref = Integer.valueOf(String.valueOf(prefs));
-        }
-    };
-
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -95,11 +88,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         FabOptions fabOptions = (FabOptions) findViewById(R.id.fab_options);
         fabOptions.setButtonsMenu(R.menu.gallery_fab);
         fabOptions.setOnClickListener(this);
-
-
-//        Intent intent = new Intent(this, GalleryFragment.class);
-//        intent.putExtra("query_param", tag);
-//        startActivity(intent);
 
 //        Bundle bundle = new Bundle();
 //        bundle.putString("query_param", tag);
@@ -146,27 +134,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.fab_page:
 
                 DialogSelection();
-                SharedPreferences sharedPref = getPreferences(MODE_PRIVATE);
-                int defaultValue = 0;
-                savedPref = sharedPref.getInt(getString(R.string.key), defaultValue);
-
-                if (savedPref == 0){
-                    tag = "Nasa";
-                    Log.d("TAG" , tag);}
-                else if (savedPref == 1){
-                    tag = "stars";
-                    Log.d("TAG" , tag);}
-                else if (savedPref == 2){
-                    tag = "Earth";
-                    Log.d("TAG" , tag);}
-                else if (savedPref == 3){
-                    tag = "night-sky";
-                    Log.d("TAG" , tag);}
-                else if (savedPref == 4){
-                    tag = "Nebula";
-                    Log.d("TAG" , tag);}
-
-//                Log.d(TAG + "tag in onClick : ", tag);
 
                 break;
 
@@ -196,7 +163,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             default:
         }
 
-        Log.d(TAG + "tag in onClick : ", tag);
+      //  Log.d(TAG + "tag in onClick : ", tag);
     }
 
     public void DialogSelection() {
@@ -214,6 +181,34 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         SharedPreferences.Editor editor = sharedPref.edit();
                         editor.putInt(getString(R.string.key), selectedPosition);
                         editor.apply();
+
+                        //read from sharePreferences
+                        //SharedPreferences sharedPref = getPreferences(MODE_PRIVATE);
+                        int defaultValue = 0;
+                        savedPref = sharedPref.getInt(getString(R.string.key), defaultValue);
+
+                        if (savedPref == 0){
+                            tag = "Nasa";
+                            Log.d("TAG" , tag);}
+                        else if (savedPref == 1){
+                            tag = "stars";
+                            Log.d("TAG" , tag);}
+                        else if (savedPref == 2){
+                            tag = "Earth";
+                            Log.d("TAG" , tag);}
+                        else if (savedPref == 3){
+                            tag = "night-sky";
+                            Log.d("TAG" , tag);}
+                        else if (savedPref == 4){
+                            tag = "Nebula";
+                            Log.d("TAG" , tag);}
+
+                        Log.e(TAG + "tag inside dialog box", tag);
+//                        //save String tag in bundle and
+//                        Bundle bundle = new Bundle();
+//                        bundle.putString("query_param", tag);
+//                        GalleryFragment galleryFragment = new GalleryFragment();
+//                        galleryFragment.setArguments(bundle);
                     }
 
                 })
@@ -226,28 +221,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .show();
     }
 
-    //   private void SavePreferences(String key, int value) {
-//        SharedPreferences sharedPreferences = getPreferences(MODE_PRIVATE);
-//        SharedPreferences.Editor editor = sharedPreferences.edit();
-//        editor.putInt(key, value);
-//        editor.apply();
-//    }
-
-
     @Override
     protected void onResume() {
         super.onResume();
         getSharedPreferences(getString(R.string.key), savedPref).registerOnSharedPreferenceChangeListener(mPrefListner);
     }
 
-
-
     @Override
     protected void onPause() {
         super.onPause();
         getSharedPreferences(getString(R.string.key), savedPref).unregisterOnSharedPreferenceChangeListener(mPrefListner);
-
     }
+
+    SharedPreferences.OnSharedPreferenceChangeListener mPrefListner = new SharedPreferences.OnSharedPreferenceChangeListener(){
+        public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
+            savedPref = Integer.valueOf(String.valueOf(prefs));
+        }
+    };
+
 
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to

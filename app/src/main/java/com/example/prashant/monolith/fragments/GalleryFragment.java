@@ -63,8 +63,9 @@ public class GalleryFragment extends Fragment implements
 
         mRecyclerView = (RecyclerView) mRootView.findViewById(R.id.recycler_view);
 
+//        mtag = this.getArguments().getString("query_param");
+//
 //       if (mtag != null) {
-//           mtag = this.getArguments().getString("query_param");
 //           Log.d(TAG + "onCreate tag :", mtag);
 //       }
 
