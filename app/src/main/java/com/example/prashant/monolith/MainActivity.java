@@ -50,6 +50,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public String tag;
     private int savedPref;
 
+    SharedPreferences.OnSharedPreferenceChangeListener mPrefListner = new SharedPreferences.OnSharedPreferenceChangeListener(){
+        public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
+            savedPref = Integer.valueOf(String.valueOf(prefs));
+        }
+    };
+
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -90,27 +96,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         fabOptions.setButtonsMenu(R.menu.gallery_fab);
         fabOptions.setOnClickListener(this);
 
-        SharedPreferences sharedPref = getPreferences(MODE_PRIVATE);
-        int defaultValue = 0;
-        savedPref = sharedPref.getInt(getString(R.string.key), defaultValue);
-
-        if (savedPref == 0){
-            tag = "Nasa";
-            Log.d("TAG" , tag);}
-        else if (savedPref == 1){
-            tag = "stars";
-            Log.d("TAG" , tag);}
-        else if (savedPref == 2){
-            tag = "Earth";
-            Log.d("TAG" , tag);}
-        else if (savedPref == 3){
-            tag = "night-sky";
-            Log.d("TAG" , tag);}
-        else if (savedPref == 4){
-            tag = "Nebula";
-            Log.d("TAG" , tag);}
-
-        Log.d(TAG + "tag in onClick : ", tag);
 
 //        Intent intent = new Intent(this, GalleryFragment.class);
 //        intent.putExtra("query_param", tag);
@@ -161,6 +146,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.fab_page:
 
                 DialogSelection();
+                SharedPreferences sharedPref = getPreferences(MODE_PRIVATE);
+                int defaultValue = 0;
+                savedPref = sharedPref.getInt(getString(R.string.key), defaultValue);
+
+                if (savedPref == 0){
+                    tag = "Nasa";
+                    Log.d("TAG" , tag);}
+                else if (savedPref == 1){
+                    tag = "stars";
+                    Log.d("TAG" , tag);}
+                else if (savedPref == 2){
+                    tag = "Earth";
+                    Log.d("TAG" , tag);}
+                else if (savedPref == 3){
+                    tag = "night-sky";
+                    Log.d("TAG" , tag);}
+                else if (savedPref == 4){
+                    tag = "Nebula";
+                    Log.d("TAG" , tag);}
+
+//                Log.d(TAG + "tag in onClick : ", tag);
+
                 break;
 
             //try adding refresh and fetch data again
@@ -188,13 +195,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             default:
         }
-    }
 
-    SharedPreferences.OnSharedPreferenceChangeListener mPrefListner = new SharedPreferences.OnSharedPreferenceChangeListener(){
-        public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
-            savedPref = Integer.valueOf(String.valueOf(prefs));
-        }
-    };
+        Log.d(TAG + "tag in onClick : ", tag);
+    }
 
     public void DialogSelection() {
 
@@ -211,8 +214,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         SharedPreferences.Editor editor = sharedPref.edit();
                         editor.putInt(getString(R.string.key), selectedPosition);
                         editor.apply();
-                        Log.d(TAG + "tag in onClick : ", tag);
                     }
+
                 })
                 .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
@@ -230,12 +233,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        editor.apply();
 //    }
 
+
     @Override
     protected void onResume() {
         super.onResume();
         getSharedPreferences(getString(R.string.key), savedPref).registerOnSharedPreferenceChangeListener(mPrefListner);
     }
-    
+
+
+
     @Override
     protected void onPause() {
         super.onPause();
