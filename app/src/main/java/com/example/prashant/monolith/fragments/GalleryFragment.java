@@ -33,8 +33,10 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import static android.content.Context.MODE_PRIVATE;
+
 public class GalleryFragment extends Fragment implements
-        LoaderManager.LoaderCallbacks<Cursor>, SharedPreferences.OnSharedPreferenceChangeListener{
+        LoaderManager.LoaderCallbacks<Cursor> {
 
     private final String TAG = GalleryFragment.class.getSimpleName();
 
@@ -44,6 +46,7 @@ public class GalleryFragment extends Fragment implements
     private Cursor mCursor;
     public Context mContext;
     private int mTag;
+    private int tag;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -60,13 +63,11 @@ public class GalleryFragment extends Fragment implements
 
         mRecyclerView = (RecyclerView) mRootView.findViewById(R.id.recycler_view);
 
-        //causing NPE
-//        try{
-//            int mTag = getArguments().getInt("query_param");
-//            Log.d(TAG + "onCreate tag :", String.valueOf(mTag));
-//        }catch (Exception e){
-//            e.printStackTrace();
-//        }
+        SharedPreferences sharedPref = getActivity().getSharedPreferences(getString(R.string.key), 0);
+        int defaultValue = 0;
+        tag = sharedPref.getInt(getString(R.string.key), defaultValue);
+
+        Log.d(TAG + " Main activity response", String.valueOf(tag));
 
 ////        FloatingActionButton fab = (FloatingActionButton) mRootView.findViewById(R.id.fab);
 //        fabOptions.setOnClickListener(new View.OnClickListener() {
@@ -76,7 +77,7 @@ public class GalleryFragment extends Fragment implements
 //                        .setAction("Action", null).show();
 //            }
 //        });
-        
+
         return mRootView;
     }
 
@@ -96,19 +97,19 @@ public class GalleryFragment extends Fragment implements
     public void ImageFetchTask(final Context context) {
         String query_tag = null;
 
-        if (mTag == 0){
+        if (tag == 0){
             query_tag = "stars";
             Log.d("TAG" , query_tag);}
-        else if (mTag == 1){
+        else if (tag == 1){
             query_tag = "Nasa";
             Log.d("TAG" , query_tag);}
-        else if (mTag == 2){
+        else if (tag == 2){
             query_tag = "Earth";
             Log.d("TAG" , query_tag);}
-        else if (mTag == 3){
+        else if (tag == 3){
             query_tag = "night-sky";
             Log.d("TAG" , query_tag);}
-        else if (mTag == 4){
+        else if (tag == 4){
             query_tag = "Nebula";
             Log.d("TAG" , query_tag);}
 
@@ -238,8 +239,4 @@ public class GalleryFragment extends Fragment implements
         mRecyclerView.setAdapter(null);
     }
 
-    @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        mTag = getArguments().getInt("query_param");
-    }
 }

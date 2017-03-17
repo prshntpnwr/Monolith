@@ -26,7 +26,7 @@ import com.joaquimley.faboptions.FabOptions;
 import java.security.PublicKey;
 import java.util.Arrays;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, SharedPreferences.OnSharedPreferenceChangeListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -45,8 +45,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ViewPager mViewPager;
     private TabLayout tabLayout;
     public static String POSITION = "position";
-    public String tag;
-    private int savedPref;
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
@@ -148,49 +146,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         new AlertDialog.Builder(this)
                 .setTitle("Select a category")
-                .setSingleChoiceItems(mCategory, savedPref, null)
+                .setSingleChoiceItems(mCategory, 0, null)
                 .setPositiveButton("ok", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         int selectedPosition = ((AlertDialog) dialog).getListView().getCheckedItemPosition();
 
-                        SharedPreferences sharedPref = getPreferences(MODE_PRIVATE);
+                        SharedPreferences sharedPref = getSharedPreferences(getString(R.string.key), 0);
                         SharedPreferences.Editor editor = sharedPref.edit();
                         editor.putInt(getString(R.string.key), selectedPosition);
                         editor.apply();
 
-                        Bundle bundle = new Bundle();
-                        bundle.putInt("query_param", selectedPosition);
-                        GalleryFragment galleryFragment = new GalleryFragment();
-                        galleryFragment.setArguments(bundle);
+                        getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.main_content, new GalleryFragment())
+                                .commit();
 
-//                        //read from sharePreferences
-//                        //SharedPreferences sharedPref = getPreferences(MODE_PRIVATE);
-//                        int defaultValue = 0;
-//                        savedPref = sharedPref.getInt(getString(R.string.key), defaultValue);
-
-                        //check this condition in Gallery Fragment
-//                        if (savedPref == 0){
-//                            tag = "Nasa";
-//                            Log.d("TAG" , tag);}
-//                        else if (savedPref == 1){
-//                            tag = "stars";
-//                            Log.d("TAG" , tag);}
-//                        else if (savedPref == 2){
-//                            tag = "Earth";
-//                            Log.d("TAG" , tag);}
-//                        else if (savedPref == 3){
-//                            tag = "night-sky";
-//                            Log.d("TAG" , tag);}
-//                        else if (savedPref == 4){
-//                            tag = "Nebula";
-//                            Log.d("TAG" , tag);}
-//
-//                        Log.e(TAG + "tag inside dialog box", tag);
-////                        //save String tag in bundle and
-//                        Bundle bundle = new Bundle();
-//                        bundle.putString("query_param", tag);
-//                        GalleryFragment galleryFragment = new GalleryFragment();
-//                        galleryFragment.setArguments(bundle);
                     }
                 })
                 .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
@@ -200,43 +169,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     }
                 })
                 .show();
-    }
-
-//    SharedPreferences.OnSharedPreferenceChangeListener mPrefListner = new SharedPreferences.OnSharedPreferenceChangeListener(){
-//        public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
-//            savedPref = Integer.valueOf(String.valueOf(prefs));
-//            Bundle bundle = new Bundle();
-//            bundle.putInt("query_param", savedPref);
-//            GalleryFragment galleryFragment = new GalleryFragment();
-//            galleryFragment.setArguments(bundle);
-//
-////            getSupportFragmentManager().beginTransaction()
-////                    .replace(R.id.main_content, new GalleryFragment())
-////                    .commit();
-//
-//        }
-//    };
-//
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-//        getSharedPreferences(getString(R.string.key), savedPref).registerOnSharedPreferenceChangeListener(mPrefListner);
-//    }
-//
-//    @Override
-//    protected void onPause() {
-//        super.onPause();
-//        getSharedPreferences(getString(R.string.key), savedPref).unregisterOnSharedPreferenceChangeListener(mPrefListner);
-//    }
-
-    @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        savedPref = Integer.valueOf(String.valueOf(sharedPreferences));
-        Log.d(TAG + "onSharedPreference", String.valueOf(savedPref));
-        Bundle bundle = new Bundle();
-        bundle.putInt("query_param", savedPref);
-        GalleryFragment galleryFragment = new GalleryFragment();
-        galleryFragment.setArguments(bundle);
     }
 
     /**
