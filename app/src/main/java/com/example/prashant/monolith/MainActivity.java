@@ -48,6 +48,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static String POSITION = "position";
     //public static final String pref = "key";
     public String tag;
+    private int savedPref;
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
@@ -88,6 +89,40 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         FabOptions fabOptions = (FabOptions) findViewById(R.id.fab_options);
         fabOptions.setButtonsMenu(R.menu.gallery_fab);
         fabOptions.setOnClickListener(this);
+
+        SharedPreferences sharedPref = getPreferences(MODE_PRIVATE);
+        int defaultValue = 0;
+        savedPref = sharedPref.getInt(getString(R.string.key), defaultValue);
+
+        if (savedPref == 0){
+            tag = "Nasa";
+            Log.d("TAG" , tag);}
+        else if (savedPref == 1){
+            tag = "stars";
+            Log.d("TAG" , tag);}
+        else if (savedPref == 2){
+            tag = "Earth";
+            Log.d("TAG" , tag);}
+        else if (savedPref == 3){
+            tag = "night-sky";
+            Log.d("TAG" , tag);}
+        else if (savedPref == 4){
+            tag = "Nebula";
+            Log.d("TAG" , tag);}
+
+        Log.d(TAG + "tag in onClick : ", tag);
+
+//        Intent intent = new Intent(this, GalleryFragment.class);
+//        intent.putExtra("query_param", tag);
+//        startActivity(intent);
+
+//        Bundle bundle = new Bundle();
+//        bundle.putString("query_param", tag);
+//        GalleryFragment galleryFragment = new GalleryFragment();
+//        galleryFragment.setArguments(bundle);
+//
+//        Log.d(TAG + "onCreate bundle", bundle.toString());
+
 //
 //        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 //        fab.setOnClickListener(new View.OnClickListener() {
@@ -124,29 +159,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.fab_page:
+
                 DialogSelection();
-
-                SharedPreferences sharedPref = getPreferences(MODE_PRIVATE);
-                int defaultValue = 1;
-                long savedPref = sharedPref.getInt(getString(R.string.key), defaultValue);
-
-                if (savedPref == 0){
-                    tag = "Nasa";
-                    Log.d("TAG" , tag);}
-                else if (savedPref == 1){
-                    tag = "Space";
-                    Log.d("TAG" , tag);}
-                else if (savedPref == 2){
-                    tag = "Earth";
-                    Log.d("TAG" , tag);}
-                else if (savedPref == 3){
-                    tag = "Galaxy";
-                    Log.d("TAG" , tag);}
-                else if (savedPref == 4){
-                    tag = "Universe";
-                    Log.d("TAG" , tag);}
-
-                Log.d(TAG + "tag in onClick : ", tag);
                 break;
 
             //try adding refresh and fetch data again
@@ -176,13 +190,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    SharedPreferences.OnSharedPreferenceChangeListener mPrefListner = new SharedPreferences.OnSharedPreferenceChangeListener(){
+        public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
+            savedPref = Integer.valueOf(String.valueOf(prefs));
+        }
+    };
+
     public void DialogSelection() {
 
         String [] mCategory = getResources().getStringArray(R.array.Category);
 
         new AlertDialog.Builder(this)
                 .setTitle("Select a category")
-                .setSingleChoiceItems(mCategory, 1, null)
+                .setSingleChoiceItems(mCategory, savedPref, null)
                 .setPositiveButton("ok", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         int selectedPosition = ((AlertDialog) dialog).getListView().getCheckedItemPosition();
@@ -191,8 +211,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         SharedPreferences.Editor editor = sharedPref.edit();
                         editor.putInt(getString(R.string.key), selectedPosition);
                         editor.apply();
-
-                        //SavePreferences(pref, selectedPosition);
+                        Log.d(TAG + "tag in onClick : ", tag);
                     }
                 })
                 .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
@@ -210,6 +229,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        editor.putInt(key, value);
 //        editor.apply();
 //    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getSharedPreferences(getString(R.string.key), savedPref).registerOnSharedPreferenceChangeListener(mPrefListner);
+    }
+    
+    @Override
+    protected void onPause() {
+        super.onPause();
+        getSharedPreferences(getString(R.string.key), savedPref).unregisterOnSharedPreferenceChangeListener(mPrefListner);
+
+    }
 
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to

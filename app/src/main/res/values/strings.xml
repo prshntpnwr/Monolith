@@ -7,14 +7,7 @@
     <string name="action_share">Share</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
-    <string-array name="Category">
-        <item>Nasa</item>
-        <item>Space</item>
-        <item>Earth</item>
-        <item>Galaxy</item>
-        <item>Universe</item>
-    </string-array>
-
     <string name="key">Pref_key</string>
+    <string name="category">Category</string>
 
 </resources>

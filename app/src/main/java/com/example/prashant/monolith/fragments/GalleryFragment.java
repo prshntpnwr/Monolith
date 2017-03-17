@@ -3,6 +3,7 @@ package com.example.prashant.monolith.fragments;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -42,8 +43,10 @@ public class GalleryFragment extends Fragment implements
 
     private RecyclerView mRecyclerView;
     public ArrayList<String> imageList = new ArrayList<>();
+    LoaderManager.LoaderCallbacks callbacks;
     private Cursor mCursor;
     public Context mContext;
+    private String mtag;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -59,6 +62,11 @@ public class GalleryFragment extends Fragment implements
         View mRootView = inflater.inflate(R.layout.fragment_gallery, container, false);
 
         mRecyclerView = (RecyclerView) mRootView.findViewById(R.id.recycler_view);
+
+//       if (mtag != null) {
+//           mtag = this.getArguments().getString("query_param");
+//           Log.d(TAG + "onCreate tag :", mtag);
+//       }
 
 ////        FloatingActionButton fab = (FloatingActionButton) mRootView.findViewById(R.id.fab);
 //        fabOptions.setOnClickListener(new View.OnClickListener() {
@@ -86,6 +94,8 @@ public class GalleryFragment extends Fragment implements
     }
 
     public void ImageFetchTask(final Context context) {
+       // String category_tag = getActivity().getIntent().getStringExtra("category");
+      //  Log.d(TAG + "MainActivity onClick : ", category_tag);
 
         String API_BASE_URL = "https://api.unsplash.com/";
 
@@ -97,7 +107,7 @@ public class GalleryFragment extends Fragment implements
 
         UnsplashGalleryInterface service = retrofit.create(UnsplashGalleryInterface.class);
 
-        Call<Results> call = service.result(1, 30, "space", "2f12038a9af628b150d141d9532b923e25818d649175c229f4d954b7f1033ef7");
+        Call<Results> call = service.result(1, 30, "earth", "2f12038a9af628b150d141d9532b923e25818d649175c229f4d954b7f1033ef7");
 
         call.enqueue(new Callback<Results>() {
 
