@@ -89,22 +89,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         fabOptions.setButtonsMenu(R.menu.gallery_fab);
         fabOptions.setOnClickListener(this);
 
-//        Bundle bundle = new Bundle();
-//        bundle.putString("query_param", tag);
-//        GalleryFragment galleryFragment = new GalleryFragment();
-//        galleryFragment.setArguments(bundle);
-//
-//        Log.d(TAG + "onCreate bundle", bundle.toString());
-
-//
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
     }
 
     @Override
@@ -120,7 +104,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
@@ -132,15 +115,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.fab_page:
-
                 DialogSelection();
-
                 break;
 
             //try adding refresh and fetch data again
             case R.id.fab_refresh:
                 // TODO: animate Refresh
-
                 GalleryFragment galleryFragment = new GalleryFragment();
                 galleryFragment.ImageFetchTask(this);
 
@@ -187,30 +167,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         int defaultValue = 0;
                         savedPref = sharedPref.getInt(getString(R.string.key), defaultValue);
 
-                        if (savedPref == 0){
-                            tag = "Nasa";
-                            Log.d("TAG" , tag);}
-                        else if (savedPref == 1){
-                            tag = "stars";
-                            Log.d("TAG" , tag);}
-                        else if (savedPref == 2){
-                            tag = "Earth";
-                            Log.d("TAG" , tag);}
-                        else if (savedPref == 3){
-                            tag = "night-sky";
-                            Log.d("TAG" , tag);}
-                        else if (savedPref == 4){
-                            tag = "Nebula";
-                            Log.d("TAG" , tag);}
-
-                        Log.e(TAG + "tag inside dialog box", tag);
-//                        //save String tag in bundle and
+                        //check this condition in Gallery Fragment
+//                        if (savedPref == 0){
+//                            tag = "Nasa";
+//                            Log.d("TAG" , tag);}
+//                        else if (savedPref == 1){
+//                            tag = "stars";
+//                            Log.d("TAG" , tag);}
+//                        else if (savedPref == 2){
+//                            tag = "Earth";
+//                            Log.d("TAG" , tag);}
+//                        else if (savedPref == 3){
+//                            tag = "night-sky";
+//                            Log.d("TAG" , tag);}
+//                        else if (savedPref == 4){
+//                            tag = "Nebula";
+//                            Log.d("TAG" , tag);}
+//
+//                        Log.e(TAG + "tag inside dialog box", tag);
+////                        //save String tag in bundle and
 //                        Bundle bundle = new Bundle();
 //                        bundle.putString("query_param", tag);
 //                        GalleryFragment galleryFragment = new GalleryFragment();
 //                        galleryFragment.setArguments(bundle);
                     }
-
                 })
                 .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
@@ -220,6 +200,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 })
                 .show();
     }
+
+    SharedPreferences.OnSharedPreferenceChangeListener mPrefListner = new SharedPreferences.OnSharedPreferenceChangeListener(){
+        public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
+            savedPref = Integer.valueOf(String.valueOf(prefs));
+            Bundle bundle = new Bundle();
+            bundle.putInt("query_param", savedPref);
+            GalleryFragment galleryFragment = new GalleryFragment();
+            galleryFragment.setArguments(bundle);
+        }
+    };
 
     @Override
     protected void onResume() {
@@ -232,13 +222,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onPause();
         getSharedPreferences(getString(R.string.key), savedPref).unregisterOnSharedPreferenceChangeListener(mPrefListner);
     }
-
-    SharedPreferences.OnSharedPreferenceChangeListener mPrefListner = new SharedPreferences.OnSharedPreferenceChangeListener(){
-        public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
-            savedPref = Integer.valueOf(String.valueOf(prefs));
-        }
-    };
-
 
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to

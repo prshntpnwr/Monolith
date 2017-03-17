@@ -46,7 +46,6 @@ public class GalleryFragment extends Fragment implements
     LoaderManager.LoaderCallbacks callbacks;
     private Cursor mCursor;
     public Context mContext;
-    private String mtag;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -63,12 +62,9 @@ public class GalleryFragment extends Fragment implements
 
         mRecyclerView = (RecyclerView) mRootView.findViewById(R.id.recycler_view);
 
-//        mtag = this.getArguments().getString("query_param");
-//
-//       if (mtag != null) {
-//           Log.d(TAG + "onCreate tag :", mtag);
-//       }
+        int mTag = getArguments().getInt("query_param");
 
+        Log.d(TAG + "onCreate tag :", String.valueOf(mTag));
 ////        FloatingActionButton fab = (FloatingActionButton) mRootView.findViewById(R.id.fab);
 //        fabOptions.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -77,7 +73,6 @@ public class GalleryFragment extends Fragment implements
 //                        .setAction("Action", null).show();
 //            }
 //        });
-
         return mRootView;
     }
 
@@ -95,8 +90,6 @@ public class GalleryFragment extends Fragment implements
     }
 
     public void ImageFetchTask(final Context context) {
-       // String category_tag = getActivity().getIntent().getStringExtra("category");
-      //  Log.d(TAG + "MainActivity onClick : ", category_tag);
 
         String API_BASE_URL = "https://api.unsplash.com/";
 
@@ -202,7 +195,6 @@ public class GalleryFragment extends Fragment implements
 //            }
 //        });
     }
-
 
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
