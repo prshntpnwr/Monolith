@@ -8,6 +8,10 @@
     android:fitsSystemWindows="true"
     tools:context="com.example.prashant.monolith.MainActivity">
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/main_content">
 
         <android.support.design.widget.AppBarLayout
             android:id="@+id/appbar"
@@ -33,12 +37,7 @@
 
         </android.support.design.widget.AppBarLayout>
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/main_content">
-
-    <android.support.v4.view.ViewPager
+        <android.support.v4.view.ViewPager
             android:id="@+id/container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
