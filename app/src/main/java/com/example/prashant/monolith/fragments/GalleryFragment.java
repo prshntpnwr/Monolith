@@ -33,8 +33,6 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import static android.content.Context.MODE_PRIVATE;
-
 public class GalleryFragment extends Fragment implements
         LoaderManager.LoaderCallbacks<Cursor> {
 
@@ -46,7 +44,7 @@ public class GalleryFragment extends Fragment implements
     private Cursor mCursor;
     public Context mContext;
     private int mTag;
-    private int tag;
+    GalleryAdapter adapter;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -65,9 +63,9 @@ public class GalleryFragment extends Fragment implements
 
         SharedPreferences sharedPref = getActivity().getSharedPreferences(getString(R.string.key), 0);
         int defaultValue = 0;
-        tag = sharedPref.getInt(getString(R.string.key), defaultValue);
+        mTag = sharedPref.getInt(getString(R.string.key), defaultValue);
 
-        Log.d(TAG + " Main activity response", String.valueOf(tag));
+        Log.d(TAG + " Main activity response", String.valueOf(mTag));
 
 ////        FloatingActionButton fab = (FloatingActionButton) mRootView.findViewById(R.id.fab);
 //        fabOptions.setOnClickListener(new View.OnClickListener() {
@@ -97,19 +95,19 @@ public class GalleryFragment extends Fragment implements
     public void ImageFetchTask(final Context context) {
         String query_tag = null;
 
-        if (tag == 0){
-            query_tag = "stars";
-            Log.d("TAG" , query_tag);}
-        else if (tag == 1){
+        if (mTag == 0){
             query_tag = "Nasa";
             Log.d("TAG" , query_tag);}
-        else if (tag == 2){
+        else if (mTag == 1){
+            query_tag = "stars";
+            Log.d("TAG" , query_tag);}
+        else if (mTag == 2){
             query_tag = "Earth";
             Log.d("TAG" , query_tag);}
-        else if (tag == 3){
+        else if (mTag == 3){
             query_tag = "night-sky";
             Log.d("TAG" , query_tag);}
-        else if (tag == 4){
+        else if (mTag == 4){
             query_tag = "Nebula";
             Log.d("TAG" , query_tag);}
 
@@ -225,7 +223,7 @@ public class GalleryFragment extends Fragment implements
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        GalleryAdapter adapter = new GalleryAdapter(data);
+        adapter = new GalleryAdapter(data);
         adapter.setHasStableIds(true);
         mRecyclerView.setAdapter(adapter);
         int columnCount = getResources().getInteger(R.integer.list_column_count);

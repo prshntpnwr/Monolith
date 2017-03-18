@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      */
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private final String TAG = MainActivity.class.getSimpleName();
+    private static final String GALLERYFRAGMENT_TAG = "GFTAG";
 
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -62,6 +63,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //Fragment fragment = getSupportFragmentManager().findFragmentByTag(GALLERYFRAGMENT_TAG);
+
+        // TODO: ask for user permissions  
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -114,7 +118,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 DialogSelection();
                 break;
 
-            //try adding refresh and fetch data again
+            //refresh and fetch data again
             case R.id.fab_refresh:
                 // TODO: animate Refresh
                 GalleryFragment galleryFragment = new GalleryFragment();
@@ -132,7 +136,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //                };
 //                Handler pdCanceller = new Handler();
 //                pdCanceller.postDelayed(progressRunnable, 3000);
-
                 Toast.makeText(this, "Refresh", Toast.LENGTH_SHORT).show();
                 break;
 
@@ -156,12 +159,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         editor.putInt(getString(R.string.key), selectedPosition);
                         editor.apply();
 
-                        getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.main_content, new GalleryFragment())
-                                .commit();
+                        getSupportFragmentManager().beginTransaction().
+                                add(R.id.main_content, new GalleryFragment(), GALLERYFRAGMENT_TAG).
+                                commit();
+
+                        Fragment fragment = getSupportFragmentManager().findFragmentByTag(GALLERYFRAGMENT_TAG);
+                        if(fragment != null)
+                            getSupportFragmentManager().beginTransaction().remove(fragment).commit();
 
                     }
                 })
+
                 .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         // do nothing
