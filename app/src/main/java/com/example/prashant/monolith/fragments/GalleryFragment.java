@@ -33,6 +33,8 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import static android.content.Context.MODE_PRIVATE;
+
 public class GalleryFragment extends Fragment implements
         LoaderManager.LoaderCallbacks<Cursor> {
 
@@ -44,7 +46,7 @@ public class GalleryFragment extends Fragment implements
     private Cursor mCursor;
     public Context mContext;
     private int mTag;
-    GalleryAdapter adapter;
+    private int tag;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -63,9 +65,9 @@ public class GalleryFragment extends Fragment implements
 
         SharedPreferences sharedPref = getActivity().getSharedPreferences(getString(R.string.key), 0);
         int defaultValue = 0;
-        mTag = sharedPref.getInt(getString(R.string.key), defaultValue);
+        tag = sharedPref.getInt(getString(R.string.key), defaultValue);
 
-        Log.d(TAG + " Main activity response", String.valueOf(mTag));
+        Log.d(TAG + " Main activity response", String.valueOf(tag));
 
 ////        FloatingActionButton fab = (FloatingActionButton) mRootView.findViewById(R.id.fab);
 //        fabOptions.setOnClickListener(new View.OnClickListener() {
@@ -95,19 +97,19 @@ public class GalleryFragment extends Fragment implements
     public void ImageFetchTask(final Context context) {
         String query_tag = null;
 
-        if (mTag == 0){
+        if (tag == 0){
             query_tag = "Nasa";
             Log.d("TAG" , query_tag);}
-        else if (mTag == 1){
+        else if (tag == 1){
             query_tag = "stars";
             Log.d("TAG" , query_tag);}
-        else if (mTag == 2){
+        else if (tag == 2){
             query_tag = "Earth";
             Log.d("TAG" , query_tag);}
-        else if (mTag == 3){
+        else if (tag == 3){
             query_tag = "night-sky";
             Log.d("TAG" , query_tag);}
-        else if (mTag == 4){
+        else if (tag == 4){
             query_tag = "Nebula";
             Log.d("TAG" , query_tag);}
 
@@ -121,14 +123,14 @@ public class GalleryFragment extends Fragment implements
 
         UnsplashGalleryInterface service = retrofit.create(UnsplashGalleryInterface.class);
 
-        Call<Results> call = service.result(1, 30, "earth", "2f12038a9af628b150d141d9532b923e25818d649175c229f4d954b7f1033ef7");
+        Call<Results> call = service.result(1, 30, query_tag, "2f12038a9af628b150d141d9532b923e25818d649175c229f4d954b7f1033ef7");
 
         call.enqueue(new Callback<Results>() {
 
             @Override
             public void onResponse(Call<Results> call, Response<Results> response) {
                 Log.d(TAG + " Response goes here ", response.toString());
-                String result = null;
+                String result;
 
                 int deleteRows = context.getContentResolver()
                         .delete(GalleryContract.GalleryEntry.CONTENT_URI, null, null);
@@ -181,6 +183,7 @@ public class GalleryFragment extends Fragment implements
                 Log.d(TAG + " Fail response from", "unsplash");
             }
         });
+
 //        String API_BASE_URL_f = "https://api.flickr.com/";
 //
 //        Retrofit retrofit_f = new Retrofit.Builder()
@@ -222,7 +225,7 @@ public class GalleryFragment extends Fragment implements
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        adapter = new GalleryAdapter(data);
+        GalleryAdapter adapter = new GalleryAdapter(data);
         adapter.setHasStableIds(true);
         mRecyclerView.setAdapter(adapter);
         int columnCount = getResources().getInteger(R.integer.list_column_count);

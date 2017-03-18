@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ViewPager mViewPager;
     private TabLayout tabLayout;
     public static String POSITION = "position";
+    int savedPref;
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
@@ -115,6 +116,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (v.getId()) {
             case R.id.fab_page:
                 DialogSelection();
+
                 break;
 
             //refresh and fetch data again
@@ -148,14 +150,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         new AlertDialog.Builder(this)
                 .setTitle("Select a category")
-                .setSingleChoiceItems(mCategory, 0, null)
+                .setSingleChoiceItems(mCategory, savedPref, null)
                 .setPositiveButton("ok", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         int selectedPosition = ((AlertDialog) dialog).getListView().getCheckedItemPosition();
+                        savedPref = selectedPosition;
 
                         SharedPreferences sharedPref = getSharedPreferences(getString(R.string.key), 0);
                         SharedPreferences.Editor editor = sharedPref.edit();
-                        editor.putInt(getString(R.string.key), selectedPosition);
+                        editor.putInt(getString(R.string.key), savedPref);
                         editor.apply();
 
                         getSupportFragmentManager().beginTransaction()
