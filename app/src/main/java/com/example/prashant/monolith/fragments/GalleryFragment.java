@@ -121,14 +121,14 @@ public class GalleryFragment extends Fragment implements
 
         UnsplashGalleryInterface service = retrofit.create(UnsplashGalleryInterface.class);
 
-        Call<Results> call = service.result(1, 30, query_tag, "2f12038a9af628b150d141d9532b923e25818d649175c229f4d954b7f1033ef7");
+        Call<Results> call = service.result(1, 30, "earth", "2f12038a9af628b150d141d9532b923e25818d649175c229f4d954b7f1033ef7");
 
         call.enqueue(new Callback<Results>() {
 
             @Override
             public void onResponse(Call<Results> call, Response<Results> response) {
                 Log.d(TAG + " Response goes here ", response.toString());
-                String result;
+                String result = null;
 
                 int deleteRows = context.getContentResolver()
                         .delete(GalleryContract.GalleryEntry.CONTENT_URI, null, null);
@@ -181,7 +181,6 @@ public class GalleryFragment extends Fragment implements
                 Log.d(TAG + " Fail response from", "unsplash");
             }
         });
-
 //        String API_BASE_URL_f = "https://api.flickr.com/";
 //
 //        Retrofit retrofit_f = new Retrofit.Builder()

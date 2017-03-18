@@ -63,7 +63,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //Fragment fragment = getSupportFragmentManager().findFragmentByTag(GALLERYFRAGMENT_TAG);
 
         // TODO: ask for user permissions  
 
@@ -160,9 +159,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         editor.apply();
 
                         getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.main_content, new GalleryFragment())
+                                .add(R.id.container, new GalleryFragment())
                                 .commit();
-
                     }
                 })
 
