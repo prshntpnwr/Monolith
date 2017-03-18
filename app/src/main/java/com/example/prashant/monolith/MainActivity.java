@@ -159,13 +159,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         editor.putInt(getString(R.string.key), selectedPosition);
                         editor.apply();
 
-                        getSupportFragmentManager().beginTransaction().
-                                add(R.id.main_content, new GalleryFragment(), GALLERYFRAGMENT_TAG).
-                                commit();
-
-                        Fragment fragment = getSupportFragmentManager().findFragmentByTag(GALLERYFRAGMENT_TAG);
-                        if(fragment != null)
-                            getSupportFragmentManager().beginTransaction().remove(fragment).commit();
+                        getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.main_content, new GalleryFragment())
+                                .commit();
 
                     }
                 })
