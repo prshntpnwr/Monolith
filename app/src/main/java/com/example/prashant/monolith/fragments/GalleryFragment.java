@@ -35,6 +35,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class GalleryFragment extends Fragment implements
         LoaderManager.LoaderCallbacks<Cursor> {
+    // TODO: RecyclerView images margin and padding
 
     private final String TAG = GalleryFragment.class.getSimpleName();
 
@@ -42,7 +43,6 @@ public class GalleryFragment extends Fragment implements
     public ArrayList<String> imageList = new ArrayList<>();
     LoaderManager.LoaderCallbacks callbacks;
     private Cursor mCursor;
-    public Context mContext;
     private int mTag;
     private int mPage = 1;
 
@@ -131,7 +131,7 @@ public class GalleryFragment extends Fragment implements
 
         UnsplashGalleryInterface service = retrofit.create(UnsplashGalleryInterface.class);
 
-        Call<Results> call = service.result(mPage, 30, query_tag, "2f12038a9af628b150d141d9532b923e25818d649175c229f4d954b7f1033ef7");
+        Call<Results> call = service.result(mPage, 30, query_tag, getResources().getString(R.string.unsplash_api_key));
 
         call.enqueue(new Callback<Results>() {
 

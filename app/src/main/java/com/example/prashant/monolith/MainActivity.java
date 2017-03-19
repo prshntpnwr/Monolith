@@ -22,7 +22,7 @@ import com.example.prashant.monolith.fragments.GalleryFragment;
 import com.joaquimley.faboptions.FabOptions;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-
+    // TODO: check for network connection and animate it  
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a

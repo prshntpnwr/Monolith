@@ -20,5 +20,6 @@
 
     <string name="wallpaper">Wallpaper</string>
     <string name="share">Share</string>
+    <string name="unsplash_api_key">2f12038a9af628b150d141d9532b923e25818d649175c229f4d954b7f1033ef7</string>
 
 </resources>
