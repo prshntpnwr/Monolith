@@ -2,8 +2,44 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
-    <dimen name="fab_margin">16dp</dimen>
     <dimen name="appbar_padding_top">8dp</dimen>
 
     <integer name="list_column_count">2</integer>
+
+    <dimen name="max_width">400dp</dimen>
+
+    <!--fab-->
+    <dimen name="fab_elevation">6dp</dimen>
+    <dimen name="fab_press_translation_z">6dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="fab_bottom_margin">48dp</dimen>
+
+    <!--article-->
+    <dimen name="app_bar_height">112dp</dimen>
+    <dimen name="app_bar_elevation">4dp</dimen>
+    <dimen name="app_bar_elevation_article_list">10dp</dimen>
+    <dimen name="detail_inner_horizontal_margin">16dp</dimen>
+    <dimen name="detail_body_horizontal_margin">48dp</dimen>
+
+    <dimen name="material_layout_app_bar_height">240dp</dimen>
+    <dimen name="expanded_toolbar_height">80dp</dimen>
+    <dimen name="expanded_toolbar_title_margin_bottom">40dp</dimen>
+
+    <!--card_padding-->
+    <dimen name="material_cards_padding">4dp</dimen>
+    <dimen name="material_component_cards_space_between_cards">4dp</dimen>
+
+    <!-- detail -->
+    <bool name="detail_is_card">false</bool>
+    <dimen name="detail_photo_height">304dp</dimen>
+    <dimen name="detail_card_top_margin">@dimen/detail_photo_height</dimen>
+    <dimen name="detail_inner_horiz_margin">16dp</dimen>
+    <dimen name="detail_card_max_width">10000dp</dimen>
+    <dimen name="detail_metabar_vert_padding">16dp</dimen>
+    <dimen name="detail_metabar_title_bottom_padding">4dp</dimen>
+    <dimen name="detail_body_top_margin">16dp</dimen>
+    <dimen name="detail_body_bottom_margin">32dp</dimen>
+    <dimen name="detail_title_bottom_margin">4dp</dimen>
+    <dimen name="detail_toolbar_margin">24dp</dimen>
+
 </resources>

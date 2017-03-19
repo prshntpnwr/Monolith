@@ -15,20 +15,19 @@
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/detail_toolbar"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="@dimen/detail_toolbar_margin"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         app:contentInsetStart="@dimen/activity_horizontal_margin"
-        app:layout_collapseMode="parallax"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
     <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            app:pressedTranslationZ="6dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginBottom="48dp"
+            app:pressedTranslationZ="@dimen/fab_press_translation_z"
+            android:layout_marginStart="@dimen/fab_margin"
+            android:layout_marginBottom="@dimen/fab_bottom_margin"
             app:fabSize="normal"
             android:src="@drawable/ic_more_verical"
             android:layout_gravity="bottom|end" />
