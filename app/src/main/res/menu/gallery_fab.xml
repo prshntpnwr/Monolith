@@ -6,7 +6,18 @@
         android:title="Page" />
 
     <item
+        android:id="@+id/fab_sample"
+        android:icon="@drawable/ic_like_outline"
+        android:title="Refresh" />
+
+    <item
         android:id="@+id/fab_refresh"
         android:icon="@drawable/ic_refresh"
         android:title="Refresh" />
+
+    <item
+        android:id="@+id/fab_next_page"
+        android:icon="@drawable/ic_next_page"
+        android:title="Refresh" />
+    
 </menu>

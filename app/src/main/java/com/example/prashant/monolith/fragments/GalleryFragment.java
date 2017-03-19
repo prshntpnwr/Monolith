@@ -33,8 +33,6 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import static android.content.Context.MODE_PRIVATE;
-
 public class GalleryFragment extends Fragment implements
         LoaderManager.LoaderCallbacks<Cursor> {
 
@@ -46,7 +44,7 @@ public class GalleryFragment extends Fragment implements
     private Cursor mCursor;
     public Context mContext;
     private int mTag;
-    private int tag;
+    private int mPage = 1;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -63,11 +61,14 @@ public class GalleryFragment extends Fragment implements
 
         mRecyclerView = (RecyclerView) mRootView.findViewById(R.id.recycler_view);
 
-        SharedPreferences sharedPref = getActivity().getSharedPreferences(getString(R.string.key), 0);
-        int defaultValue = 0;
-        tag = sharedPref.getInt(getString(R.string.key), defaultValue);
+        mTag = readSharePreferences(getString(R.string.key), 0);
+        mPage = readSharePreferences(getString(R.string.next_page), 0);
 
-        Log.d(TAG + " Main activity response", String.valueOf(tag));
+        Log.d(TAG + " mTag response", String.valueOf(mTag));
+        Log.d(TAG + " mPage response", String.valueOf(mPage));
+//        SharedPreferences sharedPref = getActivity().getSharedPreferences(getString(R.string.key), 0);
+//        int defaultValue = 0;
+//        tag = sharedPref.getInt(getString(R.string.key), defaultValue);
 
 ////        FloatingActionButton fab = (FloatingActionButton) mRootView.findViewById(R.id.fab);
 //        fabOptions.setOnClickListener(new View.OnClickListener() {
@@ -77,8 +78,14 @@ public class GalleryFragment extends Fragment implements
 //                        .setAction("Action", null).show();
 //            }
 //        });
-
         return mRootView;
+    }
+
+    public int readSharePreferences(String key, int value) {
+        SharedPreferences sharedPref = getActivity().getSharedPreferences(key, value);
+        int defaultValue = 0;
+        value = sharedPref.getInt(key, defaultValue);
+        return value;
     }
 
     @Override
@@ -97,19 +104,21 @@ public class GalleryFragment extends Fragment implements
     public void ImageFetchTask(final Context context) {
         String query_tag = null;
 
-        if (tag == 0){
+        Log.d(TAG + "mPage in ImageFetchTask", String.valueOf(mPage));
+
+        if (mTag == 0){
             query_tag = "Nasa";
             Log.d("TAG" , query_tag);}
-        else if (tag == 1){
+        else if (mTag == 1){
             query_tag = "stars";
             Log.d("TAG" , query_tag);}
-        else if (tag == 2){
+        else if (mTag == 2){
             query_tag = "Earth";
             Log.d("TAG" , query_tag);}
-        else if (tag == 3){
+        else if (mTag == 3){
             query_tag = "night-sky";
             Log.d("TAG" , query_tag);}
-        else if (tag == 4){
+        else if (mTag == 4){
             query_tag = "Nebula";
             Log.d("TAG" , query_tag);}
 
@@ -123,7 +132,7 @@ public class GalleryFragment extends Fragment implements
 
         UnsplashGalleryInterface service = retrofit.create(UnsplashGalleryInterface.class);
 
-        Call<Results> call = service.result(1, 30, query_tag, "2f12038a9af628b150d141d9532b923e25818d649175c229f4d954b7f1033ef7");
+        Call<Results> call = service.result(mPage, 30, query_tag, "2f12038a9af628b150d141d9532b923e25818d649175c229f4d954b7f1033ef7");
 
         call.enqueue(new Callback<Results>() {
 
@@ -137,7 +146,9 @@ public class GalleryFragment extends Fragment implements
 
                 Log.d(TAG + " deleted rows ", Integer.toString(deleteRows));
 
+//                int length = response.body().getResults().size();
                 int length = response.body().getResults().size();
+
                 for (int i = 0; i < length; i++) {
                     Log.d(TAG + " Result from unsplash ", i + " " + response.body().getResults()
                             .get(i).getCoverPhoto().getUrls().getRegular());

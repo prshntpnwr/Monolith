@@ -9,5 +9,6 @@
 
     <string name="key">Pref_key</string>
     <string name="category">Category</string>
+    <string name="next_page">next page key</string>
 
 </resources>

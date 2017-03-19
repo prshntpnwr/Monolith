@@ -1,19 +1,16 @@
 package com.example.prashant.monolith;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.support.design.widget.TabLayout;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,9 +19,6 @@ import android.widget.Toast;
 import com.example.prashant.monolith.fragments.ArticleFragment;
 import com.example.prashant.monolith.fragments.GalleryFragment;
 import com.joaquimley.faboptions.FabOptions;
-
-import java.security.PublicKey;
-import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -38,7 +32,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      */
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private final String TAG = MainActivity.class.getSimpleName();
-    private static final String GALLERYFRAGMENT_TAG = "GFTAG";
 
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -47,6 +40,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TabLayout tabLayout;
     public static String POSITION = "position";
     int savedPref;
+    int savedPage = 0;
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
@@ -116,7 +110,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (v.getId()) {
             case R.id.fab_page:
                 DialogSelection();
-
                 break;
 
             //refresh and fetch data again
@@ -124,7 +117,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 // TODO: animate Refresh
                 GalleryFragment galleryFragment = new GalleryFragment();
                 galleryFragment.ImageFetchTask(this);
-
 //                final ProgressDialog progress = new ProgressDialog(this);
 //                progress.setTitle("Refreshing");
 //                progress.setMessage("Please wait...");
@@ -137,8 +129,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //                };
 //                Handler pdCanceller = new Handler();
 //                pdCanceller.postDelayed(progressRunnable, 3000);
-                Toast.makeText(this, "Refresh", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Refreshing...", Toast.LENGTH_SHORT).show();
                 break;
+
+            case R.id.fab_next_page:
+
+                SharedPreferences sharedNext = getSharedPreferences(getString(R.string.next_page), 0);
+                SharedPreferences.Editor editor = sharedNext.edit();
+                editor.putInt(getString(R.string.next_page), savedPage + 1);
+                editor.apply();
+
+                getSupportFragmentManager().beginTransaction()
+                        .add(R.id.container, new GalleryFragment())
+                        .commit();
+
+                Toast.makeText(this, "Loading next...", Toast.LENGTH_SHORT).show();
 
             default:
         }
@@ -146,15 +151,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void DialogSelection() {
 
-        String [] mCategory = getResources().getStringArray(R.array.Category);
+        String[] mCategory = getResources().getStringArray(R.array.Category);
 
         new AlertDialog.Builder(this)
                 .setTitle("Select a category")
                 .setSingleChoiceItems(mCategory, savedPref, null)
                 .setPositiveButton("ok", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
-                        int selectedPosition = ((AlertDialog) dialog).getListView().getCheckedItemPosition();
-                        savedPref = selectedPosition;
+                        savedPref = ((AlertDialog) dialog).getListView().getCheckedItemPosition();
 
                         SharedPreferences sharedPref = getSharedPreferences(getString(R.string.key), 0);
                         SharedPreferences.Editor editor = sharedPref.edit();
@@ -207,7 +211,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         public int getCount() {
             // Show total pages.
-            return  mNumOfTabs;
+            return mNumOfTabs;
         }
 
         @Override
