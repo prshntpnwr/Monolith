@@ -62,7 +62,7 @@ public class GalleryFragment extends Fragment implements
         mRecyclerView = (RecyclerView) mRootView.findViewById(R.id.recycler_view);
 
         mTag = readSharePreferences(getString(R.string.key), 0);
-        mPage = readSharePreferences(getString(R.string.next_page), 0);
+        mPage = readSharePreferences(getString(R.string.next_page), 1);
 
         Log.d(TAG + " mTag response", String.valueOf(mTag));
         Log.d(TAG + " mPage response", String.valueOf(mPage));
@@ -83,8 +83,7 @@ public class GalleryFragment extends Fragment implements
 
     public int readSharePreferences(String key, int value) {
         SharedPreferences sharedPref = getActivity().getSharedPreferences(key, value);
-        int defaultValue = 0;
-        value = sharedPref.getInt(key, defaultValue);
+        value = sharedPref.getInt(key, value);
         return value;
     }
 
@@ -146,7 +145,6 @@ public class GalleryFragment extends Fragment implements
 
                 Log.d(TAG + " deleted rows ", Integer.toString(deleteRows));
 
-//                int length = response.body().getResults().size();
                 int length = response.body().getResults().size();
 
                 for (int i = 0; i < length; i++) {
@@ -169,7 +167,6 @@ public class GalleryFragment extends Fragment implements
                             null,
                             null);
                 }
-
                 //for testing our added images properly
 //                try {
 //                    if (mCursor != null) {
@@ -191,7 +188,7 @@ public class GalleryFragment extends Fragment implements
 
             @Override
             public void onFailure(Call<Results> call, Throwable t) {
-                Log.d(TAG + " Fail response from", "unsplash");
+                Log.d(TAG + " Fail response from ", "unsplash");
             }
         });
 

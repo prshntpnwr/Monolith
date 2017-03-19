@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TabLayout tabLayout;
     public static String POSITION = "position";
     int savedPref;
-    int savedPage = 0;
+    int savedPage = 1;
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
@@ -136,7 +136,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 SharedPreferences sharedNext = getSharedPreferences(getString(R.string.next_page), 0);
                 SharedPreferences.Editor editor = sharedNext.edit();
-                editor.putInt(getString(R.string.next_page), savedPage + 1);
+                savedPage += 1;
+                editor.putInt(getString(R.string.next_page), savedPage);
                 editor.apply();
 
                 getSupportFragmentManager().beginTransaction()
