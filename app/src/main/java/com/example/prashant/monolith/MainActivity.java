@@ -112,11 +112,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         SharedPreferences.Editor editor;
 
         switch (v.getId()) {
-            case R.id.fab_page:
+
+            case R.id.fab_previous_page:
+
+                // TODO: check for page threshold value
+                // TODO: animate page loading
+                sharedPage = getSharedPreferences(getString(R.string.page_num), 0);
+                editor = sharedPage.edit();
+                if (savedPage >= 2)
+                    savedPage -= 1;
+                else savedPage = 1;
+                editor.putInt(getString(R.string.page_num), savedPage);
+                editor.apply();
+
+                getSupportFragmentManager().beginTransaction()
+                        .add(R.id.container, new GalleryFragment())
+                        .commit();
+
+                Toast.makeText(this, "Loading Previous...", Toast.LENGTH_SHORT).show();
+                break;
+
+            case R.id.fab_tag:
                 DialogSelection();
                 break;
 
-            //refresh and fetch data again
             case R.id.fab_refresh:
                 // TODO: animate Refresh
                 GalleryFragment galleryFragment = new GalleryFragment();
@@ -145,10 +164,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 // TODO: check for page threshold value
                 // TODO: animate page loading
-                sharedPage = getSharedPreferences(getString(R.string.next_page), 0);
+                sharedPage = getSharedPreferences(getString(R.string.page_num), 0);
                 editor = sharedPage.edit();
                 savedPage += 1;
-                editor.putInt(getString(R.string.next_page), savedPage);
+                editor.putInt(getString(R.string.page_num), savedPage);
                 editor.apply();
 
                 getSupportFragmentManager().beginTransaction()
@@ -156,22 +175,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         .commit();
 
                 Toast.makeText(this, "Loading Next...", Toast.LENGTH_SHORT).show();
-
-            case R.id.fab_previous_page:
-
-                // TODO: check for page threshold value
-                // TODO: animate page loading
-                sharedPage = getSharedPreferences(getString(R.string.next_page), 0);
-                 editor = sharedPage.edit();
-                savedPage -= 1;
-                editor.putInt(getString(R.string.next_page), savedPage);
-                editor.apply();
-
-                getSupportFragmentManager().beginTransaction()
-                        .add(R.id.container, new GalleryFragment())
-                        .commit();
-
-                Toast.makeText(this, "Loading Previous...", Toast.LENGTH_SHORT).show();
 
             default:
         }

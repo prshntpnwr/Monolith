@@ -62,7 +62,7 @@ public class GalleryFragment extends Fragment implements
         mRecyclerView = (RecyclerView) mRootView.findViewById(R.id.recycler_view);
 
         mTag = readSharePreferences(getString(R.string.key), 0);
-        mPage = readSharePreferences(getString(R.string.next_page), 1);
+        mPage = readSharePreferences(getString(R.string.page_num), 1);
 
         Log.d(TAG + " mTag response", String.valueOf(mTag));
         Log.d(TAG + " mPage response", String.valueOf(mPage));

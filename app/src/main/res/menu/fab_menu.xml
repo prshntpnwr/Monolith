@@ -3,10 +3,11 @@
     <item
         android:id="@+id/fab_wallpaper"
         android:icon="@drawable/ic_wallpaper"
-        android:title="Wallpaper" />
+        android:title="@string/wallpaper" />
 
     <item
         android:id="@+id/fab_share"
         android:icon="@drawable/ic_share"
-        android:title="Share" />
+        android:title="@string/share" />
+
 </menu>

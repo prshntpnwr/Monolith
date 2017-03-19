@@ -4,21 +4,21 @@
     <item
         android:id="@+id/fab_previous_page"
         android:icon="@drawable/ic_previous_page"
-        android:title="Refresh" />
+        android:title="@string/previous_page" />
 
     <item
-        android:id="@+id/fab_page"
+        android:id="@+id/fab_tag"
         android:icon="@drawable/ic_page"
-        android:title="Page" />
+        android:title="@string/tag" />
 
     <item
         android:id="@+id/fab_refresh"
         android:icon="@drawable/ic_refresh"
-        android:title="Refresh" />
+        android:title="@string/refresh" />
 
     <item
         android:id="@+id/fab_next_page"
         android:icon="@drawable/ic_next_page"
-        android:title="Refresh" />
+        android:title="@string/next_page" />
     
 </menu>
