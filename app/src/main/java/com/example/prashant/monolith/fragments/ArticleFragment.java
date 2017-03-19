@@ -22,7 +22,7 @@ public class ArticleFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View mRootView = inflater.inflate(R.layout.fragment_article, container, false);
-
+        adapter = new ArticleAdapter();
         mRecyclerView = (RecyclerView) mRootView.findViewById(R.id.recycler_view_article);
         mRecyclerView.setAdapter(adapter);
 

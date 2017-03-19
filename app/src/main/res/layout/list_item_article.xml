@@ -17,7 +17,8 @@
             android:layout_height="0dp"
             android:background="@color/photo_placeholder"
             android:scaleType="centerCrop"
-            android:adjustViewBounds="true" />
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/app_name" />
 
         <TextView
             android:id="@+id/article_title"
@@ -30,7 +31,8 @@
             android:paddingBottom="@dimen/detail_title_bottom_margin"
             android:textColor="@color/primary_text"
             android:ellipsize="end"
-            android:maxLines="4" />
+            android:maxLines="4"
+            android:text="Title"/>
 
         <TextView
             android:id="@+id/article_subtitle"
@@ -42,8 +44,10 @@
             android:paddingBottom="@dimen/detail_body_top_margin"
             android:textColor="#6000"
             android:maxLines="1"
-            android:singleLine="true"
-            android:ellipsize="end" />
+            android:ellipsize="end"
+            android:text="Subtitle"/>
     </LinearLayout>
 
 </android.support.v7.widget.CardView>
+
+

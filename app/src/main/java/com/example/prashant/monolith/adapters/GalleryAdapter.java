@@ -66,8 +66,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
         ImageView imageView = holder.image;
 
         //loading images using picasso
-
-        Picasso.with(holder.image.getContext()).load(mCursor.getString(GalleryLoader.Query.COLUMN_IMAGE_PATH))
+        Picasso.with(imageView.getContext()).load(mCursor.getString(GalleryLoader.Query.COLUMN_IMAGE_PATH))
                 .placeholder(R.color.accent)
                 .error(R.color.primary_dark)
                 .into(imageView);

@@ -5,7 +5,6 @@
     <string name="gallery">Gallery</string>
     <string name="article">Article</string>
     <string name="action_share">Share</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <!--fab keys-->
     <string name="key">Pref_key</string>
@@ -21,5 +20,8 @@
     <string name="wallpaper">Wallpaper</string>
     <string name="share">Share</string>
     <string name="unsplash_api_key">2f12038a9af628b150d141d9532b923e25818d649175c229f4d954b7f1033ef7</string>
+
+    <!--article strings-->
+    <string name="article_image_desc">Article Image</string>
 
 </resources>
