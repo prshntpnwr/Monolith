@@ -11,6 +11,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -107,6 +108,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
+        SharedPreferences sharedPage;
+        SharedPreferences.Editor editor;
+
         switch (v.getId()) {
             case R.id.fab_page:
                 DialogSelection();
@@ -117,6 +121,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 // TODO: animate Refresh
                 GalleryFragment galleryFragment = new GalleryFragment();
                 galleryFragment.ImageFetchTask(this);
+
+                savedPage = 1;
+                savedPref = 0;
+                Log.d(TAG + "tag after refresh:", String.valueOf(savedPref));
+                Log.d(TAG + "PageNum after refresh:", String.valueOf(savedPage));
 //                final ProgressDialog progress = new ProgressDialog(this);
 //                progress.setTitle("Refreshing");
 //                progress.setMessage("Please wait...");
@@ -134,8 +143,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             case R.id.fab_next_page:
 
-                SharedPreferences sharedNext = getSharedPreferences(getString(R.string.next_page), 0);
-                SharedPreferences.Editor editor = sharedNext.edit();
+                // TODO: check for page threshold value
+                // TODO: animate page loading
+                sharedPage = getSharedPreferences(getString(R.string.next_page), 0);
+                editor = sharedPage.edit();
                 savedPage += 1;
                 editor.putInt(getString(R.string.next_page), savedPage);
                 editor.apply();
@@ -144,7 +155,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         .add(R.id.container, new GalleryFragment())
                         .commit();
 
-                Toast.makeText(this, "Loading next...", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Loading Next...", Toast.LENGTH_SHORT).show();
+
+            case R.id.fab_previous_page:
+
+                // TODO: check for page threshold value
+                // TODO: animate page loading
+                sharedPage = getSharedPreferences(getString(R.string.next_page), 0);
+                 editor = sharedPage.edit();
+                savedPage -= 1;
+                editor.putInt(getString(R.string.next_page), savedPage);
+                editor.apply();
+
+                getSupportFragmentManager().beginTransaction()
+                        .add(R.id.container, new GalleryFragment())
+                        .commit();
+
+                Toast.makeText(this, "Loading Previous...", Toast.LENGTH_SHORT).show();
 
             default:
         }
