@@ -8,38 +8,38 @@ import org.simpleframework.xml.Root;
 @Root(strict=false)
 public class Icon {
 
-@SerializedName("URL")
-@Expose
-private String uRL;
-@SerializedName("Height")
-@Expose
-private String height;
-@SerializedName("Width")
-@Expose
-private String width;
+    @SerializedName("URL")
+    @Expose
+    private String uRL;
+    @SerializedName("Height")
+    @Expose
+    private String height;
+    @SerializedName("Width")
+    @Expose
+    private String width;
 
-public String getURL() {
-return uRL;
-}
+    public String getURL() {
+        return uRL;
+    }
 
-public void setURL(String uRL) {
-this.uRL = uRL;
-}
+    public void setURL(String uRL) {
+        this.uRL = uRL;
+    }
 
-public String getHeight() {
-return height;
-}
+    public String getHeight() {
+        return height;
+    }
 
-public void setHeight(String height) {
-this.height = height;
-}
+    public void setHeight(String height) {
+        this.height = height;
+    }
 
-public String getWidth() {
-return width;
-}
+    public String getWidth() {
+        return width;
+    }
 
-public void setWidth(String width) {
-this.width = width;
-}
+    public void setWidth(String width) {
+        this.width = width;
+    }
 
 }

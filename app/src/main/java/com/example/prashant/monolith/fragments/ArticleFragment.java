@@ -35,7 +35,6 @@ public class ArticleFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         View mRootView = inflater.inflate(R.layout.fragment_article, container, false);
         adapter = new ArticleAdapter();
         mRecyclerView = (RecyclerView) mRootView.findViewById(R.id.recycler_view_article);
@@ -64,20 +63,23 @@ public class ArticleFragment extends Fragment {
 
         ArticleInterface service = retrofit.create(ArticleInterface.class);
 
-        Call<RelatedTopic> call = service.results("space");
+        Call<RelatedTopic> call = service.results("nasa");
 
         call.enqueue(new Callback<RelatedTopic>() {
 
             @Override
             public void onResponse(Call<RelatedTopic> call, Response<RelatedTopic> response) {
-                Log.d(TAG + " Response goes here ", response.toString());
+                Log.d(TAG + "DDG Response goes here ", response.toString());
                 int length = response.body().getTopics().size();
                 Log.d(TAG + "response length is - ", String.valueOf(length));
+//
+//                imageList.add(response.body().getTopics().get(0).getResult());
+//                Log.d(TAG + "response list is - ", String.valueOf(imageList));
             }
 
             @Override
             public void onFailure(Call<RelatedTopic> call, Throwable t) {
-
+                Log.d(TAG + " Fail response from ", "duckduckgo");
             }
         });
     }
