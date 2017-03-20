@@ -40,7 +40,7 @@ public class GalleryFragment extends Fragment implements
     private final String TAG = GalleryFragment.class.getSimpleName();
 
     private RecyclerView mRecyclerView;
-    public ArrayList<String> imageList = new ArrayList<>();
+    //public ArrayList<String> imageList = new ArrayList<>();
     LoaderManager.LoaderCallbacks callbacks;
     private Cursor mCursor;
     private int mTag;
@@ -82,16 +82,24 @@ public class GalleryFragment extends Fragment implements
     }
 
     public int readSharePreferences(String key, int value) {
-        SharedPreferences sharedPref = getActivity().getSharedPreferences(key, value);
-        value = sharedPref.getInt(key, value);
-        return value;
+        SharedPreferences sharedPref;
+        try {
+            sharedPref = getActivity().getSharedPreferences(key, value);
+            value = sharedPref.getInt(key, value);
+            return value;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
     }
+
 
     @Override
     public void onStart() {
-        if (imageList.isEmpty()) {
-            ImageFetchTask(getContext());
-        }
+//        if (imageList.isEmpty()) {
+//            ImageFetchTask(getContext());
+//        }
+        ImageFetchTask(getContext());
         super.onStart();
     }
 
@@ -131,7 +139,7 @@ public class GalleryFragment extends Fragment implements
 
         UnsplashGalleryInterface service = retrofit.create(UnsplashGalleryInterface.class);
 
-        Call<Results> call = service.result(mPage, 30, query_tag, "2f12038a9af628b150d141d9532b923e25818d649175c229f4d954b7f1033ef7");
+        Call<Results> call = service.result(mPage, 30, query_tag, getResources().getString(R.string.unsplash_api_key));
 
         call.enqueue(new Callback<Results>() {
 

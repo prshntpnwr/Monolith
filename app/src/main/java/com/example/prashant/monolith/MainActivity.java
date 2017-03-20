@@ -246,6 +246,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             return mNumOfTabs;
         }
 
+        // TODO: set image icons instead of text
         @Override
         public CharSequence getPageTitle(int position) {
             switch (position) {

@@ -19,7 +19,7 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
 
     @Override
     public int getItemCount() {
-        return 2;
+        return 10;
     }
 
     @Override
