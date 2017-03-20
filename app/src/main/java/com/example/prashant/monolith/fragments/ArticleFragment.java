@@ -71,8 +71,8 @@ public class ArticleFragment extends Fragment {
             @Override
             public void onResponse(Call<RelatedTopic> call, Response<RelatedTopic> response) {
                 Log.d(TAG + " Response goes here ", response.toString());
-                int length = response.body().;
-
+                int length = response.body().getTopics().size();
+                Log.d(TAG + "response length is - ", String.valueOf(length));
             }
 
             @Override

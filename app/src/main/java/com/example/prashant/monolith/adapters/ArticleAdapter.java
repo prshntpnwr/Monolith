@@ -12,6 +12,8 @@ import android.widget.Toast;
 import com.example.prashant.monolith.R;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+
 public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHolder> {
 
     public ArticleAdapter() {
