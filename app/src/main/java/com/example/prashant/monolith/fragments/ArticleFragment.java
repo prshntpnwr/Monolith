@@ -66,17 +66,17 @@ public class ArticleFragment extends Fragment {
 
         ArticleInterface service = retrofit.create(ArticleInterface.class);
 
-        Call<List<ArticleObject>> call = service.results();
+        Call<Rss> call = service.results();
 
-        call.enqueue(new Callback<List<ArticleObject>>() {
+        call.enqueue(new Callback<Rss>() {
             @Override
-            public void onResponse(Call<List<ArticleObject>> call, Response<List<ArticleObject>> response) {
+            public void onResponse(Call<Rss> call, Response<Rss> response) {
                 Log.d(TAG + " Article response ", response.toString());
-
+                Log.d(TAG + "Response data :", response.body().getChannel().getItem()[0].getTitle());
             }
 
             @Override
-            public void onFailure(Call<List<ArticleObject>> call, Throwable t) {
+            public void onFailure(Call<Rss> call, Throwable t) {
                 Log.d(TAG + " failed response from ", "ArticleFetchTask");
             }
         });

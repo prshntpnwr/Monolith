@@ -4,7 +4,6 @@ import org.simpleframework.xml.Root;
 
 @Root(strict=false)
 public class Item {
-//    private Guid guid;
 
     private String pubDate;
 
@@ -14,13 +13,16 @@ public class Item {
 
     private String link;
 
-//    public Guid getGuid () {
-//        return guid;
-//    }
-//
-//    public void setGuid (Guid guid) {
-//        this.guid = guid;
-//    }
+    private String thumbnail;
+
+    public String thumbnail () {
+        return pubDate;
+    }
+
+    public void thumbnail (String thumbnail) {
+        this.thumbnail = thumbnail;
+    }
+
 
     public String getPubDate () {
         return pubDate;
