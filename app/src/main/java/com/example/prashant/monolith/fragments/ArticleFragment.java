@@ -12,19 +12,15 @@ import android.view.ViewGroup;
 import com.example.prashant.monolith.R;
 import com.example.prashant.monolith.adapters.ArticleAdapter;
 import com.example.prashant.monolith.articleObject.ArticleInterface;
-import com.example.prashant.monolith.articleObject.ArticleObject;
 import com.example.prashant.monolith.articleObject.Rss;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.XMLFormatter;
 
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.simplexml.SimpleXmlConverterFactory;
 
 public class ArticleFragment extends Fragment {
