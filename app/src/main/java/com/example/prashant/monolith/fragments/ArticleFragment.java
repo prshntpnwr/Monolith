@@ -2,7 +2,6 @@ package com.example.prashant.monolith.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
@@ -13,9 +12,12 @@ import android.view.ViewGroup;
 import com.example.prashant.monolith.R;
 import com.example.prashant.monolith.adapters.ArticleAdapter;
 import com.example.prashant.monolith.articleObject.ArticleInterface;
-import com.example.prashant.monolith.articleObject.RelatedTopic;
+import com.example.prashant.monolith.articleObject.ArticleObject;
+import com.example.prashant.monolith.articleObject.Rss;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.XMLFormatter;
 
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
@@ -23,6 +25,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.converter.simplexml.SimpleXmlConverterFactory;
 
 public class ArticleFragment extends Fragment {
 
@@ -53,33 +56,28 @@ public class ArticleFragment extends Fragment {
     }
 
     public void ArticleFetchTask() {
-        String API_BASE_URL = "https://duckduckgo.com/";
+        String API_BASE_URL = "https://rss.sciencedaily.com/";
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(API_BASE_URL)
                 .client(new OkHttpClient())
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(SimpleXmlConverterFactory.create())
                 .build();
 
         ArticleInterface service = retrofit.create(ArticleInterface.class);
 
-        Call<RelatedTopic> call = service.results("nasa");
+        Call<List<ArticleObject>> call = service.results();
 
-        call.enqueue(new Callback<RelatedTopic>() {
-
+        call.enqueue(new Callback<List<ArticleObject>>() {
             @Override
-            public void onResponse(Call<RelatedTopic> call, Response<RelatedTopic> response) {
-                Log.d(TAG + "DDG Response goes here ", response.toString());
-                int length = response.body().getTopics().size();
-                Log.d(TAG + "response length is - ", String.valueOf(length));
-//
-//                imageList.add(response.body().getTopics().get(0).getResult());
-//                Log.d(TAG + "response list is - ", String.valueOf(imageList));
+            public void onResponse(Call<List<ArticleObject>> call, Response<List<ArticleObject>> response) {
+                Log.d(TAG + " Article response ", response.toString());
+
             }
 
             @Override
-            public void onFailure(Call<RelatedTopic> call, Throwable t) {
-                Log.d(TAG + " Fail response from ", "duckduckgo");
+            public void onFailure(Call<List<ArticleObject>> call, Throwable t) {
+                Log.d(TAG + " failed response from ", "ArticleFetchTask");
             }
         });
     }
