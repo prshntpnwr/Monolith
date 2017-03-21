@@ -71,8 +71,10 @@ public class ArticleFragment extends Fragment {
         call.enqueue(new Callback<Rss>() {
             @Override
             public void onResponse(Call<Rss> call, Response<Rss> response) {
-                Log.d(TAG + " Article response ", response.toString());
-                Log.d(TAG + "Response data :", response.body().getChannel().getItem()[0].getTitle());
+                Log.d(TAG + " Article response ", response.message());
+                Log.d(TAG + " Article response ", String.valueOf(response.body().getChannel().getItem().length));
+//                Log.d(TAG + "Response data :", String.valueOf(response.body().getChannel().getItem()[0].getthumbnail().getUrl()));
+//                Log.d(TAG + "Response data :", response.body().getChannel().getItem()[0].getTitle());
             }
 
             @Override

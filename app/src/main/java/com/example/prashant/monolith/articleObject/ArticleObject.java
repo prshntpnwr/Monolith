@@ -1,9 +1,15 @@
 package com.example.prashant.monolith.articleObject;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 import org.simpleframework.xml.Root;
 
 @Root(strict=false)
 public class ArticleObject{
+
+    @SerializedName("rss")
+    @Expose
     private Rss rss;
 
     public Rss getRss () {

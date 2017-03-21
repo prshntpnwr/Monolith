@@ -1,25 +1,43 @@
 package com.example.prashant.monolith.articleObject;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 import org.simpleframework.xml.Root;
 
 @Root(strict=false)
 public class Channel {
+
+    @SerializedName("pubDate")
+    @Expose
     private String pubDate;
 
+    @SerializedName("title")
+    @Expose
     private String title;
 
+    @SerializedName("description")
+    @Expose
     private String description;
 
+    @SerializedName("link")
+    @Expose
     private String link;
 
+    @SerializedName("lastBuildDate")
+    @Expose
     private String lastBuildDate;
 
+    @SerializedName("item")
+    @Expose
     private Item[] item;
 
-    //private Image image;
-
+    @SerializedName("language")
+    @Expose
     private String language;
 
+    @SerializedName("ttl")
+    @Expose
     private String ttl;
 
     public String getPubDate () {
@@ -69,14 +87,6 @@ public class Channel {
     public void setItem (Item[] item) {
         this.item = item;
     }
-
-//    public Image getImage () {
-//        return image;
-//    }
-//
-//    public void setImage (Image image) {
-//        this.image = image;
-//    }
 
     public String getLanguage () {
         return language;

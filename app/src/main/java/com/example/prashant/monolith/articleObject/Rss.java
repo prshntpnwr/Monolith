@@ -1,11 +1,20 @@
 package com.example.prashant.monolith.articleObject;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
+import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
 @Root(strict=false)
 public class Rss {
+
+    @SerializedName("channel")
+    @Expose
     private Channel channel;
 
+    @SerializedName("version")
+    @Expose
     private String version;
 
     public Channel getChannel () {
