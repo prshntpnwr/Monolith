@@ -4,7 +4,7 @@ import org.simpleframework.xml.Root;
 
 @Root(strict=false)
 public class Item {
-    private Guid guid;
+//    private Guid guid;
 
     private String pubDate;
 
@@ -14,13 +14,13 @@ public class Item {
 
     private String link;
 
-    public Guid getGuid () {
-        return guid;
-    }
-
-    public void setGuid (Guid guid) {
-        this.guid = guid;
-    }
+//    public Guid getGuid () {
+//        return guid;
+//    }
+//
+//    public void setGuid (Guid guid) {
+//        this.guid = guid;
+//    }
 
     public String getPubDate () {
         return pubDate;
@@ -56,6 +56,6 @@ public class Item {
 
     @Override
     public String toString() {
-        return "ClassPojo [guid = "+guid+", pubDate = "+pubDate+", title = "+title+", description = "+description+", link = "+link+"]";
+        return "ClassPojo [pubDate = "+pubDate+", title = "+title+", description = "+description+", link = "+link+"]";
     }
 }

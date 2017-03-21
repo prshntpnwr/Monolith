@@ -16,7 +16,7 @@ public class Channel {
 
     private Item[] item;
 
-    private Image image;
+    //private Image image;
 
     private String language;
 
@@ -70,13 +70,13 @@ public class Channel {
         this.item = item;
     }
 
-    public Image getImage () {
-        return image;
-    }
-
-    public void setImage (Image image) {
-        this.image = image;
-    }
+//    public Image getImage () {
+//        return image;
+//    }
+//
+//    public void setImage (Image image) {
+//        this.image = image;
+//    }
 
     public String getLanguage () {
         return language;
@@ -96,6 +96,6 @@ public class Channel {
 
     @Override
     public String toString() {
-        return "ClassPojo [pubDate = "+pubDate+", title = "+title+", description = "+description+", link = "+link+", lastBuildDate = "+lastBuildDate+", item = "+item+", image = "+image+", language = "+language+", ttl = "+ttl+"]";
+        return "ClassPojo [pubDate = "+pubDate+", title = "+title+", description = "+description+", link = "+link+", lastBuildDate = "+lastBuildDate+", item = "+item+", language = "+language+", ttl = "+ttl+"]";
     }
 }
