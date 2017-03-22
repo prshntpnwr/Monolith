@@ -1,18 +1,25 @@
 package com.example.prashant.monolith.articleObject;
 
+import org.simpleframework.xml.Element;
+import org.simpleframework.xml.Path;
 import org.simpleframework.xml.Root;
 
 @Root(strict=false)
 public class Item {
-    
+
+    @Element
     private String pubDate;
 
+    @Element
     private String title;
 
+    @Element
     private Description description;
 
+    @Path("link")
     private link link;
 
+    @Element
     private thumbnail thumbnail;
 
     public thumbnail getthumbnail () {

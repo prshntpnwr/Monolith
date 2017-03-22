@@ -9,7 +9,6 @@ public class Rss {
     @Element
     private Channel channel;
 
-    @Element
     private String version;
 
     public Channel getChannel () {

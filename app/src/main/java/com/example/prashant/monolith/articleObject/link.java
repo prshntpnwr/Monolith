@@ -1,13 +1,18 @@
 package com.example.prashant.monolith.articleObject;
 
+import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
 @Root(strict=false)
 public class link {
+
+    @Element
     private String rel;
 
+    @Element
     private String type;
 
+    @Element
     private String href;
 
     public String getRel () {

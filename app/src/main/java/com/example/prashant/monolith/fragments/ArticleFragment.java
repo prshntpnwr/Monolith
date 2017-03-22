@@ -69,13 +69,12 @@ public class ArticleFragment extends Fragment {
             public void onResponse(Call<Rss> call, Response<Rss> response) {
                 Log.d(TAG + " Article response ", response.message());
                 Log.d(TAG + " Article response ", String.valueOf(response.body().getChannel().getItem().size()));
-//                Log.d(TAG + "Response data :", String.valueOf(response.body().getChannel().getItem()[0].getthumbnail().getUrl()));
-//                Log.d(TAG + "Response data :", response.body().getChannel().getItem()[0].getTitle());
+                Log.d(TAG + "Response url :", response.body().getChannel().getItem().get(0).getthumbnail().getUrl());
             }
 
             @Override
             public void onFailure(Call<Rss> call, Throwable t) {
-                Log.d(TAG + " failed response from ", "ArticleFetchTask");
+                Log.e(TAG + " failed response from ", t.getLocalizedMessage());
             }
         });
     }

@@ -1,12 +1,15 @@
 package com.example.prashant.monolith.articleObject;
 
+import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
 @Root(strict=false)
 public class Description {
 
+    @Element
     private String[] content;
 
+    @Element
     private String em;
 
     public String[] getContent () {
