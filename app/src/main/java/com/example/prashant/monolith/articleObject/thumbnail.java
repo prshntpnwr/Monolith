@@ -1,23 +1,18 @@
 package com.example.prashant.monolith.articleObject;
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
-
+import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Root;
 
 @Root(strict=false)
 public class thumbnail {
 
-    @SerializedName("height")
-    @Expose
+    @Attribute
     private String height;
 
-    @SerializedName("width")
-    @Expose
+    @Attribute
     private String width;
 
-    @SerializedName("url")
-    @Expose
+    @Attribute
     private String url;
 
     public String getHeight () {

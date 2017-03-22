@@ -68,7 +68,7 @@ public class ArticleFragment extends Fragment {
             @Override
             public void onResponse(Call<Rss> call, Response<Rss> response) {
                 Log.d(TAG + " Article response ", response.message());
-                Log.d(TAG + " Article response ", String.valueOf(response.body().getChannel().getItem().length));
+                Log.d(TAG + " Article response ", String.valueOf(response.body().getChannel().getItem().size()));
 //                Log.d(TAG + "Response data :", String.valueOf(response.body().getChannel().getItem()[0].getthumbnail().getUrl()));
 //                Log.d(TAG + "Response data :", response.body().getChannel().getItem()[0].getTitle());
             }

@@ -1,52 +1,38 @@
 package com.example.prashant.monolith.articleObject;
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
-
+import org.simpleframework.xml.Element;
+import org.simpleframework.xml.ElementList;
+import org.simpleframework.xml.Path;
 import org.simpleframework.xml.Root;
+
+import java.util.ArrayList;
 
 @Root(strict=false)
 public class Channel {
 
-    @SerializedName("pubDate")
-    @Expose
+    @Element
     private String pubDate;
 
-    @SerializedName("title")
-    @Expose
+    @Element
     private String title;
 
-    @SerializedName("description")
-    @Expose
+    @Element
     private String description;
 
-    @SerializedName("link")
-    @Expose
+    @Path("link")
     private String link;
 
-    @SerializedName("lastBuildDate")
-    @Expose
+    @Element
     private String lastBuildDate;
 
-    @SerializedName("item")
-    @Expose
-    private Item[] item;
+    @ElementList(inline = true)
+    private ArrayList<Item> item;
 
-    @SerializedName("language")
-    @Expose
+    @Element
     private String language;
 
-    @SerializedName("ttl")
-    @Expose
+    @Element
     private String ttl;
-
-    public String getPubDate () {
-        return pubDate;
-    }
-
-    public void setPubDate (String pubDate) {
-        this.pubDate = pubDate;
-    }
 
     public String getTitle () {
         return title;
@@ -80,11 +66,11 @@ public class Channel {
         this.lastBuildDate = lastBuildDate;
     }
 
-    public Item[] getItem () {
+    public ArrayList<Item> getItem () {
         return item;
     }
 
-    public void setItem (Item[] item) {
+    public void setItem (ArrayList<Item> item) {
         this.item = item;
     }
 

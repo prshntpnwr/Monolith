@@ -1,22 +1,13 @@
 package com.example.prashant.monolith.articleObject;
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
-
 import org.simpleframework.xml.Root;
 
 @Root(strict=false)
 public class link {
-    @SerializedName("rel")
-    @Expose
     private String rel;
 
-    @SerializedName("type")
-    @Expose
     private String type;
 
-    @SerializedName("href")
-    @Expose
     private String href;
 
     public String getRel () {
