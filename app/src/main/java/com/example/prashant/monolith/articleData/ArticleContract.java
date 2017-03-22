@@ -26,7 +26,7 @@ public class ArticleContract {
         public static final Uri CONTENT_URI =
                BASE_CONTENT_URI.buildUpon().appendPath(PATH_ARTICLE).build();
 
-        public static final String TABLE_NAME = "article";
+        public static final String TABLE_NAME_ARTICLE = "article";
 
         public static final String COLUMN_ARTICLE_ID = "article_id";
 

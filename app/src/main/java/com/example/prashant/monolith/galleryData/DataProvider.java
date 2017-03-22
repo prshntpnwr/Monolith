@@ -11,15 +11,18 @@ import android.support.annotation.NonNull;
 
 import com.example.prashant.monolith.articleData.ArticleContract;
 import com.example.prashant.monolith.articleData.ArticleContract.ArticleEntry;
+import com.example.prashant.monolith.articleData.ArticleDbHelper;
 import com.example.prashant.monolith.galleryData.GalleryContract.GalleryEntry;
 
-import static com.example.prashant.monolith.galleryData.GalleryContract.GalleryEntry.TABLE_NAME;
+import static com.example.prashant.monolith.galleryData.GalleryContract.GalleryEntry.TABLE_NAME_GALLERY;
+import static com.example.prashant.monolith.articleData.ArticleContract.ArticleEntry.TABLE_NAME_ARTICLE;
 
 public class DataProvider extends android.content.ContentProvider {
 
     // The URI Matcher used by this content provider.
     private static final UriMatcher sUriMatcher = buildUriMatcher();
-    private GalleryDbHelper mOpenHelper;
+    private GalleryDbHelper mOpenHelper_gallery;
+    private ArticleDbHelper mOpenHelper_article;
 
     private static final int IMAGE = 0;
     private static final int IMAGE_ID = 1;
@@ -45,7 +48,8 @@ public class DataProvider extends android.content.ContentProvider {
 
     @Override
     public boolean onCreate() {
-        mOpenHelper = new GalleryDbHelper(getContext());
+        mOpenHelper_gallery = new GalleryDbHelper(getContext());
+        mOpenHelper_article = new ArticleDbHelper(getContext());
         return true;
     }
 
@@ -70,11 +74,12 @@ public class DataProvider extends android.content.ContentProvider {
     @Override
     public Cursor query(@NonNull Uri uri, String[] projection, String selection, String[] selectionArgs,
                         String sortOrder) {
-        final SQLiteDatabase db = mOpenHelper.getReadableDatabase();
+        final SQLiteDatabase db_g = mOpenHelper_gallery.getReadableDatabase();
+        final SQLiteDatabase db_a = mOpenHelper_article.getReadableDatabase();
         Cursor retCursor;
         switch (sUriMatcher.match(uri)) {
             case IMAGE:
-                retCursor = db.query(TABLE_NAME,
+                retCursor = db_g.query(TABLE_NAME_GALLERY,
                         projection,
                         selection,
                         selectionArgs,
@@ -83,7 +88,7 @@ public class DataProvider extends android.content.ContentProvider {
                 break;
             case IMAGE_ID:
 //              long _id = ContentUris.parseId(uri);
-                retCursor = db.query(TABLE_NAME,
+                retCursor = db_g.query(TABLE_NAME_GALLERY,
                         projection,
                         selection,
                         selectionArgs,
@@ -92,7 +97,7 @@ public class DataProvider extends android.content.ContentProvider {
                 break;
 
             case ARTICLE:
-                retCursor = db.query(TABLE_NAME,
+                retCursor = db_a.query(TABLE_NAME_ARTICLE,
                         projection,
                         selection,
                         selectionArgs,
@@ -101,7 +106,7 @@ public class DataProvider extends android.content.ContentProvider {
                 break;
 
             case ARTICLE_ID:
-                retCursor = db.query(TABLE_NAME,
+                retCursor = db_a.query(TABLE_NAME_ARTICLE,
                         projection,
                         selection,
                         selectionArgs,
@@ -120,13 +125,14 @@ public class DataProvider extends android.content.ContentProvider {
     @Override
     public Uri insert(@NonNull Uri uri, ContentValues values) {
 
-        final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
+        final SQLiteDatabase db_g = mOpenHelper_gallery.getReadableDatabase();
+        final SQLiteDatabase db_a = mOpenHelper_article.getReadableDatabase();
         final int match = sUriMatcher.match(uri);
         Uri returnUri;
-        long _id = db.insert(TABLE_NAME, null, values);
 
         switch (match) {
             case IMAGE:
+                long _id = db_g.insert(TABLE_NAME_GALLERY, null, values);
                 if (_id > 0) {
                     returnUri = GalleryEntry.buildGalleryUri(_id);
                 } else {
@@ -135,8 +141,9 @@ public class DataProvider extends android.content.ContentProvider {
                 break;
 
             case ARTICLE:
-                if (_id > 0) {
-                    returnUri = ArticleEntry.buildArticleUri(_id);
+                long id = db_a.insert(TABLE_NAME_ARTICLE, null, values);
+                if (id > 0) {
+                    returnUri = ArticleEntry.buildArticleUri(id);
                 } else {
                     throw new SQLException("Failed to add a record into " + uri);
                 }
@@ -147,14 +154,17 @@ public class DataProvider extends android.content.ContentProvider {
         }
 
         getContext().getContentResolver().notifyChange(uri, null);
-        db.close();
+        db_g.close();
+        db_a.close();
 
         return returnUri;
     }
 
     @Override
     public int delete(@NonNull Uri uri, String selection, String[] selectionArgs) {
-        final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
+
+        final SQLiteDatabase db_g = mOpenHelper_gallery.getReadableDatabase();
+        final SQLiteDatabase db_a = mOpenHelper_article.getReadableDatabase();
         final int match = sUriMatcher.match(uri);
         int rowDeleted;
 
@@ -162,11 +172,11 @@ public class DataProvider extends android.content.ContentProvider {
 
         switch (match) {
             case IMAGE:
-                rowDeleted = db.delete(TABLE_NAME, selection, selectionArgs);
+                rowDeleted = db_g.delete(TABLE_NAME_GALLERY, selection, selectionArgs);
                 break;
 
             case ARTICLE:
-                rowDeleted = db.delete(TABLE_NAME, selection, selectionArgs);
+                rowDeleted = db_a.delete(TABLE_NAME_ARTICLE, selection, selectionArgs);
                 break;
 
             default:
@@ -182,18 +192,20 @@ public class DataProvider extends android.content.ContentProvider {
 
     @Override
     public int update(@NonNull Uri uri, ContentValues values, String selection, String[] selectionArgs) {
-        final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
+
+        final SQLiteDatabase db_g = mOpenHelper_gallery.getReadableDatabase();
+        final SQLiteDatabase db_a = mOpenHelper_article.getReadableDatabase();
         final int match = sUriMatcher.match(uri);
         int rowUpdated;
 
         switch (match) {
             case IMAGE:
-                rowUpdated = db.update(TABLE_NAME, values, selection,
+                rowUpdated = db_a.update(TABLE_NAME_GALLERY, values, selection,
                         selectionArgs);
                 break;
 
             case ARTICLE:
-                rowUpdated = db.update(TABLE_NAME, values, selection,
+                rowUpdated = db_g.update(TABLE_NAME_ARTICLE, values, selection,
                         selectionArgs);
                 break;
             default:

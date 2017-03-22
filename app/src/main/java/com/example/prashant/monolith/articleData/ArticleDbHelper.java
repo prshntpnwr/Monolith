@@ -20,7 +20,7 @@ public class ArticleDbHelper extends SQLiteOpenHelper{
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
 
-        final String SQL_CREATE_Article_TABLE = "CREATE TABLE " + ArticleContract.ArticleEntry.TABLE_NAME + " (" +
+        final String SQL_CREATE_Article_TABLE = "CREATE TABLE " + ArticleContract.ArticleEntry.TABLE_NAME_ARTICLE + " (" +
                 ArticleContract.ArticleEntry.COLUMN_ARTICLE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 ArticleContract.ArticleEntry.COLUMN_TITLE + " TEXT, " +
                 ArticleContract.ArticleEntry.COLUMN_DESCRIPTION + " TEXT, " +
@@ -34,7 +34,7 @@ public class ArticleDbHelper extends SQLiteOpenHelper{
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
 
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + ArticleContract.ArticleEntry.TABLE_NAME);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + ArticleContract.ArticleEntry.TABLE_NAME_ARTICLE);
         Log.i(TAG, "Old version = " + oldVersion + " New version = " + newVersion);
         onCreate(sqLiteDatabase);
     }

@@ -30,7 +30,7 @@ public class GalleryContract {
         public static final Uri CONTENT_URI =
                BASE_CONTENT_URI.buildUpon().appendPath(PATH_IMAGE).build();
 
-        public static final String TABLE_NAME = "gallery";
+        public static final String TABLE_NAME_GALLERY = "gallery";
 
         public static final String COLUMN_IMAGE_ID = "image_id";
 

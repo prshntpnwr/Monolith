@@ -23,7 +23,7 @@ public class GalleryDbHelper extends SQLiteOpenHelper{
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
 
-        final String SQL_CREATE_Gallery_TABLE = "CREATE TABLE " + GalleryEntry.TABLE_NAME + " (" +
+        final String SQL_CREATE_Gallery_TABLE = "CREATE TABLE " + GalleryEntry.TABLE_NAME_GALLERY + " (" +
                 GalleryEntry.COLUMN_IMAGE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 GalleryEntry.COLUMN_IMAGE_PATH + " TEXT, " +
                 GalleryEntry.COLUMN_IMAGE_STATUS + " INTEGER" + ");";
@@ -34,7 +34,7 @@ public class GalleryDbHelper extends SQLiteOpenHelper{
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
 
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + GalleryEntry.TABLE_NAME);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + GalleryEntry.TABLE_NAME_GALLERY);
         Log.i(TAG, "Old version = " + oldVersion + " New version = " + newVersion);
 
         onCreate(sqLiteDatabase);
