@@ -22,8 +22,6 @@ import com.example.prashant.monolith.articleData.ArticleLoader;
 import com.example.prashant.monolith.articleObject.ArticleInterface;
 import com.example.prashant.monolith.articleObject.Rss;
 
-import java.util.ArrayList;
-
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -37,8 +35,15 @@ public class ArticleFragment extends Fragment implements
     private final String TAG = ArticleFragment.class.getSimpleName();
 
     private RecyclerView mRecyclerView;
-    public ArticleAdapter adapter;
     private Cursor mCursor;
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        //initialize loader here
+        getLoaderManager().initLoader(0, null, this);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -87,8 +92,6 @@ public class ArticleFragment extends Fragment implements
                 int length = response.body().getChannel().getItem().size();
 
                 for (int i = 0; i < length; i++) {
-
-                    Log.d(TAG + " Result from Feed ", i + " " + response.body().getChannel().getItem().get(1).getthumbnail().getUrl());
 
                     title = response.body().getChannel().getItem().get(i).getTitle();
                     description = response.body().getChannel().getItem().get(i).getDescription();

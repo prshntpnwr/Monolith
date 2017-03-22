@@ -91,12 +91,8 @@ public class GalleryFragment extends Fragment implements
         }
     }
 
-
     @Override
     public void onStart() {
-//        if (imageList.isEmpty()) {
-//            ImageFetchTask(getContext());
-//        }
         ImageFetchTask(getContext());
         super.onStart();
     }

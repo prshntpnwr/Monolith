@@ -1,8 +1,8 @@
 package com.example.prashant.monolith.adapters;
 
-import android.content.Context;
 import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,9 +14,9 @@ import com.example.prashant.monolith.R;
 import com.example.prashant.monolith.articleData.ArticleLoader;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
-
 public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHolder> {
+    private final String TAG = ArticleAdapter.class.getSimpleName();
+
     private Cursor mCursor;
 
     public ArticleAdapter(Cursor cursor) {
@@ -25,7 +25,13 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
 
     @Override
     public int getItemCount() {
-        return 10;
+        return mCursor.getCount();
+    }
+
+    @Override
+    public long getItemId(int position) {
+        mCursor.moveToPosition(position);
+        return mCursor.getLong(ArticleLoader.Query.COLUMN_ARTICLE_ID);
     }
 
     @Override
@@ -48,6 +54,7 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
     @Override
     public void onBindViewHolder(ArticleAdapter.ViewHolder holder, int position) {
         holder.titleView.setText(mCursor.getString(ArticleLoader.Query.COLUMN_TITLE));
+//        Log.d(TAG + "Title", mCursor.getString(ArticleLoader.Query.COLUMN_TITLE));
 
         // TODO: add date here
         holder.subtitleView.setText("Subtitle");
@@ -57,6 +64,8 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
                 .placeholder(R.color.accent)
                 .error(R.color.primary_dark)
                 .into(imageView);
+        
+        Log.d(TAG + "Image_url", mCursor.getString(ArticleLoader.Query.COLUMN_IMAGE_URL));
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
