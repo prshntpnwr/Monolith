@@ -1,6 +1,5 @@
 package com.example.prashant.monolith.articleObject;
 
-import org.simpleframework.xml.Element;
 import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
 

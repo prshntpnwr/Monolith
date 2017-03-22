@@ -27,15 +27,8 @@ public class GalleryContract {
         public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.com.example.prashant.monolith.images";
         public static final String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/vnd.com.example.prashant.monolith.images";
 
-
         public static final Uri CONTENT_URI =
                BASE_CONTENT_URI.buildUpon().appendPath(PATH_IMAGE).build();
-
-//        public static final String CONTENT_TYPE =
-//                ContentResolver.CURSOR_DIR_BASE_TYPE + "/vnd" + CONTENT_AUTHORITY + PATH_IMAGE;
-//
-//        public static final String CONTENT_ITEM_TYPE =
-//                ContentResolver.CURSOR_ITEM_BASE_TYPE + "/vnd" + CONTENT_AUTHORITY + PATH_IMAGE;
 
         public static final String TABLE_NAME = "gallery";
 

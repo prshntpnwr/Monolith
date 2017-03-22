@@ -9,11 +9,13 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 
+import com.example.prashant.monolith.articleData.ArticleContract;
+import com.example.prashant.monolith.articleData.ArticleContract.ArticleEntry;
 import com.example.prashant.monolith.galleryData.GalleryContract.GalleryEntry;
 
 import static com.example.prashant.monolith.galleryData.GalleryContract.GalleryEntry.TABLE_NAME;
 
-public class GalleryProvider extends ContentProvider {
+public class DataProvider extends android.content.ContentProvider {
 
     // The URI Matcher used by this content provider.
     private static final UriMatcher sUriMatcher = buildUriMatcher();
@@ -21,6 +23,8 @@ public class GalleryProvider extends ContentProvider {
 
     private static final int IMAGE = 0;
     private static final int IMAGE_ID = 1;
+    private static final int ARTICLE = 3;
+    private static final int ARTICLE_ID = 4;
 
     private static UriMatcher buildUriMatcher() {
         //The code passed into the constructor represents the code to return for the root URI.
@@ -28,8 +32,13 @@ public class GalleryProvider extends ContentProvider {
         final String authority = GalleryContract.CONTENT_AUTHORITY;
 
         //for the type of URI we want to add, create a corresponding code
+        //for gallery
         matcher.addURI(authority, GalleryContract.PATH_IMAGE, IMAGE);
         matcher.addURI(authority, GalleryContract.PATH_IMAGE + "/#", IMAGE_ID);
+
+        //for article
+        matcher.addURI(authority, ArticleContract.PATH_ARTICLE, ARTICLE);
+        matcher.addURI(authority, ArticleContract.PATH_ARTICLE + "/#", ARTICLE_ID);
 
         return matcher;
     }
@@ -49,6 +58,10 @@ public class GalleryProvider extends ContentProvider {
                 return GalleryEntry.CONTENT_ITEM_TYPE;
             case IMAGE_ID:
                 return GalleryEntry.CONTENT_ITEM_TYPE;
+            case ARTICLE:
+                return ArticleEntry.CONTENT_ITEM_TYPE;
+            case ARTICLE_ID:
+                return ArticleEntry.CONTENT_ITEM_TYPE;
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
         }
@@ -77,6 +90,25 @@ public class GalleryProvider extends ContentProvider {
                         null, null,
                         sortOrder);
                 break;
+
+            case ARTICLE:
+                retCursor = db.query(TABLE_NAME,
+                        projection,
+                        selection,
+                        selectionArgs,
+                        null, null,
+                        sortOrder);
+                break;
+
+            case ARTICLE_ID:
+                retCursor = db.query(TABLE_NAME,
+                        projection,
+                        selection,
+                        selectionArgs,
+                        null, null,
+                        sortOrder);
+                break;
+
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
         }
@@ -101,6 +133,15 @@ public class GalleryProvider extends ContentProvider {
                     throw new SQLException("Failed to add a record into " + uri);
                 }
                 break;
+
+            case ARTICLE:
+                if (_id > 0) {
+                    returnUri = ArticleEntry.buildArticleUri(_id);
+                } else {
+                    throw new SQLException("Failed to add a record into " + uri);
+                }
+                break;
+
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
         }
@@ -123,6 +164,11 @@ public class GalleryProvider extends ContentProvider {
             case IMAGE:
                 rowDeleted = db.delete(TABLE_NAME, selection, selectionArgs);
                 break;
+
+            case ARTICLE:
+                rowDeleted = db.delete(TABLE_NAME, selection, selectionArgs);
+                break;
+
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
         }
@@ -142,6 +188,11 @@ public class GalleryProvider extends ContentProvider {
 
         switch (match) {
             case IMAGE:
+                rowUpdated = db.update(TABLE_NAME, values, selection,
+                        selectionArgs);
+                break;
+
+            case ARTICLE:
                 rowUpdated = db.update(TABLE_NAME, values, selection,
                         selectionArgs);
                 break;

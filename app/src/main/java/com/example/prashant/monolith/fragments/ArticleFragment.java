@@ -91,10 +91,16 @@ public class ArticleFragment extends Fragment implements
                     Log.d(TAG + " Result from Feed ", i + " " + response.body().getChannel().getItem().get(1).getthumbnail().getUrl());
 
                     title = response.body().getChannel().getItem().get(i).getTitle();
-                    description = response.body().getChannel().getItem().get(i).getDescription().getContent().toString();
+                    description = response.body().getChannel().getItem().get(i).getDescription();
                     image_url = response.body().getChannel().getItem().get(i).getthumbnail().getUrl();
                     pub_date = response.body().getChannel().getItem().get(i).getPubDate();
-                    link =response.body().getChannel().getItem().get(i).getLink().getRel();
+                    link =response.body().getChannel().getItem().get(i).getLink();
+
+                    Log.d(TAG + " title : ", title);
+                    Log.d(TAG + " description : ", description);
+                    Log.d(TAG + " image url : ", image_url);
+                    Log.d(TAG + " publish date : ", pub_date);
+                    Log.d(TAG + " link : ", link);
 
                     Uri uri = ArticleContract.ArticleEntry.CONTENT_URI;
                     ContentValues contentValues = new ContentValues();

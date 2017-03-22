@@ -16,10 +16,11 @@ public class Item {
     private String title;
 
     @Element
-    private Description description;
+    private String description;
 
-    @Path("link")
-    private link link;
+//    @Path("link")
+    @Element
+    private String link;
 
     @Element(required = false)
     private thumbnail thumbnail;
@@ -57,19 +58,19 @@ public class Item {
         this.title = title;
     }
 
-    public Description getDescription() {
+    public String getDescription() {
         return description;
     }
 
-    public void setDescription(Description description) {
+    public void setDescription(String description) {
         this.description = description;
     }
 
-    public link getLink() {
+    public String getLink() {
         return link;
     }
 
-    public void setLink(link link) {
+    public void setLink(String link) {
         this.link = link;
     }
 
