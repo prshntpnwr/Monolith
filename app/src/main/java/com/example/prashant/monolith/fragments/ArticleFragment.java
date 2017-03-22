@@ -69,7 +69,8 @@ public class ArticleFragment extends Fragment {
             public void onResponse(Call<Rss> call, Response<Rss> response) {
                 Log.d(TAG + " Article response ", response.message());
                 Log.d(TAG + " Article response ", String.valueOf(response.body().getChannel().getItem().size()));
-                Log.d(TAG + "Response url :", response.body().getChannel().getItem().get(0).getthumbnail().getUrl());
+                Log.d(TAG + "Response url :", response.body().getChannel().getItem().get(1).getthumbnail().getUrl());
+                //imageList.add(response.body().getChannel().getItem().get(5).getthumbnail().getUrl());
             }
 
             @Override

@@ -4,7 +4,9 @@ import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Path;
 import org.simpleframework.xml.Root;
 
-@Root(strict=false)
+import static android.R.attr.path;
+
+@Root(strict = false)
 public class Item {
 
     @Element
@@ -19,51 +21,60 @@ public class Item {
     @Path("link")
     private link link;
 
-    @Element
+    @Element(required = false)
     private thumbnail thumbnail;
 
-    public thumbnail getthumbnail () {
-        return thumbnail;
+    @Path("thumbnail")
+    public thumbnail getthumbnail() {
+        if (thumbnail != null) {
+            return thumbnail;
+        } else {
+            thumbnail t = new thumbnail();
+            t.setUrl("https://unsplash.com/search/space?photo=OVO8nK-7Rfs");
+            t.setHeight("300");
+            t.setWidth("300");
+            return t;
+        }
     }
 
-    public void setthumbnail (thumbnail thumbnail) {
+    public void setthumbnail(thumbnail thumbnail) {
         this.thumbnail = thumbnail;
     }
 
-    public String getPubDate () {
+    public String getPubDate() {
         return pubDate;
     }
 
-    public void setPubDate (String pubDate) {
+    public void setPubDate(String pubDate) {
         this.pubDate = pubDate;
     }
 
-    public String getTitle () {
+    public String getTitle() {
         return title;
     }
 
-    public void setTitle (String title) {
+    public void setTitle(String title) {
         this.title = title;
     }
 
-    public Description getDescription () {
+    public Description getDescription() {
         return description;
     }
 
-    public void setDescription (Description description) {
+    public void setDescription(Description description) {
         this.description = description;
     }
 
-    public link getLink () {
+    public link getLink() {
         return link;
     }
 
-    public void setLink (link link) {
+    public void setLink(link link) {
         this.link = link;
     }
 
     @Override
     public String toString() {
-        return "ClassPojo [pubDate = "+pubDate+", title = "+title+", description = "+description+", link = "+link+"]";
+        return "ClassPojo [pubDate = " + pubDate + ", title = " + title + ", description = " + description + ", link = " + link + "]";
     }
 }

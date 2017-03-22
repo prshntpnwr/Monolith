@@ -1,22 +1,24 @@
 package com.example.prashant.monolith.articleObject;
 
 import org.simpleframework.xml.Element;
+import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
+
+import java.util.ArrayList;
 
 @Root(strict=false)
 public class Description {
 
-    @Element
-    private String[] content;
+    @ElementList(inline = true,required = false)
+    private ArrayList<String> content;
 
-    @Element
     private String em;
 
-    public String[] getContent () {
+    public ArrayList<String> getContent () {
         return content;
     }
 
-    public void setContent (String[] content) {
+    public void setContent (ArrayList<String> content) {
         this.content = content;
     }
 
