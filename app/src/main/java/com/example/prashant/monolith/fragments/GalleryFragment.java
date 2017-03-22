@@ -19,12 +19,10 @@ import android.view.ViewGroup;
 
 import com.example.prashant.monolith.R;
 import com.example.prashant.monolith.adapters.GalleryAdapter;
-import com.example.prashant.monolith.data.GalleryContract;
-import com.example.prashant.monolith.data.GalleryLoader;
+import com.example.prashant.monolith.galleryData.GalleryContract;
+import com.example.prashant.monolith.galleryData.GalleryLoader;
 import com.example.prashant.monolith.galleryObjects.Results;
 import com.example.prashant.monolith.galleryObjects.UnsplashGalleryInterface;
-
-import java.util.ArrayList;
 
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
@@ -196,7 +194,7 @@ public class GalleryFragment extends Fragment implements
 
             @Override
             public void onFailure(Call<Results> call, Throwable t) {
-                Log.d(TAG + " Fail response from ", "unsplash");
+                Log.d(TAG + "unsplash Fail response", t.getLocalizedMessage());
             }
         });
 
@@ -236,7 +234,7 @@ public class GalleryFragment extends Fragment implements
 
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
-        return GalleryLoader.newAllArticlesInstance(this.getContext());
+        return GalleryLoader.newAllGalleryInstance(this.getContext());
     }
 
     @Override
@@ -244,7 +242,7 @@ public class GalleryFragment extends Fragment implements
         GalleryAdapter adapter = new GalleryAdapter(data);
         adapter.setHasStableIds(true);
         mRecyclerView.setAdapter(adapter);
-        int columnCount = getResources().getInteger(R.integer.list_column_count);
+        int columnCount = getResources().getInteger(R.integer.gallery_list_column_count);
         StaggeredGridLayoutManager sglm =
                 new StaggeredGridLayoutManager(columnCount, StaggeredGridLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(sglm);
@@ -254,5 +252,4 @@ public class GalleryFragment extends Fragment implements
     public void onLoaderReset(Loader<Cursor> loader) {
         mRecyclerView.setAdapter(null);
     }
-
 }

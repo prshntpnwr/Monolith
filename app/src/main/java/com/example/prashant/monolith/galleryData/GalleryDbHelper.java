@@ -1,11 +1,11 @@
-package com.example.prashant.monolith.data;
+package com.example.prashant.monolith.galleryData;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import com.example.prashant.monolith.data.GalleryContract.GalleryEntry;
+import com.example.prashant.monolith.galleryData.GalleryContract.GalleryEntry;
 
 public class GalleryDbHelper extends SQLiteOpenHelper{
 

@@ -1,4 +1,4 @@
-package com.example.prashant.monolith.data;
+package com.example.prashant.monolith.galleryData;
 
 import android.content.Context;
 import android.support.v4.content.CursorLoader;
@@ -9,7 +9,7 @@ import android.net.Uri;
  */
 public class GalleryLoader extends CursorLoader {
 
-    public static GalleryLoader newAllArticlesInstance(Context context) {
+    public static GalleryLoader newAllGalleryInstance(Context context) {
         return new GalleryLoader(context, GalleryContract.GalleryEntry.CONTENT_URI);
     }
 

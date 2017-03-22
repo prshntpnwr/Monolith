@@ -2,39 +2,25 @@ package com.example.prashant.monolith;
 
 import android.app.WallpaperManager;
 import android.content.Intent;
-import android.content.res.ColorStateList;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.app.ShareCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.Loader;
-import android.support.v7.graphics.Palette;
 import android.support.v7.widget.Toolbar;
-import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.android.volley.toolbox.ImageLoader;
-import com.example.prashant.monolith.data.GalleryLoader;
-import com.hlab.fabrevealmenu.enums.Direction;
+import com.example.prashant.monolith.galleryData.GalleryLoader;
 import com.hlab.fabrevealmenu.listeners.OnFABMenuSelectedListener;
 import com.hlab.fabrevealmenu.model.FABMenuItem;
 import com.hlab.fabrevealmenu.view.FABRevealMenu;
@@ -42,8 +28,6 @@ import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
 import java.util.ArrayList;
 
 public class ImageDetailFragment extends Fragment implements

@@ -1,6 +1,7 @@
 package com.example.prashant.monolith.adapters;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,11 +11,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.prashant.monolith.R;
+import com.example.prashant.monolith.articleData.ArticleLoader;
 import com.squareup.picasso.Picasso;
 
-public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHolder> {
+import java.util.ArrayList;
 
-    public ArticleAdapter() {
+public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHolder> {
+    private Cursor mCursor;
+
+    public ArticleAdapter(Cursor cursor) {
+        mCursor = cursor;
     }
 
     @Override
@@ -41,11 +47,13 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(ArticleAdapter.ViewHolder holder, int position) {
-        holder.titleView.setText("Article Title");
+        holder.titleView.setText(mCursor.getString(ArticleLoader.Query.COLUMN_TITLE));
+
+        // TODO: add date here
         holder.subtitleView.setText("Subtitle");
 
         ImageView imageView = holder.thumbnail;
-        Picasso.with(imageView.getContext()).load("http://i.imgur.com/DvpvklR.png")
+        Picasso.with(imageView.getContext()).load(mCursor.getString(ArticleLoader.Query.COLUMN_IMAGE_URL))
                 .placeholder(R.color.accent)
                 .error(R.color.primary_dark)
                 .into(imageView);

@@ -1,10 +1,8 @@
-package com.example.prashant.monolith.data;
+package com.example.prashant.monolith.galleryData;
 
-import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.net.Uri;
 import android.provider.BaseColumns;
-import android.util.Log;
 
 public class GalleryContract {
 

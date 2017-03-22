@@ -1,4 +1,4 @@
-package com.example.prashant.monolith.data;
+package com.example.prashant.monolith.galleryData;
 
 import android.content.ContentProvider;
 import android.content.ContentValues;
@@ -9,9 +9,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 
-import com.example.prashant.monolith.data.GalleryContract.GalleryEntry;
+import com.example.prashant.monolith.galleryData.GalleryContract.GalleryEntry;
 
-import static com.example.prashant.monolith.data.GalleryContract.GalleryEntry.TABLE_NAME;
+import static com.example.prashant.monolith.galleryData.GalleryContract.GalleryEntry.TABLE_NAME;
 
 public class GalleryProvider extends ContentProvider {
 

@@ -2,18 +2,15 @@ package com.example.prashant.monolith.adapters;
 
 import android.content.Intent;
 import android.database.Cursor;
-import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.example.prashant.monolith.ImageDetailActivity;
 import com.example.prashant.monolith.R;
-import com.example.prashant.monolith.data.GalleryContract;
-import com.example.prashant.monolith.data.GalleryLoader;
+import com.example.prashant.monolith.galleryData.GalleryContract;
+import com.example.prashant.monolith.galleryData.GalleryLoader;
 import com.squareup.picasso.Picasso;
 
 public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHolder> {
@@ -47,12 +44,12 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
 //                intent.putExtra("URL",mCursor.getString(mCursor.getColumnIndex(GalleryContract.GalleryEntry.COLUMN_IMAGE_PATH)));
 //                parent.getContext().startActivity(intent);
 
-//                String path = mCursor.getString(GalleryLoader.Query.COLUMN_IMAGE_PATH);
+//                String path = mCursor.getString(ArticleLoader.Query.COLUMN_IMAGE_PATH);
 //
 //                Log.d("image url goes here", path);
                 parent.getContext().startActivity(new Intent(Intent.ACTION_VIEW,
                         GalleryContract.GalleryEntry.buildGalleryUri(getItemId(vh.getAdapterPosition()))));
-//                Log.d("onclick image goes here", mCursor.getString(GalleryLoader.Query.COLUMN_IMAGE_PATH));
+//                Log.d("onclick image goes here", mCursor.getString(ArticleLoader.Query.COLUMN_IMAGE_PATH));
 
             }
         });

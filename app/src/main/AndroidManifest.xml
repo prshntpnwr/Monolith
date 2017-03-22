@@ -42,7 +42,12 @@
         </activity>
 
         <provider
-            android:name=".data.GalleryProvider"
+            android:name=".galleryData.GalleryProvider"
+            android:authorities="com.example.prashant.monolith"
+            android:exported="false" />
+
+        <provider
+            android:name=".articleData.ArticleProvider"
             android:authorities="com.example.prashant.monolith"
             android:exported="false" />
 

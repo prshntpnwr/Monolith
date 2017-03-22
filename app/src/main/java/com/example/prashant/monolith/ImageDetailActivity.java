@@ -13,8 +13,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.TypedValue;
 import android.view.WindowManager;
 
-import com.example.prashant.monolith.data.GalleryContract;
-import com.example.prashant.monolith.data.GalleryLoader;
+import com.example.prashant.monolith.galleryData.GalleryContract;
+import com.example.prashant.monolith.galleryData.GalleryLoader;
 
 public class ImageDetailActivity extends AppCompatActivity
         implements LoaderManager.LoaderCallbacks<Cursor> {
@@ -87,7 +87,7 @@ public class ImageDetailActivity extends AppCompatActivity
 
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
-        return GalleryLoader.newAllArticlesInstance(this);
+        return GalleryLoader.newAllGalleryInstance(this);
     }
 
     @Override
