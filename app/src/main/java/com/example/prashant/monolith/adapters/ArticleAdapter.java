@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.prashant.monolith.R;
 import com.example.prashant.monolith.articleData.ArticleLoader;
 import com.squareup.picasso.Picasso;
@@ -60,16 +61,18 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
         holder.subtitleView.setText("Subtitle");
 
         ImageView imageView = holder.thumbnail;
-        Picasso.with(imageView.getContext()).load(mCursor.getString(ArticleLoader.Query.COLUMN_IMAGE_URL))
+        //loading images using picasso
+        Glide.clear(imageView);
+        Glide.with(imageView.getContext()).load(mCursor.getString(ArticleLoader.Query.COLUMN_IMAGE_URL))
                 .placeholder(R.color.accent)
                 .error(R.color.primary_dark)
                 .into(imageView);
-        
+
         Log.d(TAG + "Image_url", mCursor.getString(ArticleLoader.Query.COLUMN_IMAGE_URL));
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView thumbnail;
+         ImageView thumbnail;
          TextView titleView;
          TextView subtitleView;
 
