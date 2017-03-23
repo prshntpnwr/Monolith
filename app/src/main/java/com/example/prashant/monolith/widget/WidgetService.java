@@ -6,8 +6,9 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.os.Binder;
-import android.util.Log;
+
 import android.widget.AdapterView;
+import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
@@ -37,16 +38,19 @@ public class WidgetService extends RemoteViewsService {
         public RemoteAdapter(Context context, int appWidgetId) {
             this.appWidgetId = appWidgetId;
             this.mContext = context;
+            Log.d(TAG + " WidgetService ", " is called");
         }
 
         @Override
         public void onCreate() {
+            Log.d(TAG + "onCreate()", String.valueOf(mCursor));
             mCursor = mContext.getContentResolver()
                     .query(ArticleContract.ArticleEntry.CONTENT_URI, null, null, null, null);
         }
 
         @Override
         public void onDataSetChanged() {
+            Log.d(TAG + "onDataSetChanged()", String.valueOf(mCursor));
             if (mCursor != null) {
                 mCursor.close();
             }
@@ -67,6 +71,7 @@ public class WidgetService extends RemoteViewsService {
 
         @Override
         public int getCount() {
+            Log.d(TAG + "getCount cursor", String.valueOf(mCursor));
             return mCursor == null ? 0 : mCursor.getCount();
         }
 
@@ -77,7 +82,7 @@ public class WidgetService extends RemoteViewsService {
                 return null;
             }
 
-            Log.d(TAG, "Cursor position is : " + mCursor.getPosition());
+            Log.d(TAG, "Cursor position : " + mCursor.getPosition());
             final RemoteViews remoteViews = new RemoteViews(mContext.getPackageName(), R.layout.widget_detail_list_item);
             try {
                 Picasso picasso = Picasso.with(mContext);

@@ -37,5 +37,9 @@
     <!--widget strings-->
     <string name="empty_forecast_list">Empty Widget</string>
     <string name="title_app_widget">Monolith</string>
+    <string name="article_widget_title">Title: news articles</string>
+    <string name="article_widget_date">Today, May 21</string>
+    <string name="article_widget_image">Article Widget image</string>
+
 
 </resources>
