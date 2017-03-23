@@ -36,5 +36,6 @@
 
     <!--widget strings-->
     <string name="empty_forecast_list">Empty Widget</string>
+    <string name="title_app_widget">Monolith</string>
 
 </resources>

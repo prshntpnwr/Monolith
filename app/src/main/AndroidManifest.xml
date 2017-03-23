@@ -69,7 +69,8 @@
             </intent-filter>
         </service>
 
-        <receiver android:name=".widget.MonolithWidget">
+        <receiver android:name=".widget.MonolithWidget"
+            android:label="@string/title_app_widget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>

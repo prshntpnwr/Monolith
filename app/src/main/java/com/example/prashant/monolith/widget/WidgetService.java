@@ -5,6 +5,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.net.Uri;
+import android.os.Binder;
+
+import android.widget.AdapterView;
 import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
@@ -18,6 +22,9 @@ import java.io.IOException;
 
 public class WidgetService extends RemoteViewsService {
 
+    public static final String ACTION_DATA_UPDATED =
+            "com.example.prashant.monolith.widget.ACTION_DATA_UPDATED";
+
     @Override
     public RemoteViewsFactory onGetViewFactory(Intent intent) {
         int appWidgetId = intent.getExtras().getInt(AppWidgetManager.EXTRA_APPWIDGET_ID);
@@ -25,10 +32,9 @@ public class WidgetService extends RemoteViewsService {
         return new RemoteAdapter(WidgetService.this, appWidgetId);
     }
 
+    public class RemoteAdapter implements RemoteViewsFactory {
 
-    public static class RemoteAdapter implements RemoteViewsFactory {
-
-        private static final String TAG = RemoteAdapter.class.getSimpleName();
+        private final String TAG = RemoteAdapter.class.getSimpleName();
         Cursor mCursor;
         Context mContext;
         int appWidgetId;
@@ -40,27 +46,42 @@ public class WidgetService extends RemoteViewsService {
 
         @Override
         public void onCreate() {
-            mCursor = mContext.getContentResolver().query(ArticleContract.ArticleEntry.CONTENT_URI, null, null, null, null);
+            mCursor = mContext.getContentResolver()
+                    .query(ArticleContract.ArticleEntry.CONTENT_URI, null, null, null, null);
         }
 
         @Override
         public void onDataSetChanged() {
+            if (mCursor != null) {
+                mCursor.close();
+            }
 
+            final long identityToken = Binder.clearCallingIdentity();
+            mCursor = mContext.getContentResolver()
+                    .query(ArticleContract.ArticleEntry.CONTENT_URI, null, null, null, null);
+            Binder.restoreCallingIdentity(identityToken);
         }
 
         @Override
         public void onDestroy() {
-
+            if (mCursor != null) {
+                mCursor.close();
+                mCursor = null;
+            }
         }
 
         @Override
         public int getCount() {
-            return mCursor.getCount();
+            return mCursor == null ? 0 : mCursor.getCount();
         }
 
         @Override
-        public RemoteViews getViewAt(int i) {
-            mCursor.moveToPosition(i);
+        public RemoteViews getViewAt(int position) {
+            if (position == AdapterView.INVALID_POSITION ||
+                    mCursor == null || !mCursor.moveToPosition(position)) {
+                return null;
+            }
+
             Log.d(TAG, "Cursor is at " + mCursor.getPosition());
             final RemoteViews remoteViews = new RemoteViews(mContext.getPackageName(), R.layout.widget_detail_list_item);
             try {
@@ -76,12 +97,23 @@ public class WidgetService extends RemoteViewsService {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
+            updateWidgets();
+
             return remoteViews;
         }
 
+        private void updateWidgets() {
+            // Setting the package ensures that only components in our app will receive the broadcast
+            Intent dataUpdatedIntent = new Intent(ACTION_DATA_UPDATED)
+                    .setPackage(mContext.getPackageName());
+            mContext.sendBroadcast(dataUpdatedIntent);
+        }
+
+
         @Override
         public RemoteViews getLoadingView() {
-            return null;
+            return new RemoteViews(getPackageName(), R.layout.widget_detail_list_item);
         }
 
         @Override
@@ -90,13 +122,15 @@ public class WidgetService extends RemoteViewsService {
         }
 
         @Override
-        public long getItemId(int i) {
-            return 1;
+        public long getItemId(int position) {
+            if (mCursor.moveToPosition(position))
+                return mCursor.getLong(ArticleLoader.Query.COLUMN_ARTICLE_ID);
+            return position;
         }
 
         @Override
         public boolean hasStableIds() {
-            return false;
+            return true;
         }
     }
 }
