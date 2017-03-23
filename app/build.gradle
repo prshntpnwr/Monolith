@@ -62,4 +62,7 @@ dependencies {
     //gallery fab
     compile 'com.github.joaquimley:faboptions:1.1.2'
 
+    //custom chrome tab
+    compile 'com.android.support:customtabs:25.2.0'
+
 }

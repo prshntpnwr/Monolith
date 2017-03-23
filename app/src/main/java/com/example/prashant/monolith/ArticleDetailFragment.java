@@ -3,8 +3,11 @@ package com.example.prashant.monolith;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.customtabs.CustomTabsIntent;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -56,9 +59,13 @@ public class ArticleDetailFragment extends Fragment implements
     private int mItemPosition;
     private long mItemId;
     private Cursor mCursor;
+    private FloatingActionButton fab;
+    private FABRevealMenu fabMenu;
 
     public View mRootView;
     public Toolbar toolbar;
+    int defaultColor;
+    int color;
 
     public static ArticleDetailFragment newInstance(long itemId, int position) {
         Bundle arguments = new Bundle();
@@ -100,12 +107,11 @@ public class ArticleDetailFragment extends Fragment implements
         mPhotoView = (ImageView) mRootView.findViewById(R.id.photo);
         mPhotoContainerView = mRootView.findViewById(R.id.photo_container);
 
-        final FloatingActionButton fab = (FloatingActionButton) mRootView.findViewById(R.id.fab);
-        final FABRevealMenu fabMenu = (FABRevealMenu) mRootView.findViewById(R.id.fabMenu);
+        fab = (FloatingActionButton) mRootView.findViewById(R.id.fab);
+        fabMenu = (FABRevealMenu) mRootView.findViewById(R.id.fabMenu);
 
         try {
             if (fabMenu != null) {
-                // setFabMenu(fabMenu);
                 fabMenu.bindAncherView(fab);
                 fabMenu.setOnFABMenuSelectedListener(this);
             }
@@ -153,10 +159,12 @@ public class ArticleDetailFragment extends Fragment implements
                                                        boolean isFromMemoryCache, boolean isFirstResource) {
                             Bitmap bitmap = ((GlideBitmapDrawable) resource.getCurrent()).getBitmap();
                             Palette palette = Palette.generate(bitmap);
-                            int defaultColor = 0xFF333333;
-                            int color = palette.getMutedColor(defaultColor);
+                            defaultColor = 0xFF333333;
+                            color = palette.getMutedColor(defaultColor);
                             mRootView.findViewById(R.id.meta_bar)
                                     .setBackgroundColor(color);
+//                            fab.setBackgroundColor(color);
+//                            fabMenu.setBackgroundColor(color);
                             return false;
                         }
                     })
@@ -219,6 +227,23 @@ public class ArticleDetailFragment extends Fragment implements
         int id = (int) view.getTag();
         if (id == R.id.fab_custom_tab) {
 
+            Intent intent = new Intent();
+            //Add app as the referrer
+            intent.putExtra(Intent.EXTRA_REFERRER,
+                    Uri.parse(Intent.URI_ANDROID_APP_SCHEME + "//" + getContext().getPackageName()));
+
+            CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
+            //tab color
+            builder.setToolbarColor(color);
+            //tab animation
+            builder.setStartAnimations(this.getContext(), android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+            builder.setExitAnimations(this.getContext(), android.R.anim.slide_in_left,
+                    android.R.anim.slide_out_right);
+            //tab back button
+            builder.setCloseButtonIcon(BitmapFactory.decodeResource(
+                    getResources(), R.drawable.ic_back));
+            CustomTabsIntent customTabsIntent = builder.build();
+            customTabsIntent.launchUrl(this.getContext(), Uri.parse(mCursor.getString(ArticleLoader.Query.COLUMN_LINK)));
 
         } else if (id == R.id.fab) {
             try {
