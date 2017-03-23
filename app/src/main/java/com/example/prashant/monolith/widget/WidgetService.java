@@ -96,6 +96,13 @@ public class WidgetService extends RemoteViewsService {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
+            final Intent fillInIntent = new Intent();
+            fillInIntent.putExtra("title", mCursor.getString(ArticleLoader.Query.COLUMN_TITLE));
+            fillInIntent.putExtra("date", mCursor.getString(ArticleLoader.Query.COLUMN_PUBLISH_DATE));
+            fillInIntent.putExtra("image", mCursor.getString(ArticleLoader.Query.COLUMN_IMAGE_URL));
+            remoteViews.setOnClickFillInIntent(R.id.widget_list_item, fillInIntent);
+
             return remoteViews;
         }
 
