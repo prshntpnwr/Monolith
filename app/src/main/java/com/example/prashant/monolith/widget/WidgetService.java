@@ -106,7 +106,8 @@ public class WidgetService extends RemoteViewsService {
         private void updateWidgets() {
             // Setting the package ensures that only components in our app will receive the broadcast
             Intent dataUpdatedIntent = new Intent(ACTION_DATA_UPDATED)
-                    .setPackage(mContext.getPackageName());
+                    .setPackage(mContext.getPackageName())
+                    .putExtra("Cursor", String.valueOf(mCursor));
             mContext.sendBroadcast(dataUpdatedIntent);
         }
 
