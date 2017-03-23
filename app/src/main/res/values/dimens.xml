@@ -7,7 +7,6 @@
     <integer name="gallery_list_column_count">2</integer>
     <integer name="article_list_column_count">2</integer>
 
-
     <dimen name="max_width">400dp</dimen>
 
     <!--fab-->
@@ -43,5 +42,11 @@
     <dimen name="detail_body_bottom_margin">32dp</dimen>
     <dimen name="detail_title_bottom_margin">4dp</dimen>
     <dimen name="detail_toolbar_margin">24dp</dimen>
+
+    <!--article detail text-->
+    <dimen name="detail_title_text_size">32sp</dimen>
+    <dimen name="detail_body_text_size">22sp</dimen>
+    <dimen name="detail_byline_text_size">16sp</dimen>
+    <item name="detail_body_line_spacing_multiplier" format="float" type="fraction">1.2</item>
 
 </resources>

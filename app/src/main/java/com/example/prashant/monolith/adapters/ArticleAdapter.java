@@ -1,19 +1,20 @@
 package com.example.prashant.monolith.adapters;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
+import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.prashant.monolith.R;
+import com.example.prashant.monolith.articleData.ArticleContract;
 import com.example.prashant.monolith.articleData.ArticleLoader;
-import com.squareup.picasso.Picasso;
 
 public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHolder> {
     private final String TAG = ArticleAdapter.class.getSimpleName();
@@ -41,11 +42,12 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.list_item_article, parent, false);
 
-        ViewHolder vh = new ViewHolder(view);
+        final ViewHolder vh = new ViewHolder(view);
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(parent.getContext(), "this is an article", Toast.LENGTH_SHORT).show();
+                parent.getContext().startActivity(new Intent(Intent.ACTION_VIEW,
+                        ArticleContract.ArticleEntry.buildArticleUri(getItemId(vh.getAdapterPosition()))));
             }
         });
 
@@ -55,13 +57,16 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
     @Override
     public void onBindViewHolder(ArticleAdapter.ViewHolder holder, int position) {
         holder.titleView.setText(mCursor.getString(ArticleLoader.Query.COLUMN_TITLE));
-//        Log.d(TAG + "Title", mCursor.getString(ArticleLoader.Query.COLUMN_TITLE));
 
-        // TODO: add date here
-        holder.subtitleView.setText("Subtitle");
+        // TODO: format date
+        holder.subtitleView.setText(
+                DateUtils.getRelativeTimeSpanString(
+                        mCursor.getLong(ArticleLoader.Query.COLUMN_PUBLISH_DATE),
+                        System.currentTimeMillis(), DateUtils.HOUR_IN_MILLIS,
+                        DateUtils.FORMAT_ABBREV_ALL).toString());
 
         ImageView imageView = holder.thumbnail;
-        //loading images using picasso
+        //loading images using glide
         Glide.clear(imageView);
         Glide.with(imageView.getContext()).load(mCursor.getString(ArticleLoader.Query.COLUMN_IMAGE_URL))
                 .placeholder(R.color.accent)
@@ -72,9 +77,9 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-         ImageView thumbnail;
-         TextView titleView;
-         TextView subtitleView;
+        ImageView thumbnail;
+        TextView titleView;
+        TextView subtitleView;
 
         public ViewHolder(View itemView) {
             super(itemView);

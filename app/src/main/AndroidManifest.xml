@@ -6,7 +6,6 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.SET_WALLPAPER">
         <uses-permission android:name="android.permission.SET_WALLPAPER_HINTS">
         </uses-permission></uses-permission>
@@ -39,6 +38,19 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
+        </activity>
+
+        <activity
+            android:name=".ArticleDetailActivity"
+            android:theme="@style/AppTheme.Detail">
+            <intent-filter tools:ignore="GoogleAppIndexingWarning">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="vnd.android.cursor.item/vnd.com.example.prashant.monolith.article" />
+            </intent-filter>
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity"/>
         </activity>
 
         <provider
