@@ -1,12 +1,16 @@
 package com.example.prashant.monolith.fragments;
 
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
@@ -23,6 +27,7 @@ import com.example.prashant.monolith.galleryData.GalleryContract;
 import com.example.prashant.monolith.galleryData.GalleryLoader;
 import com.example.prashant.monolith.galleryObjects.Results;
 import com.example.prashant.monolith.galleryObjects.UnsplashGalleryInterface;
+import com.example.prashant.monolith.widget.MonolithWidget;
 
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
@@ -36,9 +41,10 @@ public class GalleryFragment extends Fragment implements
     // TODO: RecyclerView images margin and padding
 
     private final String TAG = GalleryFragment.class.getSimpleName();
+    public static final String ACTION_DATA_UPDATED =
+            "com.example.prashant.monolith.fragments.GalleryFragment.ACTION_DATA_UPDATED";
 
     private RecyclerView mRecyclerView;
-    //public ArrayList<String> imageList = new ArrayList<>();
     LoaderManager.LoaderCallbacks callbacks;
     private Cursor mCursor;
     private int mTag;
@@ -242,10 +248,21 @@ public class GalleryFragment extends Fragment implements
         StaggeredGridLayoutManager sglm =
                 new StaggeredGridLayoutManager(columnCount, StaggeredGridLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(sglm);
+        udpateWidget(data);
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
         mRecyclerView.setAdapter(null);
+    }
+
+    public void udpateWidget(Cursor cursor) {
+//        ComponentName name = new ComponentName(this.getContext(), MonolithWidget.class);
+//        int[] ids = AppWidgetManager.getInstance(this.getContext()).getAppWidgetIds(name);
+        Intent intent = new Intent(this.getContext(), MonolithWidget.class);
+        intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, String.valueOf(cursor));
+        getContext().sendBroadcast(intent);
+
     }
 }

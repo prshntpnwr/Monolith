@@ -5,11 +5,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Binder;
-
-import android.widget.AdapterView;
 import android.util.Log;
+import android.widget.AdapterView;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
@@ -21,9 +19,6 @@ import com.squareup.picasso.Picasso;
 import java.io.IOException;
 
 public class WidgetService extends RemoteViewsService {
-
-    public static final String ACTION_DATA_UPDATED =
-            "com.example.prashant.monolith.widget.ACTION_DATA_UPDATED";
 
     @Override
     public RemoteViewsFactory onGetViewFactory(Intent intent) {
@@ -82,7 +77,7 @@ public class WidgetService extends RemoteViewsService {
                 return null;
             }
 
-            Log.d(TAG, "Cursor is at " + mCursor.getPosition());
+            Log.d(TAG, "Cursor position is : " + mCursor.getPosition());
             final RemoteViews remoteViews = new RemoteViews(mContext.getPackageName(), R.layout.widget_detail_list_item);
             try {
                 Picasso picasso = Picasso.with(mContext);
@@ -97,20 +92,8 @@ public class WidgetService extends RemoteViewsService {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
-            updateWidgets();
-
             return remoteViews;
         }
-
-        private void updateWidgets() {
-            // Setting the package ensures that only components in our app will receive the broadcast
-            Intent dataUpdatedIntent = new Intent(ACTION_DATA_UPDATED)
-                    .setPackage(mContext.getPackageName())
-                    .putExtra("Cursor", String.valueOf(mCursor));
-            mContext.sendBroadcast(dataUpdatedIntent);
-        }
-
 
         @Override
         public RemoteViews getLoadingView() {

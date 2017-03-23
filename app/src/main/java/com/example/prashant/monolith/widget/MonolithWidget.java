@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.widget.RemoteViews;
 
 import com.example.prashant.monolith.R;
+import com.example.prashant.monolith.fragments.GalleryFragment;
 
 /**
  * Implementation of App Widget functionality.
@@ -41,13 +42,13 @@ public class MonolithWidget extends AppWidgetProvider {
     @Override
     public void onReceive(Context context, Intent intent) {
         super.onReceive(context, intent);
-        if (WidgetService.ACTION_DATA_UPDATED.equals(intent.getAction())) {
+        if (AppWidgetManager.ACTION_APPWIDGET_UPDATE.equals(intent.getAction())) {
             AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
             int[] appWidgetIds = appWidgetManager.getAppWidgetIds(
                     new ComponentName(context, getClass()));
+            intent.getAction();
             appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.widget_list);
         }
-
     }
 
     @Override
