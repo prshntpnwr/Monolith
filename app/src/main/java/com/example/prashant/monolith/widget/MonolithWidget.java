@@ -15,52 +15,43 @@ import com.example.prashant.monolith.R;
  */
 public class MonolithWidget extends AppWidgetProvider {
 
+    private String TAG = getClass().getName();
+
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                 int appWidgetId) {
 
-        Intent intent = new Intent(context, WidgetService.class);
-        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
-        intent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));
-
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.monolith_widget);
-        views.setRemoteAdapter(R.id.widget_list, intent);
-        views.setEmptyView(R.id.widget_list, R.id.widget_empty);
 
+        views.setRemoteAdapter(R.id.widget_list,
+                new Intent(context, WidgetService.class));
         // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, views);
+        appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetId, R.id.widget_list);
     }
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         // There may be multiple widgets active, so update all of them
+
         for (int appWidgetId : appWidgetIds) {
+            Log.e(TAG, "onUpdate: " + appWidgetId);
             updateAppWidget(context, appWidgetManager, appWidgetId);
         }
+        super.onUpdate(context, appWidgetManager, appWidgetIds);
     }
 
     @Override
     public void onReceive(Context context, Intent intent) {
         super.onReceive(context, intent);
-        Log.d("onReceive called", "widgetProvide");
         if (AppWidgetManager.ACTION_APPWIDGET_UPDATE.equals(intent.getAction())) {
             AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
             int[] appWidgetIds = appWidgetManager.getAppWidgetIds(
                     new ComponentName(context, getClass()));
-
-            RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.widget_detail_list_item);
+            Log.e("Widget", "onReceive: ");
+            RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.monolith_widget);
             appWidgetManager.updateAppWidget(appWidgetIds, remoteViews);
             appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.widget_list);
         }
-    }
-
-    @Override
-    public void onEnabled(Context context) {
-        // Enter relevant functionality for when the first widget is created
-    }
-
-    @Override
-    public void onDisabled(Context context) {
-        // Enter relevant functionality for when the last widget is disabled
     }
 }
 

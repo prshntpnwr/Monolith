@@ -23,34 +23,33 @@ public class WidgetService extends RemoteViewsService {
 
     @Override
     public RemoteViewsFactory onGetViewFactory(Intent intent) {
-        int appWidgetId = intent.getExtras().getInt(AppWidgetManager.EXTRA_APPWIDGET_ID);
 
-        return new RemoteAdapter(WidgetService.this, appWidgetId);
+        return new RemoteAdapter(WidgetService.this, intent);
     }
 
-    public class RemoteAdapter implements RemoteViewsFactory {
+    public class RemoteAdapter implements RemoteViewsService.RemoteViewsFactory {
 
         private final String TAG = RemoteAdapter.class.getSimpleName();
         Cursor mCursor;
         Context mContext;
-        int appWidgetId;
+        private Intent intent;
 
-        public RemoteAdapter(Context context, int appWidgetId) {
-            this.appWidgetId = appWidgetId;
+
+        public RemoteAdapter(WidgetService context, Intent intent) {
             this.mContext = context;
-            Log.d(TAG + " WidgetService ", " is called");
+            this.intent = intent;
         }
 
         @Override
         public void onCreate() {
-            Log.d(TAG + "onCreate()", String.valueOf(mCursor));
+            Log.e(TAG, "onCreate: ");
             mCursor = mContext.getContentResolver()
                     .query(ArticleContract.ArticleEntry.CONTENT_URI, null, null, null, null);
         }
 
         @Override
         public void onDataSetChanged() {
-            Log.d(TAG + "onDataSetChanged()", String.valueOf(mCursor));
+            Log.e(TAG, "onDataSetChanged: ");
             if (mCursor != null) {
                 mCursor.close();
             }
@@ -71,18 +70,18 @@ public class WidgetService extends RemoteViewsService {
 
         @Override
         public int getCount() {
-            Log.d(TAG + "getCount cursor", String.valueOf(mCursor));
-            return mCursor == null ? 0 : mCursor.getCount();
+            return mCursor == null ? 0 : 10;
         }
 
         @Override
         public RemoteViews getViewAt(int position) {
+            Log.e(TAG, "getViewAt: ");
             if (position == AdapterView.INVALID_POSITION ||
                     mCursor == null || !mCursor.moveToPosition(position)) {
                 return null;
             }
 
-            Log.d(TAG, "Cursor position : " + mCursor.getPosition());
+            Log.d(TAG, "Cursor position is : " + mCursor.getPosition());
             final RemoteViews remoteViews = new RemoteViews(mContext.getPackageName(), R.layout.widget_detail_list_item);
             try {
                 Picasso picasso = Picasso.with(mContext);
@@ -102,7 +101,7 @@ public class WidgetService extends RemoteViewsService {
 
         @Override
         public RemoteViews getLoadingView() {
-            return new RemoteViews(getPackageName(), R.layout.widget_detail_list_item);
+            return null;
         }
 
         @Override
@@ -112,8 +111,6 @@ public class WidgetService extends RemoteViewsService {
 
         @Override
         public long getItemId(int position) {
-            if (mCursor.moveToPosition(position))
-                return mCursor.getLong(ArticleLoader.Query.COLUMN_ARTICLE_ID);
             return position;
         }
 
