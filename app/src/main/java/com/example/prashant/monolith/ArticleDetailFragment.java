@@ -12,7 +12,6 @@ import android.support.v4.content.Loader;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.Toolbar;
-import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,7 +25,6 @@ import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.example.prashant.monolith.articleData.ArticleLoader;
-import com.example.prashant.monolith.galleryData.GalleryLoader;
 
 public class ArticleDetailFragment extends Fragment implements
         LoaderManager.LoaderCallbacks<Cursor> {
@@ -40,14 +38,10 @@ public class ArticleDetailFragment extends Fragment implements
     public ArticleDetailFragment() {
     }
 
-    private int mMutedColor = 0xFF333333;
-
     private ColorDrawable mStatusBarColorDrawable;
 
-    private int mTopInset;
     private View mPhotoContainerView;
     private ImageView mPhotoView;
-    private int mScrollY;
     private boolean mIsCard = false;
     private int mStatusBarFullOpacityBottom;
 
@@ -57,17 +51,15 @@ public class ArticleDetailFragment extends Fragment implements
     private int mItemPosition;
     private long mItemId;
     private Cursor mCursor;
-    private String image_url;
 
-    public ImageView imageView;
     public View mRootView;
     public Toolbar toolbar;
 
-    public static ImageDetailFragment newInstance(long itemId, int position) {
+    public static ArticleDetailFragment newInstance(long itemId, int position) {
         Bundle arguments = new Bundle();
         arguments.putLong(ARG_ITEM_ID, itemId);
         arguments.putInt(ARG_ITEM_POSITION, position);
-        ImageDetailFragment fragment = new ImageDetailFragment();
+        ArticleDetailFragment fragment = new ArticleDetailFragment();
         fragment.setArguments(arguments);
         return fragment;
     }
@@ -94,7 +86,7 @@ public class ArticleDetailFragment extends Fragment implements
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        mRootView = inflater.inflate(R.layout.fragment_image_detail, container, false);
+        mRootView = inflater.inflate(R.layout.fragment_article_detail, container, false);
         toolbar = (Toolbar) mRootView.findViewById(R.id.detail_toolbar);
 
         toolbar = (Toolbar) mRootView.findViewById(R.id.detail_toolbar);
@@ -112,7 +104,6 @@ public class ArticleDetailFragment extends Fragment implements
             }
         });
 
-        bindViews();
         setupToolbar();
         return mRootView;
     }
@@ -126,8 +117,6 @@ public class ArticleDetailFragment extends Fragment implements
         TextView bylineView = (TextView) mRootView.findViewById(R.id.article_byline);
         TextView bodyView = (TextView) mRootView.findViewById(R.id.article_body);
 
-        imageView = (ImageView) mRootView.findViewById(R.id.image);
-
         if (mCursor != null) {
             mRootView.setAlpha(0);
             mRootView.setVisibility(View.VISIBLE);
@@ -138,7 +127,7 @@ public class ArticleDetailFragment extends Fragment implements
             bylineView.setText(mCursor.getString(ArticleLoader.Query.COLUMN_PUBLISH_DATE));
             bodyView.setText(mCursor.getString(ArticleLoader.Query.COLUMN_DESCRIPTION));
 
-            Glide.clear(imageView);
+            Glide.clear(mPhotoView);
             Glide.with(this.getContext())
                     .load(mCursor.getString(ArticleLoader.Query.COLUMN_IMAGE_URL))
                     .listener(new RequestListener<String, GlideDrawable>() {
@@ -160,7 +149,7 @@ public class ArticleDetailFragment extends Fragment implements
                             return false;
                         }
                     })
-                    .into(imageView);
+                    .into(mPhotoView);
         } else {
             mRootView.setVisibility(View.GONE);
             titleView.setText("N/A");

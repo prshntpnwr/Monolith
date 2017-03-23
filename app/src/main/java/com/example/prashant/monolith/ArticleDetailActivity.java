@@ -19,7 +19,6 @@ import com.example.prashant.monolith.articleData.ArticleLoader;
 public class ArticleDetailActivity extends AppCompatActivity
         implements LoaderManager.LoaderCallbacks<Cursor> {
 
-    public static String Fragment_tag = "current_fragment";
     private Cursor mCursor;
     private long mStartId;
 
@@ -32,7 +31,6 @@ public class ArticleDetailActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        onRestoreInstanceState(savedInstanceState);
         setContentView(R.layout.activity_article_detail);
 
         getSupportLoaderManager().initLoader(0, null, this);
