@@ -248,7 +248,7 @@ public class GalleryFragment extends Fragment implements
         StaggeredGridLayoutManager sglm =
                 new StaggeredGridLayoutManager(columnCount, StaggeredGridLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(sglm);
-        udpateWidget(data);
+        udpateWidget();
     }
 
     @Override
@@ -256,12 +256,12 @@ public class GalleryFragment extends Fragment implements
         mRecyclerView.setAdapter(null);
     }
 
-    public void udpateWidget(Cursor cursor) {
-//        ComponentName name = new ComponentName(this.getContext(), MonolithWidget.class);
-//        int[] ids = AppWidgetManager.getInstance(this.getContext()).getAppWidgetIds(name);
+    public void udpateWidget() {
+        ComponentName name = new ComponentName(this.getContext(), MonolithWidget.class);
+        int[] ids = AppWidgetManager.getInstance(this.getContext()).getAppWidgetIds(name);
         Intent intent = new Intent(this.getContext(), MonolithWidget.class);
         intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
-        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, String.valueOf(cursor));
+        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids);
         getContext().sendBroadcast(intent);
 
     }
