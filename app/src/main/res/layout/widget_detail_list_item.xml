@@ -10,14 +10,14 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:minHeight="?android:attr/listPreferredItemHeight"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
+        android:paddingStart="@dimen/widget_Linearlayout_margin"
+        android:paddingEnd="@dimen/widget_Linearlayout_margin"
         android:orientation="horizontal">
 
         <LinearLayout
             android:layout_height="wrap_content"
             android:layout_width="0dp"
-            android:layout_weight="4"
+            android:layout_weight="7"
             android:orientation="vertical">
 
             <TextView
@@ -42,10 +42,10 @@
         <ImageView
             android:id="@+id/widget_photo"
             android:layout_gravity="center"
-            android:layout_width="96dp"
-            android:layout_height="96dp"
-            android:layout_marginEnd="8dp"
-            android:padding="8dp"
+            android:layout_width="@dimen/widget_image_size"
+            android:layout_height="@dimen/widget_image_size"
+            android:layout_marginEnd="@dimen/widget_image_margin"
+            android:padding="@dimen/widget_image_padding"
             android:src="@drawable/bg"
             android:contentDescription="@string/article_widget_image" />
 
