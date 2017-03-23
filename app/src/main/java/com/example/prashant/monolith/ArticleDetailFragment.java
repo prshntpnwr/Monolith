@@ -163,6 +163,9 @@ public class ArticleDetailFragment extends Fragment implements
                     .into(imageView);
         } else {
             mRootView.setVisibility(View.GONE);
+            titleView.setText("N/A");
+            bylineView.setText("N/A" );
+            bodyView.setText("N/A");
         }
     }
 

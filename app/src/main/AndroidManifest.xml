@@ -46,7 +46,7 @@
             <intent-filter tools:ignore="GoogleAppIndexingWarning">
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
-                <data android:mimeType="vnd.android.cursor.item/vnd.com.example.prashant.monolith.article" />
+                <data android:mimeType="vnd.android.cursor.item/vnd.com.example.prashant.monolith.articles" />
             </intent-filter>
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
