@@ -1,12 +1,15 @@
 package com.example.prashant.monolith;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
+import android.support.v4.app.ShareCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.Loader;
 import android.support.v4.widget.NestedScrollView;
@@ -25,9 +28,11 @@ import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.example.prashant.monolith.articleData.ArticleLoader;
+import com.hlab.fabrevealmenu.listeners.OnFABMenuSelectedListener;
+import com.hlab.fabrevealmenu.view.FABRevealMenu;
 
 public class ArticleDetailFragment extends Fragment implements
-        LoaderManager.LoaderCallbacks<Cursor> {
+        LoaderManager.LoaderCallbacks<Cursor> , OnFABMenuSelectedListener {
 
     private static final String TAG = ImageDetailFragment.class.getSimpleName();
 
@@ -95,14 +100,20 @@ public class ArticleDetailFragment extends Fragment implements
         mPhotoView = (ImageView) mRootView.findViewById(R.id.photo);
         mPhotoContainerView = mRootView.findViewById(R.id.photo_container);
 
-        bindViews();
+        final FloatingActionButton fab = (FloatingActionButton) mRootView.findViewById(R.id.fab);
+        final FABRevealMenu fabMenu = (FABRevealMenu) mRootView.findViewById(R.id.fabMenu);
 
-        mRootView.findViewById(R.id.share_fab).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // TODO: share intent
+        try {
+            if (fabMenu != null) {
+                // setFabMenu(fabMenu);
+                fabMenu.bindAncherView(fab);
+                fabMenu.setOnFABMenuSelectedListener(this);
             }
-        });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        bindViews();
 
         setupToolbar();
         return mRootView;
@@ -201,5 +212,25 @@ public class ArticleDetailFragment extends Fragment implements
     public void onLoaderReset(Loader<Cursor> cursorLoader) {
         mCursor = null;
         bindViews();
+    }
+
+    @Override
+    public void onMenuItemSelected(View view) {
+        int id = (int) view.getTag();
+        if (id == R.id.fab_custom_tab) {
+
+
+        } else if (id == R.id.fab) {
+            try {
+                startActivity(Intent.createChooser(ShareCompat.IntentBuilder.from(getActivity())
+                        .setType("text/plain")
+                        .setText(mCursor.getString(ArticleLoader.Query.COLUMN_LINK) + "\n\n"
+                                + Monolith_SHARE_HASHTAG)
+                        .getIntent(), getString(R.string.action_share)));
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

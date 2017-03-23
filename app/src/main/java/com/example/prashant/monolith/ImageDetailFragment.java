@@ -39,15 +39,12 @@ public class ImageDetailFragment extends Fragment implements
     public static final String ARG_ITEM_POSITION = "item_position";
     private static final String Monolith_SHARE_HASHTAG = " #MonolithApp";
 
-    private ArrayList<FABMenuItem> items;
-
     public ImageDetailFragment() {
     }
 
     private int mItemPosition;
     private long mItemId;
     private Cursor mCursor;
-    private String image_url;
 
     public ImageView imageView;
     public View mRootView;
@@ -135,7 +132,7 @@ public class ImageDetailFragment extends Fragment implements
 
             Toast.makeText(getActivity(), "Wallpaper set successfully! ", Toast.LENGTH_SHORT).show();
 
-        } else if (id == R.id.fab_share) {
+        } else if (id == R.id.fab_image_share) {
             try {
                 startActivity(Intent.createChooser(ShareCompat.IntentBuilder.from(getActivity())
                         .setType("text/plain")
@@ -178,8 +175,6 @@ public class ImageDetailFragment extends Fragment implements
             Log.d("image goes here", mCursor.getString(GalleryLoader.Query.COLUMN_IMAGE_PATH));
         } else {
             mRootView.setVisibility(View.GONE);
-            //cause a purplish hue
-//           imageView.setColorFilter(R.color.photo_placeholder);
         }
     }
 

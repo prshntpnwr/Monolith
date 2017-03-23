@@ -134,15 +134,28 @@
 
     <android.support.design.widget.FloatingActionButton
         android:background="@drawable/add_fab_background"
-        android:id="@+id/share_fab"
+        android:id="@+id/fab"
         android:layout_gravity="bottom|end"
         android:layout_marginEnd="@dimen/fab_margin"
         android:layout_marginBottom="@dimen/fab_margin"
-        android:src="@drawable/ic_share"
+        android:src="@drawable/ic_more_verical"
         android:contentDescription="@string/action_share"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         app:pressedTranslationZ="@dimen/fab_press_translation_z"
         app:fabSize="normal" />
+
+    <com.hlab.fabrevealmenu.view.FABRevealMenu
+        android:id="@+id/fabMenu"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        app:animateItems="true"
+        app:menuBackgroundColor="@color/accent"
+        app:menuDirection="left"
+        app:menuRes="@menu/image_fab_menu"
+        app:menuTitleTextColor="@color/colorWhite"
+        app:showOverlay="true"
+        app:showTitle="true" />
 
 </android.support.design.widget.CoordinatorLayout>

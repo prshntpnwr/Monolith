@@ -17,8 +17,9 @@
     <string name="refresh">Refresh</string>
     <string name="next_page">Next Page</string>
 
+    <!--image detail menu item-->
     <string name="wallpaper">Wallpaper</string>
-    <string name="share">Share</string>
+    <string name="image_share">Share</string>
 
     <!--unsplash api key-->
     <string name="unsplash_api_key">2f12038a9af628b150d141d9532b923e25818d649175c229f4d954b7f1033ef7</string>
@@ -26,5 +27,9 @@
     <!--article strings-->
     <string name="article_image_desc">Article Image</string>
     <string name="article_detail_image" translatable="false">Detail Image</string>
+
+    <!--article detail menu item-->
+    <string name="custom_tab">Custom Tab</string>
+    <string name="article_share">Share</string>
 
 </resources>
