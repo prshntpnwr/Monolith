@@ -63,13 +63,13 @@
             android:authorities="com.example.prashant.monolith"
             android:exported="false" />
 
-        <service
-            android:name=".services.galleryJobService"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE" />
-            </intent-filter>
-        </service>
+        <!--<service-->
+            <!--android:name=".services.galleryJobService"-->
+            <!--android:exported="false">-->
+            <!--<intent-filter>-->
+                <!--<action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE" />-->
+            <!--</intent-filter>-->
+        <!--</service>-->
 
         <receiver android:name=".widget.MonolithWidget"
             android:label="@string/title_app_widget">

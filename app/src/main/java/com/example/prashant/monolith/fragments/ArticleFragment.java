@@ -1,7 +1,10 @@
 package com.example.prashant.monolith.fragments;
 
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
 import android.content.ContentResolver;
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -21,6 +24,7 @@ import com.example.prashant.monolith.articleData.ArticleContract;
 import com.example.prashant.monolith.articleData.ArticleLoader;
 import com.example.prashant.monolith.articleObject.ArticleInterface;
 import com.example.prashant.monolith.articleObject.Rss;
+import com.example.prashant.monolith.widget.MonolithWidget;
 
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
@@ -149,10 +153,21 @@ public class ArticleFragment extends Fragment implements
         StaggeredGridLayoutManager sglm =
                 new StaggeredGridLayoutManager(columnCount, StaggeredGridLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(sglm);
+        udpateWidget();
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
         mRecyclerView.setAdapter(null);
+    }
+
+    public void udpateWidget() {
+        Log.d(TAG + "udpateWidget" , "is called");
+        ComponentName name = new ComponentName(this.getContext(), MonolithWidget.class);
+        int[] ids = AppWidgetManager.getInstance(this.getContext()).getAppWidgetIds(name);
+        Intent intent = new Intent(this.getContext(), MonolithWidget.class);
+        intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids);
+        getContext().sendBroadcast(intent);
     }
 }
