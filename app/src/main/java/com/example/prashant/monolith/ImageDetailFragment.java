@@ -144,6 +144,7 @@ public class ImageDetailFragment extends Fragment implements
                 e.printStackTrace();
             }
         }
+        Toast.makeText(getActivity(), "Shared Successfully! ", Toast.LENGTH_SHORT).show();
     }
 
     private void bindViews() {

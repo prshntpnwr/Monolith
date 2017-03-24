@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "1021345991644",
+    "firebase_url": "https://monolith-c1f66.firebaseio.com",
+    "project_id": "monolith-c1f66",
+    "storage_bucket": "monolith-c1f66.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1021345991644:android:3967b1dc50355fd0",
+        "android_client_info": {
+          "package_name": "com.example.prashant.monolith"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1021345991644-7doamf4b2nl6miiuft2kq42knmq1fgam.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD7N_ljq2Ecfjy2MS8XjtsjNUSAJeDh_7w"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

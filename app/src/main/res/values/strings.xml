@@ -29,17 +29,16 @@
     <string name="article_detail_image" translatable="false">Detail Image</string>
 
     <!--article detail menu item-->
-    <string name="custom_tab">Custom Tab</string>
+    <string name="custom_tab">Read</string>
     <string name="article_share">Share</string>
     <string name="appwidget_text">EXAMPLE</string>
-    <string name="add_widget">Add widget</string>
 
     <!--widget strings-->
     <string name="empty_forecast_list">Empty Widget</string>
     <string name="title_app_widget">Monolith</string>
-    <string name="article_widget_title">Title: news articles</string>
+    <string name="article_widget_title">News Articles Title</string>
     <string name="article_widget_date">Today, May 21</string>
     <string name="article_widget_image">Article Widget image</string>
-
+    <string name="add_widget">Add widget</string>
 
 </resources>

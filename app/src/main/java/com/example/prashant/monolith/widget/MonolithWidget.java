@@ -25,10 +25,12 @@ public class MonolithWidget extends AppWidgetProvider {
 
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.monolith_widget);
 
+        // Intent to launch MainActivity
         Intent intent = new Intent(context, MainActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
         views.setOnClickPendingIntent(R.id.widget, pendingIntent);
 
+        // Intent to launch ArticleDetailActivity
         Intent clickIntentTemplate = new Intent(context, ArticleDetailActivity.class);
         PendingIntent clickPendingIntentTemplate = TaskStackBuilder.create(context)
                 .addNextIntentWithParentStack(clickIntentTemplate)
@@ -37,6 +39,7 @@ public class MonolithWidget extends AppWidgetProvider {
 
         views.setRemoteAdapter(R.id.widget_list,
                 new Intent(context, WidgetService.class));
+
         // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, views);
         appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetId, R.id.widget_list);

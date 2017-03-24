@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/fab_custom_tab"
-        android:icon="@drawable/ic_wallpaper"
+        android:icon="@drawable/ic_chrome_tab"
         android:title="@string/custom_tab" />
 
     <item

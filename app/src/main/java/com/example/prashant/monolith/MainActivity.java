@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.example.prashant.monolith.fragments.ArticleFragment;
 import com.example.prashant.monolith.fragments.GalleryFragment;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.joaquimley.faboptions.FabOptions;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -43,6 +44,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     int savedPref;
     int savedPage = 1;
 
+    private FirebaseAnalytics mFirebaseAnalytics;
+
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -60,6 +63,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Obtain the FirebaseAnalytics instance.
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         // TODO: ask for user permissions  
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -142,10 +147,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 GalleryFragment galleryFragment = new GalleryFragment();
                 galleryFragment.ImageFetchTask(this);
 
-                savedPage = 1;
-                savedPref = 0;
-                Log.d(TAG + "tag after refresh:", String.valueOf(savedPref));
-                Log.d(TAG + "PageNum after refresh:", String.valueOf(savedPage));
+//                savedPage = 1;
+//                savedPref = 0;
+//                Log.d(TAG + "tag after refresh:", String.valueOf(savedPref));
+//                Log.d(TAG + "PageNum after refresh:", String.valueOf(savedPage));
 //                final ProgressDialog progress = new ProgressDialog(this);
 //                progress.setTitle("Refreshing");
 //                progress.setMessage("Please wait...");
