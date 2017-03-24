@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.os.Binder;
 
+import android.os.Bundle;
 import android.widget.AdapterView;
 import android.util.Log;
 import android.widget.RemoteViews;
@@ -98,6 +99,7 @@ public class WidgetService extends RemoteViewsService {
             }
 
             final Intent fillInIntent = new Intent();
+            fillInIntent.setAction(MonolithWidget.ACTION_WIDGET_CLICK);
             fillInIntent.putExtra("title", mCursor.getString(ArticleLoader.Query.COLUMN_TITLE));
             fillInIntent.putExtra("date", mCursor.getString(ArticleLoader.Query.COLUMN_PUBLISH_DATE));
             fillInIntent.putExtra("image", mCursor.getString(ArticleLoader.Query.COLUMN_IMAGE_URL));

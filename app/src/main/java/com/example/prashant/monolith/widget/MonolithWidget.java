@@ -6,6 +6,7 @@ import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.app.TaskStackBuilder;
 import android.util.Log;
 import android.widget.RemoteViews;
@@ -19,6 +20,8 @@ import com.example.prashant.monolith.R;
 public class MonolithWidget extends AppWidgetProvider {
 
     private String TAG = getClass().getName();
+    public static final String ACTION_WIDGET_CLICK = "com.example.prashant.monolith.widget.ACTION_TOAST";
+    public static final String EXTRA_STRING = "com.example.prashant.monolith.widget.EXTRA_STRING";
 
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                 int appWidgetId) {
@@ -59,6 +62,7 @@ public class MonolithWidget extends AppWidgetProvider {
     @Override
     public void onReceive(Context context, Intent intent) {
         super.onReceive(context, intent);
+        Log.d(TAG, "onReceive is called");
         if (AppWidgetManager.ACTION_APPWIDGET_UPDATE.equals(intent.getAction())) {
             AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
             int[] appWidgetIds = appWidgetManager.getAppWidgetIds(
@@ -67,6 +71,19 @@ public class MonolithWidget extends AppWidgetProvider {
             RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.monolith_widget);
             appWidgetManager.updateAppWidget(appWidgetIds, remoteViews);
             appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.widget_list);
+        }
+
+        if (intent.getAction().equals(ACTION_WIDGET_CLICK)) {
+
+            Bundle bundle = new Bundle();
+            bundle.putString("title", intent.getStringExtra("title"));
+            bundle.putString("date", intent.getStringExtra("date"));
+            bundle.putString("image", intent.getStringExtra("image"));
+            bundle.putString("description", intent.getStringExtra("description"));
+            bundle.putString("link", intent.getStringExtra("link"));
+            Intent intent1 = new Intent(context, ArticleDetailActivity.class);
+            intent.putExtras(bundle);
+
         }
     }
 }
