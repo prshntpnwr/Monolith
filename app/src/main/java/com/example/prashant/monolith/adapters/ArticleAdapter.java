@@ -67,7 +67,6 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
 
         ImageView imageView = holder.thumbnail;
         //loading images using glide
-        Glide.clear(imageView);
         Glide.with(imageView.getContext()).load(mCursor.getString(ArticleLoader.Query.COLUMN_IMAGE_URL))
                 .placeholder(R.color.accent)
                 .error(R.color.primary_dark)

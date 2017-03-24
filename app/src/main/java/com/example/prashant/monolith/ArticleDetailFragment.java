@@ -145,7 +145,6 @@ public class ArticleDetailFragment extends Fragment implements
             bylineView.setText(mCursor.getString(ArticleLoader.Query.COLUMN_PUBLISH_DATE));
             bodyView.setText(mCursor.getString(ArticleLoader.Query.COLUMN_DESCRIPTION));
 
-            Glide.clear(mPhotoView);
             Glide.with(this.getContext())
                     .load(mCursor.getString(ArticleLoader.Query.COLUMN_IMAGE_URL))
                     .listener(new RequestListener<String, GlideDrawable>() {

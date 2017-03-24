@@ -75,7 +75,7 @@ public class WidgetService extends RemoteViewsService {
 
         @Override
         public RemoteViews getViewAt(int position) {
-            Log.e(TAG, "getViewAt: ");
+            Log.e(TAG, "getViewAt: " + position);
             if (position == AdapterView.INVALID_POSITION ||
                     mCursor == null || !mCursor.moveToPosition(position)) {
                 return null;
@@ -101,6 +101,8 @@ public class WidgetService extends RemoteViewsService {
             fillInIntent.putExtra("title", mCursor.getString(ArticleLoader.Query.COLUMN_TITLE));
             fillInIntent.putExtra("date", mCursor.getString(ArticleLoader.Query.COLUMN_PUBLISH_DATE));
             fillInIntent.putExtra("image", mCursor.getString(ArticleLoader.Query.COLUMN_IMAGE_URL));
+            fillInIntent.putExtra("description", mCursor.getString(ArticleLoader.Query.COLUMN_DESCRIPTION));
+            fillInIntent.putExtra("link", mCursor.getString(ArticleLoader.Query.COLUMN_LINK));
             remoteViews.setOnClickFillInIntent(R.id.widget_list_item, fillInIntent);
 
             return remoteViews;
