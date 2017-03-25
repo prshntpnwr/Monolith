@@ -22,6 +22,8 @@ import com.example.prashant.monolith.fragments.GalleryFragment;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.joaquimley.faboptions.FabOptions;
 
+import static com.example.prashant.monolith.R.id.fab;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     // TODO: check for network connection and animate it  
     /**
@@ -70,6 +72,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        //gallery tab fab
+        final FabOptions fabOptions = (FabOptions) findViewById(R.id.fab_options);
+        fabOptions.setButtonsMenu(R.menu.gallery_fab);
+        fabOptions.setOnClickListener(this);
+
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.addTab(tabLayout.newTab().setText("Tab 1"));
         tabLayout.addTab(tabLayout.newTab().setText("Tab 2"));
@@ -82,14 +89,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
+        mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+            @Override
+            public void onPageScrollStateChanged(int state) {
+                super.onPageScrollStateChanged(state);
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if(position == 0) {
+                    fabOptions.setVisibility(View.VISIBLE);
+                }
+                else {
+                    fabOptions.setVisibility(View.GONE);
+                }
+            }
+        });
 
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.setupWithViewPager(mViewPager);
-
-        //gallery tab fab
-        FabOptions fabOptions = (FabOptions) findViewById(R.id.fab_options);
-        fabOptions.setButtonsMenu(R.menu.gallery_fab);
-        fabOptions.setOnClickListener(this);
     }
 
     @Override

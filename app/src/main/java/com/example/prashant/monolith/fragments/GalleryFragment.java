@@ -41,8 +41,6 @@ public class GalleryFragment extends Fragment implements
     // TODO: RecyclerView images margin and padding
 
     private final String TAG = GalleryFragment.class.getSimpleName();
-    public static final String ACTION_DATA_UPDATED =
-            "com.example.prashant.monolith.fragments.GalleryFragment.ACTION_DATA_UPDATED";
 
     private RecyclerView mRecyclerView;
     LoaderManager.LoaderCallbacks callbacks;
