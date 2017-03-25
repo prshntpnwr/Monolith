@@ -1,11 +1,13 @@
 package com.example.prashant.monolith;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.customtabs.CustomTabsIntent;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -135,7 +137,41 @@ public class ArticleDetailFragment extends Fragment implements
         TextView bylineView = (TextView) mRootView.findViewById(R.id.article_byline);
         TextView bodyView = (TextView) mRootView.findViewById(R.id.article_body);
 
-        if (mCursor != null) {
+        Intent intent =  getActivity().getIntent();
+        if(intent != null && intent.getData() != null){
+
+            titleView.setText(intent.getStringExtra("title"));
+            bylineView.setText(intent.getStringExtra("date"));
+            bodyView.setText(intent.getStringExtra("description"));
+
+            Glide.with(this.getContext())
+                    .load(intent.getStringExtra("image"))
+                    .listener(new RequestListener<String, GlideDrawable>() {
+                        @Override
+                        public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
+                            return false;
+                        }
+                        @Override
+                        public boolean onResourceReady(GlideDrawable resource, String model,
+                                                       Target<GlideDrawable> target,
+                                                       boolean isFromMemoryCache, boolean isFirstResource) {
+                            Bitmap bitmap = ((GlideBitmapDrawable) resource.getCurrent()).getBitmap();
+                            Palette palette = Palette.generate(bitmap);
+                            defaultColor = 0xFF333333;
+                            color = palette.getMutedColor(defaultColor);
+                            mRootView.findViewById(R.id.meta_bar)
+                                    .setBackgroundColor(color);
+                            //lets try to use palette for fab
+                            fab.setBackgroundTintList(ColorStateList.valueOf(color));
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                fabMenu.setBackgroundTintList(ColorStateList.valueOf(color));
+                            }
+                            return false;
+                        }
+                    })
+                    .into(mPhotoView);
+        }
+        else if (mCursor != null) {
             mRootView.setAlpha(0);
             mRootView.setVisibility(View.VISIBLE);
             mRootView.animate().alpha(1);
@@ -163,18 +199,22 @@ public class ArticleDetailFragment extends Fragment implements
                             color = palette.getMutedColor(defaultColor);
                             mRootView.findViewById(R.id.meta_bar)
                                     .setBackgroundColor(color);
-//                            fab.setBackgroundColor(color);
-//                            fabMenu.setBackgroundColor(color);
+                            //lets try to use palette for fab
+                            fab.setBackgroundTintList(ColorStateList.valueOf(color));
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                fabMenu.setBackgroundTintList(ColorStateList.valueOf(color));
+                            }
                             return false;
                         }
                     })
                     .into(mPhotoView);
-        } else {
+            }else {
             mRootView.setVisibility(View.GONE);
             titleView.setText("N/A");
             bylineView.setText("N/A" );
             bodyView.setText("N/A");
         }
+
     }
 
     private void setupToolbar() {
@@ -236,7 +276,7 @@ public class ArticleDetailFragment extends Fragment implements
             //tab color
             builder.setToolbarColor(color);
             //tab animation
-            builder.setStartAnimations(this.getContext(), android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+            builder.setStartAnimations(this.getContext(), android.R.anim.slide_out_right, android.R.anim.slide_in_left);
             builder.setExitAnimations(this.getContext(), android.R.anim.slide_in_left,
                     android.R.anim.slide_out_right);
             //tab back button

@@ -21,7 +21,8 @@ public class MonolithWidget extends AppWidgetProvider {
 
     private String TAG = getClass().getName();
     public static final String ACTION_WIDGET_CLICK = "com.example.prashant.monolith.widget.ACTION_TOAST";
-    public static final String EXTRA_STRING = "com.example.prashant.monolith.widget.EXTRA_STRING";
+
+    static Intent intent;
 
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                 int appWidgetId) {
@@ -29,17 +30,17 @@ public class MonolithWidget extends AppWidgetProvider {
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.monolith_widget);
 
         // Intent to launch MainActivity
-        Intent intent = new Intent(context, MainActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
-        views.setOnClickPendingIntent(R.id.widget, pendingIntent);
-
-        // Intent to launch ArticleDetailActivity
-        Intent clickIntentTemplate = new Intent(context, ArticleDetailActivity.class);
-        PendingIntent clickPendingIntentTemplate = TaskStackBuilder.create(context)
-                .addNextIntentWithParentStack(clickIntentTemplate)
-                .getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
-        views.setPendingIntentTemplate(R.id.widget_list, clickPendingIntentTemplate);
-
+        final Intent onItemClick = new Intent(context, MonolithWidget.class);
+        onItemClick.setAction(ACTION_WIDGET_CLICK);
+        if (intent != null) {
+            onItemClick.setData(intent.getData());
+            Log.e("Content not null", "updateAppWidget: " + intent.getData() );
+        }
+        PendingIntent onClickPendingIntent = PendingIntent
+                .getBroadcast(context, 0, onItemClick,
+                        PendingIntent.FLAG_UPDATE_CURRENT);
+        views.setPendingIntentTemplate(R.id.widget_list,
+                onClickPendingIntent);
         views.setRemoteAdapter(R.id.widget_list,
                 new Intent(context, WidgetService.class));
 
@@ -62,19 +63,19 @@ public class MonolithWidget extends AppWidgetProvider {
     @Override
     public void onReceive(Context context, Intent intent) {
         super.onReceive(context, intent);
+        MonolithWidget.intent = intent;
         Log.d(TAG, "onReceive is called");
         if (AppWidgetManager.ACTION_APPWIDGET_UPDATE.equals(intent.getAction())) {
             AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
             int[] appWidgetIds = appWidgetManager.getAppWidgetIds(
                     new ComponentName(context, getClass()));
-            Log.e("Widget", "onReceive: ");
             RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.monolith_widget);
             appWidgetManager.updateAppWidget(appWidgetIds, remoteViews);
             appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.widget_list);
         }
 
         if (intent.getAction().equals(ACTION_WIDGET_CLICK)) {
-
+            Log.e(TAG, "onReceive: Intent has ACTION_WIDGET_CLICK");
             Bundle bundle = new Bundle();
             bundle.putString("title", intent.getStringExtra("title"));
             bundle.putString("date", intent.getStringExtra("date"));
@@ -82,8 +83,9 @@ public class MonolithWidget extends AppWidgetProvider {
             bundle.putString("description", intent.getStringExtra("description"));
             bundle.putString("link", intent.getStringExtra("link"));
             Intent intent1 = new Intent(context, ArticleDetailActivity.class);
-            intent.putExtras(bundle);
-
+            intent1.putExtras(bundle);
+            intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(intent1);
         }
     }
 }
