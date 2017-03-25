@@ -43,6 +43,7 @@ public class MonolithWidget extends AppWidgetProvider {
                 onClickPendingIntent);
         views.setRemoteAdapter(R.id.widget_list,
                 new Intent(context, WidgetService.class));
+        views.setEmptyView(R.id.widget_list, R.id.widget_empty);
 
         // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, views);

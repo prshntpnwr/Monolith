@@ -8,10 +8,12 @@ import android.graphics.Bitmap;
 import android.os.Binder;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.AdapterView;
 import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
+import android.widget.TextView;
 
 import com.example.prashant.monolith.R;
 import com.example.prashant.monolith.articleData.ArticleContract;
@@ -94,6 +96,7 @@ public class WidgetService extends RemoteViewsService {
                 remoteViews.setImageViewBitmap(R.id.widget_photo, bitmap);
                 remoteViews.setTextViewText(R.id.widget_article_title, mCursor.getString(ArticleLoader.Query.COLUMN_TITLE));
                 remoteViews.setTextViewText(R.id.widget_article_date, mCursor.getString(ArticleLoader.Query.COLUMN_PUBLISH_DATE));
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
