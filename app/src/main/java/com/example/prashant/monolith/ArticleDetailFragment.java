@@ -132,13 +132,12 @@ public class ArticleDetailFragment extends Fragment implements
         if (mRootView == null) {
             return;
         }
-
         TextView titleView = (TextView) mRootView.findViewById(R.id.article_title);
         TextView bylineView = (TextView) mRootView.findViewById(R.id.article_byline);
         TextView bodyView = (TextView) mRootView.findViewById(R.id.article_body);
 
         Intent intent =  getActivity().getIntent();
-        if(intent != null && intent.getData() != null){
+        if(intent != null && intent.getExtras() != null){
 
             titleView.setText(intent.getStringExtra("title"));
             bylineView.setText(intent.getStringExtra("date"));
