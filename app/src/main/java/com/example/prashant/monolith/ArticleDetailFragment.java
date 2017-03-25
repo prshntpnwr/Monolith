@@ -265,7 +265,6 @@ public class ArticleDetailFragment extends Fragment implements
             mCursor.close();
             mCursor = null;
         }
-
         bindViews();
     }
 
@@ -278,6 +277,15 @@ public class ArticleDetailFragment extends Fragment implements
     @Override
     public void onMenuItemSelected(View view) {
         int id = (int) view.getTag();
+
+        String link;
+        Intent intent1 =  getActivity().getIntent();
+        if(intent1 != null && intent1.getExtras() != null) {
+            link = intent1.getStringExtra("link");
+        } else {
+            link = mCursor.getString(ArticleLoader.Query.COLUMN_LINK);
+        }
+
         if (id == R.id.fab_custom_tab) {
 
             Intent intent = new Intent();
@@ -296,20 +304,20 @@ public class ArticleDetailFragment extends Fragment implements
             builder.setCloseButtonIcon(BitmapFactory.decodeResource(
                     getResources(), R.drawable.ic_back));
             CustomTabsIntent customTabsIntent = builder.build();
-            customTabsIntent.launchUrl(this.getContext(), Uri.parse(mCursor.getString(ArticleLoader.Query.COLUMN_LINK)));
+            customTabsIntent.launchUrl(this.getContext(), Uri.parse(link));
 
         } else if (id == R.id.fab) {
             try {
                 startActivity(Intent.createChooser(ShareCompat.IntentBuilder.from(getActivity())
                         .setType("text/plain")
-                        .setText(mCursor.getString(ArticleLoader.Query.COLUMN_LINK) + "\n\n"
+                        .setText(link + "\n\n"
                                 + Monolith_SHARE_HASHTAG)
                         .getIntent(), getString(R.string.action_share)));
 
             } catch (Exception e) {
                 e.printStackTrace();
             }
+            Toast.makeText(getActivity(), "Shared Successfully! ", Toast.LENGTH_SHORT).show();
         }
-        Toast.makeText(getActivity(), "Shared Successfully! ", Toast.LENGTH_SHORT).show();
     }
 }
