@@ -1,5 +1,6 @@
 package com.example.prashant.monolith;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.database.Cursor;
@@ -9,6 +10,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.customtabs.CustomTabsIntent;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -39,6 +41,7 @@ import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 import com.hlab.fabrevealmenu.listeners.OnFABMenuSelectedListener;
 import com.hlab.fabrevealmenu.view.FABRevealMenu;
+import com.squareup.picasso.Picasso;
 
 public class ArticleDetailFragment extends Fragment implements
         LoaderManager.LoaderCallbacks<Cursor> , OnFABMenuSelectedListener {
@@ -72,6 +75,7 @@ public class ArticleDetailFragment extends Fragment implements
     public Toolbar toolbar;
     int defaultColor;
     int color;
+    private boolean isAttached;
 
     public static ArticleDetailFragment newInstance(long itemId, int position) {
         Bundle arguments = new Bundle();
@@ -104,6 +108,7 @@ public class ArticleDetailFragment extends Fragment implements
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         mRootView = inflater.inflate(R.layout.fragment_article_detail, container, false);
 
         AdView mAdView = (AdView) mRootView.findViewById(R.id.adView);
@@ -144,38 +149,43 @@ public class ArticleDetailFragment extends Fragment implements
         if (mRootView == null) {
             return;
         }
+
         TextView titleView = (TextView) mRootView.findViewById(R.id.article_title);
         TextView bylineView = (TextView) mRootView.findViewById(R.id.article_byline);
         TextView bodyView = (TextView) mRootView.findViewById(R.id.article_body);
 
         Intent intent =  getActivity().getIntent();
-        if(intent != null && intent.getExtras() != null){
+        if(intent != null && intent.getExtras() != null) {
 
             titleView.setText(intent.getStringExtra("title"));
             bylineView.setText(intent.getStringExtra("date"));
             bodyView.setText(intent.getStringExtra("description"));
 
-            Glide.with(this.getContext())
-                    .load(intent.getStringExtra("image"))
-                    .listener(new RequestListener<String, GlideDrawable>() {
-                        @Override
-                        public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
-                            return false;
-                        }
-                        @Override
-                        public boolean onResourceReady(GlideDrawable resource, String model,
-                                                       Target<GlideDrawable> target,
-                                                       boolean isFromMemoryCache, boolean isFirstResource) {
-                            Bitmap bitmap = ((GlideBitmapDrawable) resource.getCurrent()).getBitmap();
-                            Palette palette = Palette.generate(bitmap);
-                            defaultColor = 0xFF333333;
-                            color = palette.getMutedColor(defaultColor);
-                            mRootView.findViewById(R.id.meta_bar)
-                                    .setBackgroundColor(color);
-                            return false;
-                        }
-                    })
-                    .into(mPhotoView);
+           try {
+               Glide.with(this.getContext())
+                       .load(intent.getStringExtra("image"))
+                       .listener(new RequestListener<String, GlideDrawable>() {
+                           @Override
+                           public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
+                               return false;
+                           }
+
+                           @Override
+                           public boolean onResourceReady(GlideDrawable resource, String model,
+                                                          Target<GlideDrawable> target,
+                                                          boolean isFromMemoryCache, boolean isFirstResource) {
+                               Bitmap bitmap = ((GlideBitmapDrawable) resource.getCurrent()).getBitmap();
+                               Palette palette = Palette.generate(bitmap);
+                               defaultColor = 0xFF333333;
+                               color = palette.getMutedColor(defaultColor);
+                               mRootView.findViewById(R.id.meta_bar)
+                                       .setBackgroundColor(color);
+                               return false;
+                           }
+                       });
+           }catch (Exception e) {
+               e.printStackTrace();
+           }
         }
         else if (mCursor != null) {
             mRootView.setAlpha(0);
@@ -187,35 +197,38 @@ public class ArticleDetailFragment extends Fragment implements
             bylineView.setText(mCursor.getString(ArticleLoader.Query.COLUMN_PUBLISH_DATE));
             bodyView.setText(mCursor.getString(ArticleLoader.Query.COLUMN_DESCRIPTION));
 
-            Glide.with(this.getContext())
-                    .load(mCursor.getString(ArticleLoader.Query.COLUMN_IMAGE_URL))
-                    .listener(new RequestListener<String, GlideDrawable>() {
-                        @Override
-                        public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
-                            return false;
-                        }
+            try {
+                Glide.with(this.getContext())
+                        .load(mCursor.getString(ArticleLoader.Query.COLUMN_IMAGE_URL))
+                        .listener(new RequestListener<String, GlideDrawable>() {
+                            @Override
+                            public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
+                                return false;
+                            }
 
-                        @Override
-                        public boolean onResourceReady(GlideDrawable resource, String model,
-                                                       Target<GlideDrawable> target,
-                                                       boolean isFromMemoryCache, boolean isFirstResource) {
-                            Bitmap bitmap = ((GlideBitmapDrawable) resource.getCurrent()).getBitmap();
-                            Palette palette = Palette.generate(bitmap);
-                            defaultColor = 0xFF333333;
-                            color = palette.getMutedColor(defaultColor);
-                            mRootView.findViewById(R.id.meta_bar)
-                                    .setBackgroundColor(color);
-                            return false;
-                        }
-                    })
-                    .into(mPhotoView);
-            }else {
+                            @Override
+                            public boolean onResourceReady(GlideDrawable resource, String model,
+                                                           Target<GlideDrawable> target,
+                                                           boolean isFromMemoryCache, boolean isFirstResource) {
+                                Bitmap bitmap = ((GlideBitmapDrawable) resource.getCurrent()).getBitmap();
+                                Palette palette = Palette.generate(bitmap);
+                                defaultColor = 0xFF333333;
+                                color = palette.getMutedColor(defaultColor);
+                                mRootView.findViewById(R.id.meta_bar)
+                                        .setBackgroundColor(color);
+                                return false;
+                            }
+                        })
+                        .into(mPhotoView);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }else {
             mRootView.setVisibility(View.GONE);
             titleView.setText("N/A");
             bylineView.setText("N/A" );
             bodyView.setText("N/A");
         }
-
     }
 
     private void setupToolbar() {
@@ -228,7 +241,6 @@ public class ArticleDetailFragment extends Fragment implements
                     getActivity().finish();
                 }
             });
-
             toolbar.setTitle("");
         }
     }
