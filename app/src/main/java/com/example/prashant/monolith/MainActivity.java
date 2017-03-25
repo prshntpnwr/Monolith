@@ -69,6 +69,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        //gallery tab fab
+        final FabOptions fabOptions = (FabOptions) findViewById(R.id.fab_options);
+        fabOptions.setButtonsMenu(R.menu.gallery_fab);
+        fabOptions.setOnClickListener(this);
 
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.addTab(tabLayout.newTab().setText("Tab 1"));
@@ -82,14 +86,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
+        mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+            @Override
+            public void onPageScrollStateChanged(int state) {
+                super.onPageScrollStateChanged(state);
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if(position == 0) {
+                    fabOptions.setVisibility(View.VISIBLE);
+                }
+                else {
+                    fabOptions.setVisibility(View.GONE);
+                }
+            }
+        });
 
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.setupWithViewPager(mViewPager);
-
-        //gallery tab fab
-        FabOptions fabOptions = (FabOptions) findViewById(R.id.fab_options);
-        fabOptions.setButtonsMenu(R.menu.gallery_fab);
-        fabOptions.setOnClickListener(this);
     }
 
     @Override
@@ -147,8 +162,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 GalleryFragment galleryFragment = new GalleryFragment();
                 galleryFragment.ImageFetchTask(this);
 
-//                savedPage = 1;
-//                savedPref = 0;
+                savedPage = 1;
+                savedPref = 0;
 //                Log.d(TAG + "tag after refresh:", String.valueOf(savedPref));
 //                Log.d(TAG + "PageNum after refresh:", String.valueOf(savedPage));
 //                final ProgressDialog progress = new ProgressDialog(this);
