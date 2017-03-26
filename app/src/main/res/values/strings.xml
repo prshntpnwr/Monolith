@@ -6,6 +6,9 @@
     <string name="article">Article</string>
     <string name="action_share">Share</string>
 
+    <!--gallery strings-->
+    <string name="gallery_image_desc">Gallery Image</string>
+
     <!--fab keys-->
     <string name="key">Pref_key</string>
     <string name="category">Category key</string>
@@ -40,5 +43,8 @@
     <string name="article_widget_date">Today, May 21</string>
     <string name="article_widget_image">Article Widget image</string>
     <string name="add_widget">Add widget</string>
+
+    <!--AdMob ad unit ID-->
+    <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
 
 </resources>

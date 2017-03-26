@@ -11,7 +11,8 @@
         android:id="@+id/image"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="centerCrop"/>
+        android:scaleType="centerCrop"
+        android:contentDescription="@string/gallery_image_desc" />
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/detail_toolbar"
@@ -29,7 +30,7 @@
             android:layout_marginEnd="@dimen/fab_margin"
             android:layout_marginBottom="@dimen/gallery_detail_fab_margin"
             app:fabSize="normal"
-            android:src="@drawable/ic_more_verical"
+            android:src="@drawable/ic_more_vertical"
             android:layout_gravity="bottom|end" />
 
     <com.hlab.fabrevealmenu.view.FABRevealMenu
