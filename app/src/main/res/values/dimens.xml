@@ -13,7 +13,7 @@
     <dimen name="fab_elevation">6dp</dimen>
     <dimen name="fab_press_translation_z">6dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
-    <dimen name="fab_bottom_margin">48dp</dimen>
+    <dimen name="gallery_detail_fab_margin">48dp</dimen>
 
     <!--article-->
     <dimen name="app_bar_height">112dp</dimen>

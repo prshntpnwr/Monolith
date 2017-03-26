@@ -8,10 +8,13 @@
     <item name="detail_body_line_spacing_multiplier" format="float" type="fraction">1.25</item>
 
     <!--fab-->
-    <dimen name="fab_margin">8dp</dimen>
+    <dimen name="fab_margin">42dp</dimen>
+    <dimen name="gallery_detail_fab_margin">8dp</dimen>
+
     <!-- detail -->
     <dimen name="detail_photo_height">224dp</dimen>
     <dimen name="detail_inner_horiz_margin">112dp</dimen>
 
-    <integer name="list_column_count">3</integer>
+    <integer name="gallery_list_column_count">3</integer>
+    <integer name="article_list_column_count">3</integer>
 </resources>

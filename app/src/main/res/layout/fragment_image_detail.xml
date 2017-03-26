@@ -27,7 +27,7 @@
             android:layout_width="wrap_content"
             app:pressedTranslationZ="@dimen/fab_press_translation_z"
             android:layout_marginEnd="@dimen/fab_margin"
-            android:layout_marginBottom="@dimen/fab_bottom_margin"
+            android:layout_marginBottom="@dimen/gallery_detail_fab_margin"
             app:fabSize="normal"
             android:src="@drawable/ic_more_verical"
             android:layout_gravity="bottom|end" />
