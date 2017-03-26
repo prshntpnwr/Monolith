@@ -101,7 +101,7 @@ public class ArticleFragment extends Fragment implements
                     description = response.body().getChannel().getItem().get(i).getDescription();
                     image_url = response.body().getChannel().getItem().get(i).getthumbnail().getUrl();
                     pub_date = response.body().getChannel().getItem().get(i).getPubDate();
-                    link =response.body().getChannel().getItem().get(i).getLink();
+                    link = response.body().getChannel().getItem().get(i).getLink();
 
                     Log.d(TAG + " title : ", title);
                     Log.d(TAG + " description : ", description);
@@ -162,7 +162,7 @@ public class ArticleFragment extends Fragment implements
     }
 
     public void udpateWidget() {
-        Log.d(TAG + "udpateWidget" , "is called");
+        Log.d(TAG + "udpateWidget", "is called");
         ComponentName name = new ComponentName(this.getContext(), MonolithWidget.class);
         int[] ids = AppWidgetManager.getInstance(this.getContext()).getAppWidgetIds(name);
         Intent intent = new Intent(this.getContext(), MonolithWidget.class);

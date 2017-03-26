@@ -5,6 +5,7 @@ import android.content.ComponentName;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -14,12 +15,15 @@ import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+import android.content.SharedPreferences;
 
 import com.example.prashant.monolith.R;
 import com.example.prashant.monolith.adapters.GalleryAdapter;
@@ -28,6 +32,7 @@ import com.example.prashant.monolith.galleryData.GalleryLoader;
 import com.example.prashant.monolith.galleryObjects.Results;
 import com.example.prashant.monolith.galleryObjects.UnsplashGalleryInterface;
 import com.example.prashant.monolith.widget.MonolithWidget;
+import com.joaquimley.faboptions.FabOptions;
 
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
@@ -37,18 +42,18 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class GalleryFragment extends Fragment implements
-        LoaderManager.LoaderCallbacks<Cursor> {
+        LoaderManager.LoaderCallbacks<Cursor>, View.OnClickListener  {
     // TODO: RecyclerView images margin and padding
 
     private final String TAG = GalleryFragment.class.getSimpleName();
-    public static final String ACTION_DATA_UPDATED =
-            "com.example.prashant.monolith.fragments.GalleryFragment.ACTION_DATA_UPDATED";
 
     private RecyclerView mRecyclerView;
     LoaderManager.LoaderCallbacks callbacks;
     private Cursor mCursor;
     private int mTag;
     private int mPage = 1;
+    int savedPref;
+    int savedPage = 1;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -64,6 +69,10 @@ public class GalleryFragment extends Fragment implements
         View mRootView = inflater.inflate(R.layout.fragment_gallery, container, false);
 
         mRecyclerView = (RecyclerView) mRootView.findViewById(R.id.recycler_view);
+
+        final FabOptions fabOptions = (FabOptions) mRootView.findViewById(R.id.fab_options);
+        fabOptions.setButtonsMenu(R.menu.gallery_fab);
+        fabOptions.setOnClickListener(this);
 
         mTag = readSharePreferences(getString(R.string.key), 0);
         mPage = readSharePreferences(getString(R.string.page_num), 1);
@@ -199,7 +208,6 @@ public class GalleryFragment extends Fragment implements
                 Log.d(TAG + "unsplash Fail response", t.getLocalizedMessage());
             }
         });
-
 //        String API_BASE_URL_f = "https://api.flickr.com/";
 //
 //        Retrofit retrofit_f = new Retrofit.Builder()
@@ -253,5 +261,98 @@ public class GalleryFragment extends Fragment implements
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
         mRecyclerView.setAdapter(null);
+    }
+
+    @Override
+    public void onClick(View v) {
+        SharedPreferences sharedPage;
+        SharedPreferences.Editor editor;
+
+        switch (v.getId()) {
+
+            case R.id.fab_previous_page:
+
+                // TODO: check for page threshold value
+                // TODO: animate page loading
+                sharedPage = getContext().getSharedPreferences(getString(R.string.page_num), 0);
+                editor = sharedPage.edit();
+                if (savedPage >= 2)
+                    savedPage -= 1;
+                else savedPage = 1;
+                editor.putInt(getString(R.string.page_num), savedPage);
+                editor.apply();
+
+                Toast.makeText(this.getContext(), "Loading Previous...", Toast.LENGTH_SHORT).show();
+                break;
+
+            case R.id.fab_tag:
+                DialogSelection();
+                break;
+
+            case R.id.fab_refresh:
+                // TODO: animate Refresh
+               ImageFetchTask(getContext());
+
+                savedPage = 1;
+                savedPref = 0;
+
+//                Log.d(TAG + "tag after refresh:", String.valueOf(savedPref));
+//                Log.d(TAG + "PageNum after refresh:", String.valueOf(savedPage));
+//                final ProgressDialog progress = new ProgressDialog(this);
+//                progress.setTitle("Refreshing");
+//                progress.setMessage("Please wait...");
+//                progress.show();
+//                Runnable progressRunnable = new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        progress.cancel();
+//                    }
+//                };
+//                Handler pdCanceller = new Handler();
+//                pdCanceller.postDelayed(progressRunnable, 3000);
+                Toast.makeText(this.getContext(), "Refreshing...", Toast.LENGTH_SHORT).show();
+                break;
+
+            case R.id.fab_next_page:
+                // TODO: check for page threshold value
+                // TODO: animate page loading
+                sharedPage = getContext().getSharedPreferences(getString(R.string.page_num), 0);
+                editor = sharedPage.edit();
+                savedPage += 1;
+                editor.putInt(getString(R.string.page_num), savedPage);
+                editor.apply();
+
+                Toast.makeText(this.getContext(), "Loading Next...", Toast.LENGTH_SHORT).show();
+
+            default:
+        }
+    }
+
+    public void DialogSelection() {
+
+        String[] mCategory = getResources().getStringArray(R.array.Category);
+
+        new AlertDialog.Builder(this.getContext())
+                .setTitle("Select a category")
+                .setSingleChoiceItems(mCategory, savedPref, null)
+                .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        savedPref = ((AlertDialog) dialog).getListView().getCheckedItemPosition();
+
+                        SharedPreferences sharedPref = getContext().getSharedPreferences(getString(R.string.key), 0);
+                        SharedPreferences.Editor editor = sharedPref.edit();
+                        editor.putInt(getString(R.string.key), savedPref);
+                        editor.apply();
+
+                    }
+                })
+
+                .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // do nothing
+                        dialog.cancel();
+                    }
+                })
+                .show();
     }
 }

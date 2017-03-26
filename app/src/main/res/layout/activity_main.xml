@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/main_content"
     android:fitsSystemWindows="true"
     tools:context="com.example.prashant.monolith.MainActivity">
 
@@ -37,11 +38,5 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-
-    <com.joaquimley.faboptions.FabOptions
-        android:id="@+id/fab_options"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom" />
 
 </android.support.design.widget.CoordinatorLayout>

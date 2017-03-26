@@ -88,6 +88,10 @@ public class ArticleDetailFragment extends Fragment implements
             mItemPosition = getArguments().getInt(ARG_ITEM_POSITION);
         }
 
+        mIsCard = getResources().getBoolean(R.bool.detail_is_card);
+        mStatusBarFullOpacityBottom = getResources().getDimensionPixelSize(
+                R.dimen.detail_card_top_margin);
+
         setHasOptionsMenu(true);
     }
 
@@ -184,7 +188,6 @@ public class ArticleDetailFragment extends Fragment implements
             bodyView.setText(mCursor.getString(ArticleLoader.Query.COLUMN_DESCRIPTION));
 
             try {
-
                 Glide.with(this.getContext())
                         .load(mCursor.getString(ArticleLoader.Query.COLUMN_IMAGE_URL))
                         .listener(new RequestListener<String, GlideDrawable>() {
@@ -204,10 +207,10 @@ public class ArticleDetailFragment extends Fragment implements
                                 mRootView.findViewById(R.id.meta_bar)
                                         .setBackgroundColor(color);
                                 //lets try to use palette for fab
-                                fab.setBackgroundTintList(ColorStateList.valueOf(color));
-                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                                    fabMenu.setBackgroundTintList(ColorStateList.valueOf(color));
-                                }
+//                                fab.setBackgroundTintList(ColorStateList.valueOf(color));
+//                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//                                    fabMenu.setBackgroundTintList(ColorStateList.valueOf(color));
+//                                }
                                 return false;
                             }
                         })
@@ -217,11 +220,11 @@ public class ArticleDetailFragment extends Fragment implements
             }
         }else {
             mRootView.setVisibility(View.GONE);
+            // TODO: add empty layout
             titleView.setText("N/A");
             bylineView.setText("N/A" );
             bodyView.setText("N/A");
         }
-
     }
 
     private void setupToolbar() {
@@ -272,6 +275,15 @@ public class ArticleDetailFragment extends Fragment implements
     @Override
     public void onMenuItemSelected(View view) {
         int id = (int) view.getTag();
+        String url;
+
+        Intent intent1 =  getActivity().getIntent();
+        if(intent1 != null && intent1.getExtras() != null) {
+            url = intent1.getStringExtra("link");
+        } else {
+            url = mCursor.getString(ArticleLoader.Query.COLUMN_LINK);
+        }
+
         if (id == R.id.fab_custom_tab) {
 
             Intent intent = new Intent();
@@ -290,13 +302,13 @@ public class ArticleDetailFragment extends Fragment implements
             builder.setCloseButtonIcon(BitmapFactory.decodeResource(
                     getResources(), R.drawable.ic_back));
             CustomTabsIntent customTabsIntent = builder.build();
-            customTabsIntent.launchUrl(this.getContext(), Uri.parse(mCursor.getString(ArticleLoader.Query.COLUMN_LINK)));
+            customTabsIntent.launchUrl(this.getContext(), Uri.parse(url));
 
         } else if (id == R.id.fab) {
             try {
                 startActivity(Intent.createChooser(ShareCompat.IntentBuilder.from(getActivity())
                         .setType("text/plain")
-                        .setText(mCursor.getString(ArticleLoader.Query.COLUMN_LINK) + "\n\n"
+                        .setText(url + "\n\n"
                                 + Monolith_SHARE_HASHTAG)
                         .getIntent(), getString(R.string.action_share)));
 

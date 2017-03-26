@@ -1,7 +1,6 @@
 package com.example.prashant.monolith;
 
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -11,7 +10,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,7 +20,7 @@ import com.example.prashant.monolith.fragments.GalleryFragment;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.joaquimley.faboptions.FabOptions;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity {
     // TODO: check for network connection and animate it  
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -34,6 +32,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      */
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private final String TAG = MainActivity.class.getSimpleName();
+    private final String GALLERYFRAGMENT_TAG = "gallery_flag";
 
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -41,8 +40,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ViewPager mViewPager;
     private TabLayout tabLayout;
     public static String POSITION = "position";
-    int savedPref;
-    int savedPage = 1;
 
     private FirebaseAnalytics mFirebaseAnalytics;
 
@@ -70,9 +67,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         //gallery tab fab
-        final FabOptions fabOptions = (FabOptions) findViewById(R.id.fab_options);
-        fabOptions.setButtonsMenu(R.menu.gallery_fab);
-        fabOptions.setOnClickListener(this);
 
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.addTab(tabLayout.newTab().setText("Tab 1"));
@@ -86,22 +80,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
-        mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-            @Override
-            public void onPageScrollStateChanged(int state) {
-                super.onPageScrollStateChanged(state);
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                if(position == 0) {
-                    fabOptions.setVisibility(View.VISIBLE);
-                }
-                else {
-                    fabOptions.setVisibility(View.GONE);
-                }
-            }
-        });
+//        mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+//            @Override
+//            public void onPageScrollStateChanged(int state) {
+//                super.onPageScrollStateChanged(state);
+//            }
+//
+//            @Override
+//            public void onPageSelected(int position) {
+//                if (position == 0) {
+//                    fabOptions.setVisibility(View.VISIBLE);
+//                } else {
+//                    fabOptions.setVisibility(View.GONE);
+//                }
+//            }
+//        });
 
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.setupWithViewPager(mViewPager);
@@ -127,110 +120,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onClick(View v) {
-        SharedPreferences sharedPage;
-        SharedPreferences.Editor editor;
-
-        switch (v.getId()) {
-
-            case R.id.fab_previous_page:
-
-                // TODO: check for page threshold value
-                // TODO: animate page loading
-                sharedPage = getSharedPreferences(getString(R.string.page_num), 0);
-                editor = sharedPage.edit();
-                if (savedPage >= 2)
-                    savedPage -= 1;
-                else savedPage = 1;
-                editor.putInt(getString(R.string.page_num), savedPage);
-                editor.apply();
-
-                getSupportFragmentManager().beginTransaction()
-                        .add(R.id.container, new GalleryFragment())
-                        .commit();
-
-                Toast.makeText(this, "Loading Previous...", Toast.LENGTH_SHORT).show();
-                break;
-
-            case R.id.fab_tag:
-                DialogSelection();
-                break;
-
-            case R.id.fab_refresh:
-                // TODO: animate Refresh
-                GalleryFragment galleryFragment = new GalleryFragment();
-                galleryFragment.ImageFetchTask(this);
-
-                savedPage = 1;
-                savedPref = 0;
-//                Log.d(TAG + "tag after refresh:", String.valueOf(savedPref));
-//                Log.d(TAG + "PageNum after refresh:", String.valueOf(savedPage));
-//                final ProgressDialog progress = new ProgressDialog(this);
-//                progress.setTitle("Refreshing");
-//                progress.setMessage("Please wait...");
-//                progress.show();
-//                Runnable progressRunnable = new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        progress.cancel();
-//                    }
-//                };
-//                Handler pdCanceller = new Handler();
-//                pdCanceller.postDelayed(progressRunnable, 3000);
-                Toast.makeText(this, "Refreshing...", Toast.LENGTH_SHORT).show();
-                break;
-
-            case R.id.fab_next_page:
-
-                // TODO: check for page threshold value
-                // TODO: animate page loading
-                sharedPage = getSharedPreferences(getString(R.string.page_num), 0);
-                editor = sharedPage.edit();
-                savedPage += 1;
-                editor.putInt(getString(R.string.page_num), savedPage);
-                editor.apply();
-
-                getSupportFragmentManager().beginTransaction()
-                        .add(R.id.container, new GalleryFragment())
-                        .commit();
-
-                Toast.makeText(this, "Loading Next...", Toast.LENGTH_SHORT).show();
-
-            default:
-        }
-    }
-
-    public void DialogSelection() {
-
-        String[] mCategory = getResources().getStringArray(R.array.Category);
-
-        new AlertDialog.Builder(this)
-                .setTitle("Select a category")
-                .setSingleChoiceItems(mCategory, savedPref, null)
-                .setPositiveButton("ok", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        savedPref = ((AlertDialog) dialog).getListView().getCheckedItemPosition();
-
-                        SharedPreferences sharedPref = getSharedPreferences(getString(R.string.key), 0);
-                        SharedPreferences.Editor editor = sharedPref.edit();
-                        editor.putInt(getString(R.string.key), savedPref);
-                        editor.apply();
-
-                        getSupportFragmentManager().beginTransaction()
-                                .add(R.id.container, new GalleryFragment())
-                                .commit();
-                    }
-                })
-
-                .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        // do nothing
-                        dialog.cancel();
-                    }
-                })
-                .show();
-    }
 
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to

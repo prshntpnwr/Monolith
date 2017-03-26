@@ -20,7 +20,7 @@
             app:expandedTitleMargin="@dimen/activity_horizontal_margin"
             app:expandedTitleMarginBottom="@dimen/expanded_toolbar_title_margin_bottom"
             app:expandedTitleTextAppearance="@style/ExpandedTitleTextAppearance"
-            app:layout_scrollFlags="scroll|enterAlwaysCollapsed"
+            app:layout_scrollFlags="scroll"
             app:toolbarId="@+id/toolbar">
 
             <FrameLayout
@@ -122,8 +122,6 @@
                     android:layout_marginTop="@dimen/detail_body_top_margin"
                     android:textColor="@color/primary_text"
                     android:textColorLink="@color/accent"
-                    android:autoLink="web"
-                    android:linksClickable="true"
                     android:textSize="@dimen/detail_body_text_size"
                     android:lineSpacingMultiplier="@fraction/detail_body_line_spacing_multiplier" />
             </LinearLayout>
@@ -139,7 +137,6 @@
         android:layout_marginEnd="@dimen/fab_margin"
         android:layout_marginBottom="@dimen/fab_margin"
         android:src="@drawable/ic_more_verical"
-        android:contentDescription="@string/action_share"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         app:pressedTranslationZ="@dimen/fab_press_translation_z"
@@ -151,7 +148,6 @@
         android:layout_height="match_parent"
         android:layout_centerInParent="true"
         app:animateItems="true"
-
         app:menuDirection="left"
         app:menuRes="@menu/article_fab_menu"
         app:menuTitleTextColor="@color/colorWhite"
