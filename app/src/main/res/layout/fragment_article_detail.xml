@@ -20,7 +20,7 @@
             app:expandedTitleMargin="@dimen/activity_horizontal_margin"
             app:expandedTitleMarginBottom="@dimen/expanded_toolbar_title_margin_bottom"
             app:expandedTitleTextAppearance="@style/ExpandedTitleTextAppearance"
-            app:layout_scrollFlags="scroll"
+            app:layout_scrollFlags="scroll|enterAlwaysCollapsed"
             app:toolbarId="@+id/toolbar">
 
             <FrameLayout
@@ -133,7 +133,8 @@
     <android.support.design.widget.FloatingActionButton
         android:background="@drawable/add_fab_background"
         android:id="@+id/fab"
-        android:layout_gravity="bottom|end"
+        app:layout_anchor="@id/app_bar"
+        app:layout_anchorGravity="bottom|end"
         android:layout_marginEnd="@dimen/fab_margin"
         android:layout_marginBottom="@dimen/fab_margin"
         android:src="@drawable/ic_more_verical"
@@ -147,6 +148,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_centerInParent="true"
+        app:menuBackgroundColor="@color/accent"
         app:animateItems="true"
         app:menuDirection="left"
         app:menuRes="@menu/article_fab_menu"

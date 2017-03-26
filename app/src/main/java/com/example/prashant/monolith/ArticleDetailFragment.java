@@ -166,10 +166,10 @@ public class ArticleDetailFragment extends Fragment implements
                                 mRootView.findViewById(R.id.meta_bar)
                                         .setBackgroundColor(color);
                                 //lets try to use palette for fab
-                                fab.setBackgroundTintList(ColorStateList.valueOf(color));
-                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                                    fabMenu.setBackgroundTintList(ColorStateList.valueOf(color));
-                                }
+//                                fab.setBackgroundTintList(ColorStateList.valueOf(color));
+//                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//                                    fabMenu.setBackgroundTintList(ColorStateList.valueOf(color));
+//                                }
                                 return false;
                             }
                         })

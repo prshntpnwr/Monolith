@@ -1,17 +1,13 @@
 package com.example.prashant.monolith.fragments;
 
-import android.appwidget.AppWidgetManager;
-import android.content.ComponentName;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
@@ -23,7 +19,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-import android.content.SharedPreferences;
 
 import com.example.prashant.monolith.R;
 import com.example.prashant.monolith.adapters.GalleryAdapter;
@@ -31,7 +26,6 @@ import com.example.prashant.monolith.galleryData.GalleryContract;
 import com.example.prashant.monolith.galleryData.GalleryLoader;
 import com.example.prashant.monolith.galleryObjects.Results;
 import com.example.prashant.monolith.galleryObjects.UnsplashGalleryInterface;
-import com.example.prashant.monolith.widget.MonolithWidget;
 import com.joaquimley.faboptions.FabOptions;
 
 import okhttp3.OkHttpClient;
@@ -42,7 +36,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class GalleryFragment extends Fragment implements
-        LoaderManager.LoaderCallbacks<Cursor>, View.OnClickListener  {
+        LoaderManager.LoaderCallbacks<Cursor>, View.OnClickListener {
     // TODO: RecyclerView images margin and padding
 
     private final String TAG = GalleryFragment.class.getSimpleName();
@@ -118,25 +112,32 @@ public class GalleryFragment extends Fragment implements
     }
 
     public void ImageFetchTask(final Context context) {
+        mTag = readSharePreferences(getString(R.string.key), 0);
+        mPage = readSharePreferences(getString(R.string.page_num), 1);
+
+        Log.d(TAG + " mTag response", String.valueOf(mTag));
+        Log.d(TAG + " mPage response", String.valueOf(mPage));
+
         String query_tag = null;
 
         Log.d(TAG + "mPage in ImageFetchTask", String.valueOf(mPage));
 
-        if (mTag == 0){
+        if (mTag == 0) {
             query_tag = "Nasa";
-            Log.d("TAG" , query_tag);}
-        else if (mTag == 1){
+            Log.d("TAG", query_tag);
+        } else if (mTag == 1) {
             query_tag = "stars";
-            Log.d("TAG" , query_tag);}
-        else if (mTag == 2){
+            Log.d("TAG", query_tag);
+        } else if (mTag == 2) {
             query_tag = "Earth";
-            Log.d("TAG" , query_tag);}
-        else if (mTag == 3){
+            Log.d("TAG", query_tag);
+        } else if (mTag == 3) {
             query_tag = "night-sky";
-            Log.d("TAG" , query_tag);}
-        else if (mTag == 4){
+            Log.d("TAG", query_tag);
+        } else if (mTag == 4) {
             query_tag = "Nebula";
-            Log.d("TAG" , query_tag);}
+            Log.d("TAG", query_tag);
+        }
 
         String API_BASE_URL = "https://api.unsplash.com/";
 
@@ -282,7 +283,9 @@ public class GalleryFragment extends Fragment implements
                 editor.putInt(getString(R.string.page_num), savedPage);
                 editor.apply();
 
-                Toast.makeText(this.getContext(), "Loading Previous...", Toast.LENGTH_SHORT).show();
+                ImageFetchTask(getContext());
+
+                Toast.makeText(getContext(), "Loading Previous...", Toast.LENGTH_SHORT).show();
                 break;
 
             case R.id.fab_tag:
@@ -291,26 +294,11 @@ public class GalleryFragment extends Fragment implements
 
             case R.id.fab_refresh:
                 // TODO: animate Refresh
-               ImageFetchTask(getContext());
+                ImageFetchTask(getContext());
 
                 savedPage = 1;
                 savedPref = 0;
-
-//                Log.d(TAG + "tag after refresh:", String.valueOf(savedPref));
-//                Log.d(TAG + "PageNum after refresh:", String.valueOf(savedPage));
-//                final ProgressDialog progress = new ProgressDialog(this);
-//                progress.setTitle("Refreshing");
-//                progress.setMessage("Please wait...");
-//                progress.show();
-//                Runnable progressRunnable = new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        progress.cancel();
-//                    }
-//                };
-//                Handler pdCanceller = new Handler();
-//                pdCanceller.postDelayed(progressRunnable, 3000);
-                Toast.makeText(this.getContext(), "Refreshing...", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Refreshing...", Toast.LENGTH_SHORT).show();
                 break;
 
             case R.id.fab_next_page:
@@ -322,7 +310,9 @@ public class GalleryFragment extends Fragment implements
                 editor.putInt(getString(R.string.page_num), savedPage);
                 editor.apply();
 
-                Toast.makeText(this.getContext(), "Loading Next...", Toast.LENGTH_SHORT).show();
+                ImageFetchTask(getContext());
+
+                Toast.makeText(getContext(), "Loading Next...", Toast.LENGTH_SHORT).show();
 
             default:
         }
@@ -344,6 +334,7 @@ public class GalleryFragment extends Fragment implements
                         editor.putInt(getString(R.string.key), savedPref);
                         editor.apply();
 
+                        ImageFetchTask(getContext());
                     }
                 })
 

@@ -19,6 +19,6 @@
         android:paddingRight="@dimen/material_cards_padding"
         android:paddingBottom="@dimen/material_cards_padding"
         android:paddingTop="@dimen/material_cards_padding"/>
-    <!---->
+
 <!--</android.support.v4.com.example.prashant.monolith.widget.SwipeRefreshLayout>-->
 
