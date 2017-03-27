@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -18,6 +20,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.prashant.monolith.R;
@@ -42,6 +46,7 @@ public class GalleryFragment extends Fragment implements
     private final String TAG = GalleryFragment.class.getSimpleName();
 
     private RecyclerView mRecyclerView;
+    private FrameLayout mEmptyView;
     LoaderManager.LoaderCallbacks callbacks;
     private Cursor mCursor;
     private int mTag;
@@ -63,6 +68,7 @@ public class GalleryFragment extends Fragment implements
         View mRootView = inflater.inflate(R.layout.fragment_gallery, container, false);
 
         mRecyclerView = (RecyclerView) mRootView.findViewById(R.id.recycler_view);
+        mEmptyView = (FrameLayout) mRootView.findViewById(R.id.empty_container);
 
         final FabOptions fabOptions = (FabOptions) mRootView.findViewById(R.id.fab_options);
         fabOptions.setButtonsMenu(R.menu.gallery_fab);
@@ -94,7 +100,7 @@ public class GalleryFragment extends Fragment implements
 
                 // TODO: check for page threshold value
                 // TODO: animate page loading
-                sharedPage = getContext().getSharedPreferences(getString(R.string.page_num), 1);
+                sharedPage = getContext().getSharedPreferences(getString(R.string.page_num), getContext().MODE_PRIVATE);
                 editor = sharedPage.edit();
                 if (savedPage >= 2)
                     savedPage -= 1;
@@ -120,7 +126,7 @@ public class GalleryFragment extends Fragment implements
             case R.id.fab_next_page:
                 // TODO: check for page threshold value
                 // TODO: animate page loading
-                sharedPage = getContext().getSharedPreferences(getString(R.string.page_num), 1);
+                sharedPage = getContext().getSharedPreferences(getString(R.string.page_num), getContext().MODE_PRIVATE);
                 editor = sharedPage.edit();
                 savedPage += 1;
                 editor.putInt(getString(R.string.page_num), savedPage);
@@ -183,8 +189,27 @@ public class GalleryFragment extends Fragment implements
     @Override
     public void onStart() {
         super.onStart();
+        if (isNetworkAvailable()) {
+            mRecyclerView.setVisibility(View.VISIBLE);
+            mEmptyView.setVisibility(View.VISIBLE);
+            ImageFetchTask();
+        } else {
+            mRecyclerView.setVisibility(View.GONE);
+            mEmptyView.setVisibility(View.VISIBLE);
+        }
     }
 
+    public boolean isNetworkAvailable() {
+        //It is a class that answer all the queries about the os network connectivity.
+        //also notifies app when connection changes
+        ConnectivityManager connectivityManager = (ConnectivityManager) getActivity()
+                .getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        //To get the instance of current network connection
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
+    
     @Override
     public void onDestroyView() {
         super.onDestroyView();

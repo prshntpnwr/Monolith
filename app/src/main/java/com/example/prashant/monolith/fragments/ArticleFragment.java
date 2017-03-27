@@ -4,8 +4,11 @@ import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
 import android.content.ContentResolver;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -18,6 +21,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
 import com.example.prashant.monolith.R;
 import com.example.prashant.monolith.adapters.ArticleAdapter;
@@ -40,6 +44,7 @@ public class ArticleFragment extends Fragment implements
     private final String TAG = ArticleFragment.class.getSimpleName();
 
     private RecyclerView mRecyclerView;
+    private FrameLayout mEmptyView;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private Cursor mCursor;
 
@@ -64,6 +69,7 @@ public class ArticleFragment extends Fragment implements
                              Bundle savedInstanceState) {
         View mRootView = inflater.inflate(R.layout.fragment_article, container, false);
         mRecyclerView = (RecyclerView) mRootView.findViewById(R.id.recycler_view_article);
+        mEmptyView = (FrameLayout) mRootView.findViewById(R.id.empty_container);
         mSwipeRefreshLayout = (SwipeRefreshLayout) mRootView.findViewById(R.id.swipe_refresh_layout);
 
         if (mSwipeRefreshLayout != null) {
@@ -83,6 +89,25 @@ public class ArticleFragment extends Fragment implements
     @Override
     public void onStart() {
         super.onStart();
+        if (isNetworkAvailable()) {
+            mRecyclerView.setVisibility(View.VISIBLE);
+            mEmptyView.setVisibility(View.VISIBLE);
+            ArticleFetchTask();
+        } else {
+            mRecyclerView.setVisibility(View.GONE);
+            mEmptyView.setVisibility(View.VISIBLE);
+        }
+    }
+
+    public boolean isNetworkAvailable() {
+        //It is a class that answer all the queries about the os network connectivity.
+        //also notifies app when connection changes
+        ConnectivityManager connectivityManager = (ConnectivityManager) getActivity()
+                .getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        //To get the instance of current network connection
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
     public void ArticleFetchTask() {
