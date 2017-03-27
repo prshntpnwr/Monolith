@@ -205,6 +205,8 @@ public class ArticleFragment extends Fragment implements
                             @Override
                             public void onClick(View v) {
                                 ArticleFetchTask();
+                                GalleryFragment galleryfragment = new GalleryFragment();
+                                galleryfragment.ImageFetchTask();
                             }
                         })
                         .setActionTextColor(getResources().getColor(R.color.accent));

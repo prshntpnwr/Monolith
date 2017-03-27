@@ -27,6 +27,7 @@ import android.widget.Toast;
 
 import com.example.prashant.monolith.R;
 import com.example.prashant.monolith.adapters.GalleryAdapter;
+import com.example.prashant.monolith.articleData.ArticleLoader;
 import com.example.prashant.monolith.galleryData.GalleryContract;
 import com.example.prashant.monolith.galleryData.GalleryLoader;
 import com.example.prashant.monolith.galleryObjects.Results;
@@ -289,6 +290,8 @@ public class GalleryFragment extends Fragment implements
                         @Override
                         public void onClick(View v) {
                             ImageFetchTask();
+                            ArticleFragment articleFragment = new ArticleFragment();
+                            articleFragment.ArticleFetchTask();
                         }
                     })
                     .setActionTextColor(getResources().getColor(R.color.accent));

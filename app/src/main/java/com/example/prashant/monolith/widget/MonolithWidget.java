@@ -78,11 +78,11 @@ public class MonolithWidget extends AppWidgetProvider {
         if (intent.getAction().equals(ACTION_WIDGET_CLICK)) {
             Log.e(TAG, "onReceive: Intent has ACTION_WIDGET_CLICK");
             Bundle bundle = new Bundle();
-            bundle.putString("title", intent.getStringExtra("title"));
-            bundle.putString("date", intent.getStringExtra("date"));
-            bundle.putString("image", intent.getStringExtra("image"));
-            bundle.putString("description", intent.getStringExtra("description"));
-            bundle.putString("link", intent.getStringExtra("link"));
+            bundle.putString(context.getResources().getString(R.string.title), intent.getStringExtra(context.getResources().getString(R.string.title)));
+            bundle.putString(context.getResources().getString(R.string.date), intent.getStringExtra(context.getResources().getString(R.string.date)));
+            bundle.putString(context.getResources().getString(R.string.image), intent.getStringExtra(context.getResources().getString(R.string.image)));
+            bundle.putString(context.getResources().getString(R.string.description), intent.getStringExtra(context.getResources().getString(R.string.description)));
+            bundle.putString(context.getResources().getString(R.string.link), intent.getStringExtra(context.getResources().getString(R.string.link)));
             Intent intent1 = new Intent(context, ArticleDetailActivity.class);
             intent1.putExtras(bundle);
             intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
