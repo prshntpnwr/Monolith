@@ -42,7 +42,6 @@ public class ArticleFragment extends Fragment implements
     private RecyclerView mRecyclerView;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private Cursor mCursor;
-    private boolean mIsRefreshing = false;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -78,7 +77,6 @@ public class ArticleFragment extends Fragment implements
 
     @Override
     public void onRefresh() {
-        if (!mIsRefreshing)
         ArticleFetchTask();
     }
 
@@ -103,6 +101,7 @@ public class ArticleFragment extends Fragment implements
         call.enqueue(new Callback<Rss>() {
             @Override
             public void onResponse(Call<Rss> call, Response<Rss> response) {
+                mSwipeRefreshLayout.setRefreshing(false);
                 Log.d(TAG + " Article response ", response.message());
                 Log.d(TAG + " Article response size", String.valueOf(response.body().getChannel().getItem().size()));
 
@@ -158,6 +157,7 @@ public class ArticleFragment extends Fragment implements
 
             @Override
             public void onFailure(Call<Rss> call, Throwable t) {
+                mSwipeRefreshLayout.setRefreshing(false);
                 Log.e(TAG + " failed response from ", t.getLocalizedMessage());
             }
         });
