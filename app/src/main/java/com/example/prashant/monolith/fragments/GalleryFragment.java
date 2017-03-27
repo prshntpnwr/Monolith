@@ -50,8 +50,8 @@ public class GalleryFragment extends Fragment implements
     private final String TAG = GalleryFragment.class.getSimpleName();
 
     private RecyclerView mRecyclerView;
-    private FrameLayout mEmptyView;
-    private View mRootView;
+    FrameLayout mEmptyView;
+    View mRootView;
     LoaderManager.LoaderCallbacks callbacks;
     private Cursor mCursor;
     private int mTag;
@@ -165,7 +165,7 @@ public class GalleryFragment extends Fragment implements
         String[] mCategory = getResources().getStringArray(R.array.Category);
 
         new AlertDialog.Builder(this.getContext())
-                .setTitle("Select a category")
+                .setTitle(getResources().getString(R.string.select_a_category))
                 .setSingleChoiceItems(mCategory, savedPref, null)
                 .setPositiveButton("ok", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
@@ -314,8 +314,8 @@ public class GalleryFragment extends Fragment implements
         } else {
             mRootView.setVisibility(View.VISIBLE);
             final Snackbar snackbar = Snackbar
-                    .make(mRootView, "Please try Again", Snackbar.LENGTH_INDEFINITE)
-                    .setAction("Retry", new View.OnClickListener() {
+                    .make(mRootView, getResources().getString(R.string.please_try_again), Snackbar.LENGTH_INDEFINITE)
+                    .setAction(getResources().getString(R.string.retry), new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             ImageFetchTask();
@@ -324,6 +324,8 @@ public class GalleryFragment extends Fragment implements
                     .setActionTextColor(getResources().getColor(R.color.accent));
             snackbar.show();
         }
+
+
 //        String API_BASE_URL_f = "https://api.flickr.com/";
 //
 //        Retrofit retrofit_f = new Retrofit.Builder()

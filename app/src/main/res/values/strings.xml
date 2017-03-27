@@ -10,6 +10,7 @@
     <string name="gallery_image_desc">Gallery Image</string>
     <string name="gallery_detail_image" translatable="false">Gallery Image</string>
     <string name="transition_gallery_photo" translatable="false">TN_Gallery_Photo</string>
+    <string name="select_a_category">"Select a category"</string>
 
     <!--fab keys-->
     <string name="key">Pref_key</string>
@@ -49,5 +50,11 @@
 
     <!--AdMob ad unit ID-->
     <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
+
+    <!--empty view strings-->
+    <string name="empty_view_text">Something Went Wrong Please Try Again !</string>
+    <string name="please_try_again">Please try Again</string>
+    <string name="retry">Retry</string>
+
 
 </resources>

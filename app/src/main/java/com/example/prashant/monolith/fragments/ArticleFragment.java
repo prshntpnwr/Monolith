@@ -45,8 +45,8 @@ public class ArticleFragment extends Fragment implements
     private final String TAG = ArticleFragment.class.getSimpleName();
 
     private RecyclerView mRecyclerView;
-    private View mRootView;
-    private FrameLayout mEmptyView;
+    View mRootView;
+    FrameLayout mEmptyView;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private Cursor mCursor;
 
@@ -58,20 +58,20 @@ public class ArticleFragment extends Fragment implements
         getLoaderManager().initLoader(0, null, this);
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (savedInstanceState == null) {
-            onRefresh();
-        }
-    }
+//    @Override
+//    public void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        if (savedInstanceState == null) {
+//            onRefresh();
+//        }
+//    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mRootView = inflater.inflate(R.layout.fragment_article, container, false);
         mRecyclerView = (RecyclerView) mRootView.findViewById(R.id.recycler_view_article);
-        mEmptyView = (FrameLayout) mRootView.findViewById(R.id.empty_include);
+        mEmptyView = (FrameLayout) mRootView.findViewById(R.id.empty_container);
 
         mSwipeRefreshLayout = (SwipeRefreshLayout) mRootView.findViewById(R.id.swipe_refresh_layout);
 
@@ -94,6 +94,16 @@ public class ArticleFragment extends Fragment implements
     public void onStart() {
         super.onStart();
     }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+
+        if (isVisibleToUser) {
+            ArticleFetchTask();
+        }
+    }
+
 
     public boolean isNetworkAvailable() {
         //It is a class that answer all the queries about the os network connectivity.
@@ -136,7 +146,7 @@ public class ArticleFragment extends Fragment implements
                     String pub_date;
                     String link;
 
-                    int deleteRows = getActivity().getContentResolver()
+                    int deleteRows = getContext().getContentResolver()
                             .delete(ArticleContract.ArticleEntry.CONTENT_URI, null, null);
 
                     Log.d(TAG + " deleted rows ", Integer.toString(deleteRows));
@@ -159,7 +169,7 @@ public class ArticleFragment extends Fragment implements
 
                         Uri uri = ArticleContract.ArticleEntry.CONTENT_URI;
                         ContentValues contentValues = new ContentValues();
-                        final ContentResolver resolver = getActivity().getContentResolver();
+                        final ContentResolver resolver = getContext().getContentResolver();
 
                         contentValues.put(ArticleContract.ArticleEntry.COLUMN_TITLE, title);
                         contentValues.put(ArticleContract.ArticleEntry.COLUMN_DESCRIPTION, description);
@@ -187,17 +197,19 @@ public class ArticleFragment extends Fragment implements
                 }
             });
         }else {
-            mRootView.setVisibility(View.VISIBLE);
-            final Snackbar snackbar = Snackbar
-                    .make(mRootView, "Please try Again", Snackbar.LENGTH_INDEFINITE)
-                    .setAction("Retry", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            ArticleFetchTask();
-                        }
-                    })
-                    .setActionTextColor(getResources().getColor(R.color.accent));
-            snackbar.show();
+            //tells if the current view is attached to the window
+            if (mRootView.isAttachedToWindow()) {
+                final Snackbar snackbar = Snackbar
+                        .make(mRootView, getResources().getString(R.string.please_try_again), Snackbar.LENGTH_INDEFINITE)
+                        .setAction(getResources().getString(R.string.retry), new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                ArticleFetchTask();
+                            }
+                        })
+                        .setActionTextColor(getResources().getColor(R.color.accent));
+                snackbar.show();
+            }
         }
     }
 
