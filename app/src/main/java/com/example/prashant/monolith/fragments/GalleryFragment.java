@@ -69,31 +69,30 @@ public class GalleryFragment extends Fragment implements
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View mRootView = inflater.inflate(R.layout.fragment_gallery, container, false);
-
-        mRecyclerView = (RecyclerView) mRootView.findViewById(R.id.recycler_view);
-        mEmptyView = (FrameLayout) mRootView.findViewById(R.id.empty_container);
-
-        final FabOptions fabOptions = (FabOptions) mRootView.findViewById(R.id.fab_options);
-        fabOptions.setButtonsMenu(R.menu.gallery_fab);
-        fabOptions.setOnClickListener(this);
-
-        if (isNetworkAvailable()) {
-            mRecyclerView.setVisibility(VISIBLE);
-            mEmptyView.setVisibility(GONE);
-            ImageFetchTask();
+        if (isNetworkAvailable()){
+            View mRootView = inflater.inflate(R.layout.fragment_gallery, container, false);
+            mRecyclerView = (RecyclerView) mRootView.findViewById(R.id.recycler_view);
+            final FabOptions fabOptions = (FabOptions) mRootView.findViewById(R.id.fab_options);
+            fabOptions.setButtonsMenu(R.menu.gallery_fab);
+            fabOptions.setOnClickListener(this);
+            return mRootView;
         } else {
-            mRecyclerView.setVisibility(GONE);
-            mEmptyView.setVisibility(VISIBLE);
+            View mEmptyView = inflater.inflate(R.layout.empty_layout, container, false);
+            mEmptyView = (FrameLayout) mEmptyView.findViewById(R.id.empty_container);
 
-            //snack bar to try again ImageFetchTask
-            fabOptions.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Snackbar.make(view, "Retry", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
-                }
-            });
+            final Snackbar snackbar = Snackbar
+                    .make(mEmptyView, "Please try Again", Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Retry", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            ImageFetchTask();
+                        }
+                    })
+                    .setActionTextColor(getResources().getColor(R.color.accent));
+
+            snackbar.show();
+
+            return mEmptyView;
         }
 ////        FloatingActionButton fab = (FloatingActionButton) mRootView.findViewById(R.id.fab);
 //        fabOptions.setOnClickListener(new View.OnClickListener() {
@@ -103,7 +102,6 @@ public class GalleryFragment extends Fragment implements
 //                        .setAction("Action", null).show();
 //            }
 //        });
-        return mRootView;
     }
 
     @Override
