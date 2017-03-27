@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
+        android:transitionName="@string/transition_gallery_photo"
         android:contentDescription="@string/gallery_image_desc" />
 
     <android.support.v7.widget.Toolbar

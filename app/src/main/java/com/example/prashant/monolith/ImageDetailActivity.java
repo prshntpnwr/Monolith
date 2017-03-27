@@ -3,6 +3,7 @@ package com.example.prashant.monolith;
 import android.database.Cursor;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -53,6 +54,9 @@ public class ImageDetailActivity extends AppCompatActivity
                 WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
         getSupportLoaderManager().initLoader(0, null, this);
+
+        //Postpone transition here
+        ActivityCompat.postponeEnterTransition(this);
 
         // TODO: add animation to viewPager 
         mPager = (ViewPager) findViewById(R.id.pager);

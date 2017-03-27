@@ -60,10 +60,7 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
 
         // TODO: format date
         holder.subtitleView.setText(
-                DateUtils.getRelativeTimeSpanString(
-                        mCursor.getLong(ArticleLoader.Query.COLUMN_PUBLISH_DATE),
-                        System.currentTimeMillis(), DateUtils.HOUR_IN_MILLIS,
-                        DateUtils.FORMAT_ABBREV_ALL).toString());
+                mCursor.getString(ArticleLoader.Query.COLUMN_PUBLISH_DATE));
 
         ImageView imageView = holder.thumbnail;
         //loading images using glide

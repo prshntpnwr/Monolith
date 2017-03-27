@@ -7,16 +7,19 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.app.ShareCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.Loader;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -100,6 +103,7 @@ public class ImageDetailFragment extends Fragment implements
 
         bindViews();
         setupToolbar();
+        setSharedAnimation();
         return mRootView;
     }
 
@@ -194,6 +198,13 @@ public class ImageDetailFragment extends Fragment implements
         }
     }
 
+    public void setSharedAnimation() {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            ViewCompat.setTransitionName(imageView,
+                    getResources().getString(R.string.transition_gallery_photo) + String.valueOf(mItemPosition));
+        }
+    }
+
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
         return GalleryLoader.newInstanceForItemId(getActivity(), mItemId);
@@ -201,6 +212,17 @@ public class ImageDetailFragment extends Fragment implements
 
     @Override
     public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
+        imageView.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+            @Override
+            public boolean onPreDraw() {
+                imageView.getViewTreeObserver().removeOnPreDrawListener(this);
+                // Start the postponed transition here
+                ActivityCompat.startPostponedEnterTransition(getActivity());
+                Log.d("HERE GOES TRANSITION---", "Starting transition");
+                return true;
+            }
+        });
+
         if (!isAdded()) {
             if (cursor != null) {
                 cursor.close();

@@ -3,6 +3,7 @@ package com.example.prashant.monolith;
 import android.database.Cursor;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -40,6 +41,7 @@ public class ArticleDetailActivity extends AppCompatActivity
                         | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
                         | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION // hide nav bar
                         | View.SYSTEM_UI_FLAG_IMMERSIVE);
+
 
         // TODO: add animation to viewPager
         mPager = (ViewPager) findViewById(R.id.pager);
