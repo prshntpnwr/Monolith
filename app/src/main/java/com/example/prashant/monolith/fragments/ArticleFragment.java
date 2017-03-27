@@ -35,7 +35,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.simplexml.SimpleXmlConverterFactory;
 
 public class ArticleFragment extends Fragment implements
-        LoaderManager.LoaderCallbacks<Cursor> {
+        LoaderManager.LoaderCallbacks<Cursor>, SwipeRefreshLayout.OnRefreshListener {
 
     private final String TAG = ArticleFragment.class.getSimpleName();
 
@@ -52,12 +52,34 @@ public class ArticleFragment extends Fragment implements
     }
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        getActivity().setContentView(R.layout.fragment_article);
+
+        mSwipeRefreshLayout = (SwipeRefreshLayout) getActivity().findViewById(R.id.swipe_refresh_layout);
+
+        if (mSwipeRefreshLayout != null) {
+            mSwipeRefreshLayout.setColorSchemeResources(R.color.accent);
+            mSwipeRefreshLayout.setOnRefreshListener(this);
+        }
+
+        if (savedInstanceState == null) {
+            onRefresh();
+        }
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View mRootView = inflater.inflate(R.layout.fragment_article, container, false);
         mRecyclerView = (RecyclerView) mRootView.findViewById(R.id.recycler_view_article);
         ArticleFetchTask();
         return mRootView;
+    }
+
+    @Override
+    public void onRefresh() {
+        ArticleFetchTask();
     }
 
     @Override
