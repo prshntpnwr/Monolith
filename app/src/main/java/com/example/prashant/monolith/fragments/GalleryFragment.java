@@ -44,7 +44,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class GalleryFragment extends Fragment implements
         LoaderManager.LoaderCallbacks<Cursor>, View.OnClickListener {
-    // TODO: RecyclerView images margin and padding
 
     private final String TAG = GalleryFragment.class.getSimpleName();
 
@@ -85,6 +84,21 @@ public class GalleryFragment extends Fragment implements
     @Override
     public void onStart() {
         super.onStart();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ImageFetchTask();
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+
+        if (isVisibleToUser) {
+            ImageFetchTask();
+        }
     }
 
     @Override
@@ -275,7 +289,7 @@ public class GalleryFragment extends Fragment implements
         } else {
             if (mRootView != null && mRootView.isAttachedToWindow()) {
                 Log.e(TAG, "ArticleFetchTask: ");
-                mEmptyView.setVisibility(View.VISIBLE);
+                mRootView.setVisibility(View.VISIBLE);
                 final Snackbar snackbar = Snackbar
                         .make(mRootView, getResources().getString(R.string.please_try_again), Snackbar.LENGTH_INDEFINITE)
                         .setAction(getResources().getString(R.string.retry), new View.OnClickListener() {

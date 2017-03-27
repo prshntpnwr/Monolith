@@ -21,7 +21,6 @@ import com.google.firebase.analytics.FirebaseAnalytics;
 import com.joaquimley.faboptions.FabOptions;
 
 public class MainActivity extends AppCompatActivity {
-    // TODO: check for network connection and animate it  
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -81,6 +80,10 @@ public class MainActivity extends AppCompatActivity {
 
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.setupWithViewPager(mViewPager);
+
+//        tabLayout.getTabAt(0).setIcon(getResources().getDrawable(R.drawable.ic_wallpaper));
+//        tabLayout.getTabAt(1).setIcon(getResources().getDrawable(R.drawable.ic_chrome_tab));
+
     }
 
     /**
