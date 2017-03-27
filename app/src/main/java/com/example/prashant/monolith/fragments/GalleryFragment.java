@@ -67,12 +67,6 @@ public class GalleryFragment extends Fragment implements
         final FabOptions fabOptions = (FabOptions) mRootView.findViewById(R.id.fab_options);
         fabOptions.setButtonsMenu(R.menu.gallery_fab);
         fabOptions.setOnClickListener(this);
-
-        mTag = readSharePreferences(getString(R.string.key), 0);
-        mPage = readSharePreferences(getString(R.string.page_num), 1);
-
-        Log.d(TAG + " mTag response", String.valueOf(mTag));
-        Log.d(TAG + " mPage response", String.valueOf(mPage));
 //        SharedPreferences sharedPref = getActivity().getSharedPreferences(getString(R.string.key), 0);
 //        int defaultValue = 0;
 //        tag = sharedPref.getInt(getString(R.string.key), defaultValue);
@@ -88,13 +82,98 @@ public class GalleryFragment extends Fragment implements
         return mRootView;
     }
 
+    @Override
+    public void onClick(View v) {
+        SharedPreferences sharedPage;
+        SharedPreferences.Editor editor;
+
+        switch (v.getId()) {
+
+            case R.id.fab_previous_page:
+
+                // TODO: check for page threshold value
+                // TODO: animate page loading
+                sharedPage = getContext().getSharedPreferences(getString(R.string.page_num), 0);
+                editor = sharedPage.edit();
+                if (savedPage >= 2)
+                    savedPage -= 1;
+                else savedPage = 1;
+                editor.putInt(getString(R.string.page_num), savedPage);
+                editor.apply();
+
+                ImageFetchTask();
+
+                Toast.makeText(getContext(), "Loading Previous...", Toast.LENGTH_SHORT).show();
+                break;
+
+            case R.id.fab_tag:
+                DialogSelection();
+                break;
+
+            case R.id.fab_refresh:
+                // TODO: animate Refresh
+                ImageFetchTask();
+                Toast.makeText(getContext(), "Refreshing...", Toast.LENGTH_SHORT).show();
+                break;
+
+            case R.id.fab_next_page:
+                // TODO: check for page threshold value
+                // TODO: animate page loading
+                sharedPage = getContext().getSharedPreferences(getString(R.string.page_num), 0);
+                editor = sharedPage.edit();
+                savedPage += 1;
+                editor.putInt(getString(R.string.page_num), savedPage);
+                editor.apply();
+
+                Log.d(TAG + "saved page is ", String.valueOf(savedPage));
+
+                ImageFetchTask();
+
+                Log.d(TAG + "saved page after fetch ", String.valueOf(savedPage));
+
+                Toast.makeText(getContext(), "Loading Next...", Toast.LENGTH_SHORT).show();
+
+            default:
+        }
+    }
+
+    public void DialogSelection() {
+
+        String[] mCategory = getResources().getStringArray(R.array.Category);
+
+        new AlertDialog.Builder(this.getContext())
+                .setTitle("Select a category")
+                .setSingleChoiceItems(mCategory, savedPref, null)
+                .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        savedPref = ((AlertDialog) dialog).getListView().getCheckedItemPosition();
+
+                        SharedPreferences sharedPref = getContext().getSharedPreferences(getString(R.string.key), 0);
+                        SharedPreferences.Editor editor = sharedPref.edit();
+                        editor.putInt(getString(R.string.key), savedPref);
+                        editor.apply();
+
+                        ImageFetchTask();
+                    }
+                })
+
+                .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // do nothing
+                        dialog.cancel();
+                    }
+                })
+                .show();
+    }
+
     public int readSharePreferences(String key, int value) {
         SharedPreferences sharedPref;
         try {
-            sharedPref = getActivity().getSharedPreferences(key, value);
+            sharedPref = getActivity().getSharedPreferences(key, getContext().MODE_PRIVATE);
             value = sharedPref.getInt(key, value);
             return value;
         } catch (Exception e) {
+            Log.d(TAG, "ERROR reading from readSharePreferences");
             e.printStackTrace();
             return 0;
         }
@@ -102,7 +181,7 @@ public class GalleryFragment extends Fragment implements
 
     @Override
     public void onStart() {
-        ImageFetchTask(getContext());
+        ImageFetchTask();
         super.onStart();
     }
 
@@ -111,7 +190,7 @@ public class GalleryFragment extends Fragment implements
         super.onDestroyView();
     }
 
-    public void ImageFetchTask(final Context context) {
+    public void ImageFetchTask() {
         mTag = readSharePreferences(getString(R.string.key), 0);
         mPage = readSharePreferences(getString(R.string.page_num), 1);
 
@@ -158,7 +237,7 @@ public class GalleryFragment extends Fragment implements
                 Log.d(TAG + " Response goes here ", response.toString());
                 String result;
 
-                int deleteRows = context.getContentResolver()
+                int deleteRows = getContext().getContentResolver()
                         .delete(GalleryContract.GalleryEntry.CONTENT_URI, null, null);
 
                 Log.d(TAG + " deleted rows ", Integer.toString(deleteRows));
@@ -173,7 +252,7 @@ public class GalleryFragment extends Fragment implements
 
                     Uri uri = GalleryContract.GalleryEntry.CONTENT_URI;
                     ContentValues contentValues = new ContentValues();
-                    final ContentResolver resolver = context.getContentResolver();
+                    final ContentResolver resolver = getContext().getContentResolver();
 
                     contentValues.put(GalleryContract.GalleryEntry.COLUMN_IMAGE_PATH, result);
                     contentValues.put(GalleryContract.GalleryEntry.COLUMN_IMAGE_STATUS, 1);
@@ -262,88 +341,5 @@ public class GalleryFragment extends Fragment implements
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
         mRecyclerView.setAdapter(null);
-    }
-
-    @Override
-    public void onClick(View v) {
-        SharedPreferences sharedPage;
-        SharedPreferences.Editor editor;
-
-        switch (v.getId()) {
-
-            case R.id.fab_previous_page:
-
-                // TODO: check for page threshold value
-                // TODO: animate page loading
-                sharedPage = getContext().getSharedPreferences(getString(R.string.page_num), 0);
-                editor = sharedPage.edit();
-                if (savedPage >= 2)
-                    savedPage -= 1;
-                else savedPage = 1;
-                editor.putInt(getString(R.string.page_num), savedPage);
-                editor.apply();
-
-                ImageFetchTask(getContext());
-
-                Toast.makeText(getContext(), "Loading Previous...", Toast.LENGTH_SHORT).show();
-                break;
-
-            case R.id.fab_tag:
-                DialogSelection();
-                break;
-
-            case R.id.fab_refresh:
-                // TODO: animate Refresh
-                ImageFetchTask(getContext());
-
-                savedPage = 1;
-                savedPref = 0;
-                Toast.makeText(getContext(), "Refreshing...", Toast.LENGTH_SHORT).show();
-                break;
-
-            case R.id.fab_next_page:
-                // TODO: check for page threshold value
-                // TODO: animate page loading
-                sharedPage = getContext().getSharedPreferences(getString(R.string.page_num), 0);
-                editor = sharedPage.edit();
-                savedPage += 1;
-                editor.putInt(getString(R.string.page_num), savedPage);
-                editor.apply();
-
-                ImageFetchTask(getContext());
-
-                Toast.makeText(getContext(), "Loading Next...", Toast.LENGTH_SHORT).show();
-
-            default:
-        }
-    }
-
-    public void DialogSelection() {
-
-        String[] mCategory = getResources().getStringArray(R.array.Category);
-
-        new AlertDialog.Builder(this.getContext())
-                .setTitle("Select a category")
-                .setSingleChoiceItems(mCategory, savedPref, null)
-                .setPositiveButton("ok", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        savedPref = ((AlertDialog) dialog).getListView().getCheckedItemPosition();
-
-                        SharedPreferences sharedPref = getContext().getSharedPreferences(getString(R.string.key), 0);
-                        SharedPreferences.Editor editor = sharedPref.edit();
-                        editor.putInt(getString(R.string.key), savedPref);
-                        editor.apply();
-
-                        ImageFetchTask(getContext());
-                    }
-                })
-
-                .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        // do nothing
-                        dialog.cancel();
-                    }
-                })
-                .show();
     }
 }
