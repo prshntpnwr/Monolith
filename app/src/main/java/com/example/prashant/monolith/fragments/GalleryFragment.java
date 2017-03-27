@@ -50,7 +50,7 @@ public class GalleryFragment extends Fragment implements
     private final String TAG = GalleryFragment.class.getSimpleName();
 
     private RecyclerView mRecyclerView;
-    private FrameLayout mEmptyView;
+    private FrameLayout mEmptyLayout;
     LoaderManager.LoaderCallbacks callbacks;
     private Cursor mCursor;
     private int mTag;
@@ -72,14 +72,18 @@ public class GalleryFragment extends Fragment implements
         if (isNetworkAvailable()){
             View mRootView = inflater.inflate(R.layout.fragment_gallery, container, false);
             mRecyclerView = (RecyclerView) mRootView.findViewById(R.id.recycler_view);
+
             final FabOptions fabOptions = (FabOptions) mRootView.findViewById(R.id.fab_options);
             fabOptions.setButtonsMenu(R.menu.gallery_fab);
             fabOptions.setOnClickListener(this);
+
+            ImageFetchTask();
+
             return mRootView;
+
         } else {
             View mEmptyView = inflater.inflate(R.layout.empty_layout, container, false);
-            mEmptyView = (FrameLayout) mEmptyView.findViewById(R.id.empty_container);
-
+            mEmptyLayout = (FrameLayout) mEmptyView.findViewById(R.id.empty_container);
             final Snackbar snackbar = Snackbar
                     .make(mEmptyView, "Please try Again", Snackbar.LENGTH_INDEFINITE)
                     .setAction("Retry", new View.OnClickListener() {
@@ -92,7 +96,7 @@ public class GalleryFragment extends Fragment implements
 
             snackbar.show();
 
-            return mEmptyView;
+            return mEmptyLayout;
         }
 ////        FloatingActionButton fab = (FloatingActionButton) mRootView.findViewById(R.id.fab);
 //        fabOptions.setOnClickListener(new View.OnClickListener() {
@@ -360,13 +364,15 @@ public class GalleryFragment extends Fragment implements
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        GalleryAdapter adapter = new GalleryAdapter(data);
-        adapter.setHasStableIds(true);
-        mRecyclerView.setAdapter(adapter);
-        int columnCount = getResources().getInteger(R.integer.gallery_list_column_count);
-        StaggeredGridLayoutManager sglm =
-                new StaggeredGridLayoutManager(columnCount, StaggeredGridLayoutManager.VERTICAL);
-        mRecyclerView.setLayoutManager(sglm);
+        if (isNetworkAvailable()) {
+            GalleryAdapter adapter = new GalleryAdapter(data);
+            adapter.setHasStableIds(true);
+            mRecyclerView.setAdapter(adapter);
+            int columnCount = getResources().getInteger(R.integer.gallery_list_column_count);
+            StaggeredGridLayoutManager sglm =
+                    new StaggeredGridLayoutManager(columnCount, StaggeredGridLayoutManager.VERTICAL);
+            mRecyclerView.setLayoutManager(sglm);
+        }
     }
 
     @Override

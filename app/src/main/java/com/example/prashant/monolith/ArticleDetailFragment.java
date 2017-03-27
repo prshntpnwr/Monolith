@@ -340,6 +340,5 @@ public class ArticleDetailFragment extends Fragment implements
                 e.printStackTrace();
             }
         }
-        Toast.makeText(getActivity(), "Shared Successfully! ", Toast.LENGTH_SHORT).show();
     }
 }

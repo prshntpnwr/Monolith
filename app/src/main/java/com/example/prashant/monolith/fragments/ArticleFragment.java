@@ -76,16 +76,6 @@ public class ArticleFragment extends Fragment implements
             mSwipeRefreshLayout.setColorSchemeResources(R.color.accent);
             mSwipeRefreshLayout.setOnRefreshListener(this);
         }
-
-        if (isNetworkAvailable()) {
-            mRecyclerView.setVisibility(View.VISIBLE);
-            mEmptyView.setVisibility(View.VISIBLE);
-            ArticleFetchTask();
-        } else {
-            mRecyclerView.setVisibility(View.GONE);
-            mEmptyView.setVisibility(View.VISIBLE);
-        }
-
         return mRootView;
     }
 
