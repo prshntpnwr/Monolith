@@ -191,8 +191,7 @@ public class ImageDetailFragment extends Fragment implements
             toolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //getActivity().finish();
-                    ((AppCompatActivity) getActivity()).supportFinishAfterTransition();
+                    getActivity().supportFinishAfterTransition();
                 }
             });
 

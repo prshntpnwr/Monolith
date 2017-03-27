@@ -56,13 +56,13 @@ public class ArticleFragment extends Fragment implements
                              Bundle savedInstanceState) {
         View mRootView = inflater.inflate(R.layout.fragment_article, container, false);
         mRecyclerView = (RecyclerView) mRootView.findViewById(R.id.recycler_view_article);
+        ArticleFetchTask();
         return mRootView;
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        ArticleFetchTask();
     }
 
     public void ArticleFetchTask() {

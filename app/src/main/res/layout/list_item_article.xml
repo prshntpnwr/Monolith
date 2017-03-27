@@ -18,6 +18,7 @@
             android:background="@color/photo_placeholder"
             android:scaleType="centerCrop"
             android:adjustViewBounds="true"
+            android:transitionName="@string/transition_article_photo"
             android:contentDescription="@string/article_image_desc" />
 
         <TextView

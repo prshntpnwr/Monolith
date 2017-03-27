@@ -32,6 +32,7 @@
     <!--article strings-->
     <string name="article_image_desc">Article Image</string>
     <string name="article_detail_image" translatable="false">Article Image</string>
+    <string name="transition_article_photo" translatable="false">TN_Article_Photo</string>
 
     <!--article detail menu item-->
     <string name="custom_tab">Read</string>

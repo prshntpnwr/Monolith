@@ -42,6 +42,8 @@ public class ArticleDetailActivity extends AppCompatActivity
                         | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION // hide nav bar
                         | View.SYSTEM_UI_FLAG_IMMERSIVE);
 
+        //Postpone transition here
+        ActivityCompat.postponeEnterTransition(this);
 
         // TODO: add animation to viewPager
         mPager = (ViewPager) findViewById(R.id.pager);

@@ -140,8 +140,8 @@ public class ArticleDetailFragment extends Fragment implements
         }
 
         bindViews();
-
         setupToolbar();
+        setSharedAnimation();
         return mRootView;
     }
 
@@ -179,11 +179,6 @@ public class ArticleDetailFragment extends Fragment implements
                                 color = palette.getMutedColor(defaultColor);
                                 mRootView.findViewById(R.id.meta_bar)
                                         .setBackgroundColor(color);
-                                //lets try to use palette for fab
-//                                fab.setBackgroundTintList(ColorStateList.valueOf(color));
-//                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//                                    fabMenu.setBackgroundTintList(ColorStateList.valueOf(color));
-//                                }
                                 return false;
                             }
                         })
@@ -220,11 +215,6 @@ public class ArticleDetailFragment extends Fragment implements
                                 color = palette.getMutedColor(defaultColor);
                                 mRootView.findViewById(R.id.meta_bar)
                                         .setBackgroundColor(color);
-                                //lets try to use palette for fab
-//                                fab.setBackgroundTintList(ColorStateList.valueOf(color));
-//                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//                                    fabMenu.setBackgroundTintList(ColorStateList.valueOf(color));
-//                                }
                                 return false;
                             }
                         })
@@ -248,11 +238,18 @@ public class ArticleDetailFragment extends Fragment implements
             toolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    getActivity().finish();
+                    getActivity().supportFinishAfterTransition();
                 }
             });
 
             toolbar.setTitle("");
+        }
+    }
+
+    public void setSharedAnimation() {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            ViewCompat.setTransitionName(mPhotoView,
+                    getResources().getString(R.string.transition_gallery_photo) + String.valueOf(mItemPosition));
         }
     }
 
@@ -263,6 +260,17 @@ public class ArticleDetailFragment extends Fragment implements
 
     @Override
     public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
+        mPhotoView.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+            @Override
+            public boolean onPreDraw() {
+                mPhotoView.getViewTreeObserver().removeOnPreDrawListener(this);
+                // Start the postponed transition here
+                ActivityCompat.startPostponedEnterTransition(getActivity());
+                Log.d("HERE GOES TRANSITION---", "Starting transition");
+                return true;
+            }
+        });
+
         if (!isAdded()) {
             if (cursor != null) {
                 cursor.close();

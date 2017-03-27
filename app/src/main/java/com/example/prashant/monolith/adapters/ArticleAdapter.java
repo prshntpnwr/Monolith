@@ -1,7 +1,10 @@
 package com.example.prashant.monolith.adapters;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
+import android.os.Build;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
 import android.util.Log;
@@ -46,8 +49,17 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                parent.getContext().startActivity(new Intent(Intent.ACTION_VIEW,
-                        ArticleContract.ArticleEntry.buildArticleUri(getItemId(vh.getAdapterPosition()))));
+                Intent intent = new Intent(Intent.ACTION_VIEW,
+                        ArticleContract.ArticleEntry.buildArticleUri(getItemId(vh.getAdapterPosition())));
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+
+                    final ImageView image = (ImageView) view.findViewById(R.id.thumbnail);
+                    ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation
+                            ((Activity) view.getContext(), image, view.getContext()
+                                    .getResources().getString(R.string.transition_gallery_photo)+String.valueOf(vh.getAdapterPosition()));
+                    view.getContext().startActivity(intent, optionsCompat.toBundle());
+                }
             }
         });
 
