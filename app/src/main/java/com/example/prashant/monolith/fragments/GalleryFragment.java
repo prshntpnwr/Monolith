@@ -273,19 +273,22 @@ public class GalleryFragment extends Fragment implements
             });
 
         } else {
-            mRootView.setVisibility(View.VISIBLE);
-            final Snackbar snackbar = Snackbar
-                    .make(mRootView, getResources().getString(R.string.please_try_again), Snackbar.LENGTH_INDEFINITE)
-                    .setAction(getResources().getString(R.string.retry), new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            ImageFetchTask();
-                            ArticleFragment articleFragment = new ArticleFragment();
-                            articleFragment.ArticleFetchTask();
-                        }
-                    })
-                    .setActionTextColor(getResources().getColor(R.color.accent));
-            snackbar.show();
+            if (mRootView != null && mRootView.isAttachedToWindow()) {
+                Log.e(TAG, "ArticleFetchTask: ");
+                mEmptyView.setVisibility(View.VISIBLE);
+                final Snackbar snackbar = Snackbar
+                        .make(mRootView, getResources().getString(R.string.please_try_again), Snackbar.LENGTH_INDEFINITE)
+                        .setAction(getResources().getString(R.string.retry), new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                ImageFetchTask();
+                                ArticleFragment articleFragment = new ArticleFragment();
+                                articleFragment.ArticleFetchTask();
+                            }
+                        })
+                        .setActionTextColor(getResources().getColor(R.color.accent));
+                snackbar.show();
+            }
         }
 //        String API_BASE_URL_f = "https://api.flickr.com/";
 //
@@ -318,7 +321,7 @@ public class GalleryFragment extends Fragment implements
 //            public void onFailure(Call<FlickrGalleryObject> call, Throwable t) {
 //                Log.d("Fail response from", "flickr");
 //            }
-//        });
+//        });}
     }
 
     @Override

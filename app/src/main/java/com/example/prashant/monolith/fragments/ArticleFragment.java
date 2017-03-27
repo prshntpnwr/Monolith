@@ -185,9 +185,11 @@ public class ArticleFragment extends Fragment implements
                     Log.e(TAG + " failed response from ", t.getLocalizedMessage());
                 }
             });
-        }else {
+        } else {
             //tells if the current view is attached to the window
-            if (mRootView.isAttachedToWindow()) {
+            if (mRootView != null && mRootView.isAttachedToWindow()) {
+                Log.e(TAG, "ArticleFetchTask: ");
+                mEmptyView.setVisibility(View.VISIBLE);
                 final Snackbar snackbar = Snackbar
                         .make(mRootView, getResources().getString(R.string.please_try_again), Snackbar.LENGTH_INDEFINITE)
                         .setAction(getResources().getString(R.string.retry), new View.OnClickListener() {
