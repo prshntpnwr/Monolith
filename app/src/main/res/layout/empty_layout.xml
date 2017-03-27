@@ -16,7 +16,8 @@
             android:layout_height="@dimen/empty_view_image_dim"
             android:layout_gravity="center"
             android:layout_marginBottom="@dimen/empty_view_image_margin"
-            android:src="@drawable/empty_view_image" />
+            android:src="@drawable/empty_view_image"
+            android:contentDescription="@string/empty_view_image" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -30,7 +31,8 @@
                 android:padding="@dimen/empty_view_ic_margin"
                 android:layout_marginEnd="@dimen/empty_view_ic_margin"
                 android:tint="@color/secondary_text"
-                android:src="@drawable/ic_error"/>
+                android:src="@drawable/ic_error"
+                android:contentDescription="@string/empty_view_ic"/>
 
             <TextView
                 android:layout_width="wrap_content"

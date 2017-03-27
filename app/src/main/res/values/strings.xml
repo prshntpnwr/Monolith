@@ -10,6 +10,8 @@
     <string name="gallery_image_desc">Gallery Image</string>
     <string name="gallery_detail_image" translatable="false">Gallery Image</string>
     <string name="transition_gallery_photo" translatable="false">TN_Gallery_Photo</string>
+    <string name="wallpaper_set_successfully">Wallpaper set successfully! </string>
+    <string name="share_successful">Sharing Successful !</string>
     <string name="select_a_category">"Select a category"</string>
     <string name="loading_next">Loading Next&#8230;</string>
     <string name="loading_previous">Loading Previous&#8230;</string>
@@ -21,17 +23,20 @@
     <string name="night_sky">night-sky</string>
     <string name="nebula">Nebula</string>
 
-    <!--article strings-->\
+    <!--article strings-->
     <string name="title">title</string>
     <string name="date">date</string>
     <string name="description">description</string>
     <string name="image">image</string>
     <string name="link">link</string>
+    <string name="article_card">Article News CardView</string>
 
     <!--fab keys-->
     <string name="key">Pref_key</string>
     <string name="category">Category key</string>
     <string name="page_num">Page Number key</string>
+    <string name="fab">Fab</string>
+    <string name="fab_menu">Fab Menu</string>
 
     <!--gallery menu item-->
     <string name="previous_page">Previous Page</string>
@@ -71,5 +76,7 @@
     <string name="empty_view_text">Something Went Wrong Please Try Again !</string>
     <string name="please_try_again">Please try Again</string>
     <string name="retry">Retry</string>
+    <string name="empty_view_image">Empty View Image</string>
+    <string name="empty_view_ic">Empty View Logo</string>
 
 </resources>

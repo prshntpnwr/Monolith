@@ -6,4 +6,5 @@
     android:layout_height="wrap_content"
     android:adjustViewBounds="true"
     android:scaleType="centerCrop"
+    android:contentDescription="@string/gallery_detail_image"
     android:transitionName="@string/transition_gallery_photo" />

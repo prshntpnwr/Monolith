@@ -30,6 +30,7 @@ import com.example.prashant.monolith.articleData.ArticleContract;
 import com.example.prashant.monolith.articleData.ArticleLoader;
 import com.example.prashant.monolith.articleObject.ArticleInterface;
 import com.example.prashant.monolith.articleObject.Rss;
+import com.example.prashant.monolith.utility;
 import com.example.prashant.monolith.widget.MonolithWidget;
 
 import okhttp3.OkHttpClient;
@@ -104,21 +105,9 @@ public class ArticleFragment extends Fragment implements
         }
     }
 
-
-    public boolean isNetworkAvailable() {
-        //It is a class that answer all the queries about the os network connectivity.
-        //also notifies app when connection changes
-        ConnectivityManager connectivityManager = (ConnectivityManager) getActivity()
-                .getSystemService(Context.CONNECTIVITY_SERVICE);
-
-        //To get the instance of current network connection
-        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
-    }
-
     public void ArticleFetchTask() {
 
-        if (isNetworkAvailable()) {
+        if (utility.isNetworkAvailable(getContext())) {
             mEmptyView.setVisibility(View.GONE);
 
             String API_BASE_URL = "https://rss.sciencedaily.com/";
@@ -222,7 +211,7 @@ public class ArticleFragment extends Fragment implements
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        if (isNetworkAvailable()) {
+        if (utility.isNetworkAvailable(getContext())) {
             ArticleAdapter adapter = new ArticleAdapter(data);
             adapter.setHasStableIds(true);
             mRecyclerView.setAdapter(adapter);

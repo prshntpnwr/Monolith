@@ -12,6 +12,7 @@
 
     <com.joaquimley.faboptions.FabOptions
         android:id="@+id/fab_options"
+        android:contentDescription="@string/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center" />

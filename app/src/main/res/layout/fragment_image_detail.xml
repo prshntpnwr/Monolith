@@ -24,18 +24,20 @@
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
     <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            app:pressedTranslationZ="@dimen/fab_press_translation_z"
-            android:layout_marginEnd="@dimen/fab_margin"
-            android:layout_marginBottom="@dimen/gallery_detail_fab_margin"
-            app:fabSize="normal"
-            android:src="@drawable/ic_more_vertical"
-            android:layout_gravity="bottom|end" />
+        android:id="@+id/fab"
+        android:contentDescription="@string/fab"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        app:pressedTranslationZ="@dimen/fab_press_translation_z"
+        android:layout_marginEnd="@dimen/fab_margin"
+        android:layout_marginBottom="@dimen/gallery_detail_fab_margin"
+        app:fabSize="normal"
+        android:src="@drawable/ic_more_vertical"
+        android:layout_gravity="bottom|end" />
 
     <com.hlab.fabrevealmenu.view.FABRevealMenu
         android:id="@+id/fabMenu"
+        android:contentDescription="@string/fab_menu"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_centerInParent="true"

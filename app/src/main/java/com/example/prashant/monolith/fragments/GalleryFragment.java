@@ -32,6 +32,7 @@ import com.example.prashant.monolith.galleryData.GalleryContract;
 import com.example.prashant.monolith.galleryData.GalleryLoader;
 import com.example.prashant.monolith.galleryObjects.Results;
 import com.example.prashant.monolith.galleryObjects.UnsplashGalleryInterface;
+import com.example.prashant.monolith.utility;
 import com.joaquimley.faboptions.FabOptions;
 
 import okhttp3.OkHttpClient;
@@ -84,17 +85,6 @@ public class GalleryFragment extends Fragment implements
     @Override
     public void onStart() {
         super.onStart();
-    }
-
-    public boolean isNetworkAvailable() {
-        //It is a class that answer all the queries about the os network connectivity.
-        //also notifies app when connection changes
-        ConnectivityManager connectivityManager = (ConnectivityManager) getActivity()
-                .getSystemService(Context.CONNECTIVITY_SERVICE);
-
-        //To get the instance of current network connection
-        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
     @Override
@@ -198,7 +188,7 @@ public class GalleryFragment extends Fragment implements
 
     public void ImageFetchTask() {
 
-        if (isNetworkAvailable()) {
+        if (utility.isNetworkAvailable(getContext())) {
             mEmptyView.setVisibility(View.GONE);
 
             mTag = readSharePreferences(getString(R.string.key), 0);
@@ -338,7 +328,7 @@ public class GalleryFragment extends Fragment implements
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        if (isNetworkAvailable()) {
+        if (utility.isNetworkAvailable(getContext())) {
             GalleryAdapter adapter = new GalleryAdapter(data);
             adapter.setHasStableIds(true);
             mRecyclerView.setAdapter(adapter);

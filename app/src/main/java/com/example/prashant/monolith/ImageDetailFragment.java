@@ -133,7 +133,7 @@ public class ImageDetailFragment extends Fragment implements
 
             Picasso.with(getContext()).load(wallpaper).into(target);
 
-            Toast.makeText(getActivity(), "Wallpaper set successfully! ", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), getResources().getString(R.string.wallpaper_set_successfully), Toast.LENGTH_SHORT).show();
 
         } else if (id == R.id.fab_image_share) {
             try {
@@ -143,7 +143,7 @@ public class ImageDetailFragment extends Fragment implements
                                 + Monolith_SHARE_HASHTAG)
                         .getIntent(), getString(R.string.action_share)));
 
-                Toast.makeText(getActivity(), "Shared Successfully! ", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), getResources().getString(R.string.share_successful), Toast.LENGTH_SHORT).show();
             } catch (Exception e) {
                 e.printStackTrace();
             }

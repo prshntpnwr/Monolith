@@ -134,6 +134,7 @@
 
     <android.support.design.widget.FloatingActionButton
         android:background="@drawable/add_fab_background"
+        android:contentDescription="@string/fab"
         android:id="@+id/fab"
         app:layout_anchor="@id/app_bar"
         app:layout_anchorGravity="bottom|end"
@@ -147,6 +148,7 @@
 
     <com.hlab.fabrevealmenu.view.FABRevealMenu
         android:id="@+id/fabMenu"
+        android:contentDescription="@string/fab_menu"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_centerInParent="true"
