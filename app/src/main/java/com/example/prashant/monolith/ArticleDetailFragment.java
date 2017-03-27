@@ -5,6 +5,7 @@ import android.content.res.ColorStateList;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
@@ -153,6 +154,8 @@ public class ArticleDetailFragment extends Fragment implements
         TextView titleView = (TextView) mRootView.findViewById(R.id.article_title);
         TextView bylineView = (TextView) mRootView.findViewById(R.id.article_byline);
         TextView bodyView = (TextView) mRootView.findViewById(R.id.article_body);
+        bylineView.setTypeface(Typeface.createFromAsset(getResources().getAssets(), "Roboto-Regular.ttf"));
+        bodyView.setTypeface(Typeface.createFromAsset(getResources().getAssets(), "Roboto-Regular.ttf"));
 
         Intent intent =  getActivity().getIntent();
         if(intent != null && intent.getExtras() != null){
@@ -224,7 +227,6 @@ public class ArticleDetailFragment extends Fragment implements
             }
         }else {
             mRootView.setVisibility(View.GONE);
-            // TODO: add empty layout
             titleView.setText("N/A");
             bylineView.setText("N/A" );
             bodyView.setText("N/A");

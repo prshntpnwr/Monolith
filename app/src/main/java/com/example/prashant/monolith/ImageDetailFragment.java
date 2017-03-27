@@ -88,13 +88,11 @@ public class ImageDetailFragment extends Fragment implements
         mRootView = inflater.inflate(R.layout.fragment_image_detail, container, false);
         toolbar = (Toolbar) mRootView.findViewById(R.id.detail_toolbar);
 
-        // TODO: add color using palette
         final FloatingActionButton fab = (FloatingActionButton) mRootView.findViewById(R.id.fab);
         final FABRevealMenu fabMenu = (FABRevealMenu) mRootView.findViewById(R.id.fabMenu);
 
         try {
             if (fabMenu != null) {
-                // setFabMenu(fabMenu);
                 fabMenu.bindAncherView(fab);
                 fabMenu.setOnFABMenuSelectedListener(this);
             }

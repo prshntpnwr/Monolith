@@ -90,7 +90,6 @@ public class ArticleDetailActivity extends AppCompatActivity
         // Select the start ID
         if (mStartId > 0) {
             mCursor.moveToFirst();
-            // TODO: optimize
             while (!mCursor.isAfterLast()) {
                 if (mCursor.getLong(ArticleLoader.Query.COLUMN_ARTICLE_ID) == mStartId) {
                     final int position = mCursor.getPosition();

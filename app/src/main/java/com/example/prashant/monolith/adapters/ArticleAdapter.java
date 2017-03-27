@@ -3,6 +3,7 @@ package com.example.prashant.monolith.adapters;
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.RecyclerView;
@@ -70,14 +71,13 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
     public void onBindViewHolder(ArticleAdapter.ViewHolder holder, int position) {
         holder.titleView.setText(mCursor.getString(ArticleLoader.Query.COLUMN_TITLE));
 
-        // TODO: format date
         holder.subtitleView.setText(
                 mCursor.getString(ArticleLoader.Query.COLUMN_PUBLISH_DATE));
 
         ImageView imageView = holder.thumbnail;
         //loading images using glide
         Glide.with(imageView.getContext()).load(mCursor.getString(ArticleLoader.Query.COLUMN_IMAGE_URL))
-                .placeholder(R.color.accent)
+                .placeholder(R.color.photo_placeholder)
                 .error(R.color.primary_dark)
                 .into(imageView);
 

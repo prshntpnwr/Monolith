@@ -30,25 +30,9 @@ public class ImageDetailActivity extends AppCompatActivity
     private ViewPager mPager;
     private MyPagerAdapter mPagerAdapter;
 
-//
-//    @Override
-//    protected void onSaveInstanceState(Bundle outState) {
-//        super.onSaveInstanceState(outState);
-//
-//        outState.putString(Fragment_tag, "Some Text");
-//    }
-//
-//    //Here you can restore saved data in onSaveInstanceState Bundle
-//    public void onRestoreInstanceState(Bundle savedInstanceState) {
-//        if (savedInstanceState != null) {
-//            String SomeText = savedInstanceState.getString(Fragment_tag);
-//        }
-//    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        onRestoreInstanceState(savedInstanceState);
         setContentView(R.layout.activity_image_detail);
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
@@ -103,12 +87,9 @@ public class ImageDetailActivity extends AppCompatActivity
         // Select the start ID
         if (mStartId > 0) {
             mCursor.moveToFirst();
-            // TODO: optimize
             while (!mCursor.isAfterLast()) {
                 if (mCursor.getLong(GalleryLoader.Query.COLUMN_IMAGE_ID) == mStartId) {
                     final int position = mCursor.getPosition();
-//                    mCursor = cursor;
-//                    mPagerAdapter.notifyDataSetChanged();
                     mPager.setCurrentItem(position, false);
                     break;
                 }
