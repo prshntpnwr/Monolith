@@ -16,6 +16,7 @@ import android.view.View;
 
 import com.example.prashant.monolith.articleData.ArticleContract;
 import com.example.prashant.monolith.articleData.ArticleLoader;
+import com.xgc1986.parallaxPagerTransformer.ParallaxPagerTransformer;
 
 public class ArticleDetailActivity extends AppCompatActivity
         implements LoaderManager.LoaderCallbacks<Cursor> {
@@ -45,8 +46,8 @@ public class ArticleDetailActivity extends AppCompatActivity
         //Postpone transition here
         ActivityCompat.postponeEnterTransition(this);
 
-        // TODO: add animation to viewPager
         mPager = (ViewPager) findViewById(R.id.pager);
+        mPager.setPageTransformer(false, new ParallaxPagerTransformer(R.id.photo));
         mPagerAdapter = new MyPagerAdapter(getSupportFragmentManager());
         mPager.setAdapter(mPagerAdapter);
         mPager.setPageMargin((int) TypedValue
