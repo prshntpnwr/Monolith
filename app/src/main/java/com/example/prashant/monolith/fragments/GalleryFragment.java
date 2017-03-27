@@ -10,6 +10,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
@@ -38,6 +39,9 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
 
 public class GalleryFragment extends Fragment implements
         LoaderManager.LoaderCallbacks<Cursor>, View.OnClickListener {
@@ -73,11 +77,24 @@ public class GalleryFragment extends Fragment implements
         final FabOptions fabOptions = (FabOptions) mRootView.findViewById(R.id.fab_options);
         fabOptions.setButtonsMenu(R.menu.gallery_fab);
         fabOptions.setOnClickListener(this);
-        ImageFetchTask();
-//        SharedPreferences sharedPref = getActivity().getSharedPreferences(getString(R.string.key), 0);
-//        int defaultValue = 0;
-//        tag = sharedPref.getInt(getString(R.string.key), defaultValue);
 
+        if (isNetworkAvailable()) {
+            mRecyclerView.setVisibility(VISIBLE);
+            mEmptyView.setVisibility(GONE);
+            ImageFetchTask();
+        } else {
+            mRecyclerView.setVisibility(GONE);
+            mEmptyView.setVisibility(VISIBLE);
+
+            //snack bar to try again ImageFetchTask
+            fabOptions.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Snackbar.make(view, "Retry", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                }
+            });
+        }
 ////        FloatingActionButton fab = (FloatingActionButton) mRootView.findViewById(R.id.fab);
 //        fabOptions.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -90,6 +107,22 @@ public class GalleryFragment extends Fragment implements
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+    }
+
+    public boolean isNetworkAvailable() {
+        //It is a class that answer all the queries about the os network connectivity.
+        //also notifies app when connection changes
+        ConnectivityManager connectivityManager = (ConnectivityManager) getActivity()
+                .getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        //To get the instance of current network connection
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
+
+    @Override
     public void onClick(View v) {
         SharedPreferences sharedPage;
         SharedPreferences.Editor editor;
@@ -98,8 +131,6 @@ public class GalleryFragment extends Fragment implements
 
             case R.id.fab_previous_page:
 
-                // TODO: check for page threshold value
-                // TODO: animate page loading
                 sharedPage = getContext().getSharedPreferences(getString(R.string.page_num), getContext().MODE_PRIVATE);
                 editor = sharedPage.edit();
                 if (savedPage >= 2)
@@ -161,6 +192,7 @@ public class GalleryFragment extends Fragment implements
                         editor.apply();
 
                         ImageFetchTask();
+                        Toast.makeText(getContext(), "Loading...", Toast.LENGTH_SHORT).show();
                     }
                 })
 
@@ -186,30 +218,6 @@ public class GalleryFragment extends Fragment implements
         }
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        if (isNetworkAvailable()) {
-            mRecyclerView.setVisibility(View.VISIBLE);
-            mEmptyView.setVisibility(View.VISIBLE);
-            ImageFetchTask();
-        } else {
-            mRecyclerView.setVisibility(View.GONE);
-            mEmptyView.setVisibility(View.VISIBLE);
-        }
-    }
-
-    public boolean isNetworkAvailable() {
-        //It is a class that answer all the queries about the os network connectivity.
-        //also notifies app when connection changes
-        ConnectivityManager connectivityManager = (ConnectivityManager) getActivity()
-                .getSystemService(Context.CONNECTIVITY_SERVICE);
-
-        //To get the instance of current network connection
-        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
-    }
-    
     @Override
     public void onDestroyView() {
         super.onDestroyView();

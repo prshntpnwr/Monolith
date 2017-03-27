@@ -77,7 +77,15 @@ public class ArticleFragment extends Fragment implements
             mSwipeRefreshLayout.setOnRefreshListener(this);
         }
 
-        ArticleFetchTask();
+        if (isNetworkAvailable()) {
+            mRecyclerView.setVisibility(View.VISIBLE);
+            mEmptyView.setVisibility(View.VISIBLE);
+            ArticleFetchTask();
+        } else {
+            mRecyclerView.setVisibility(View.GONE);
+            mEmptyView.setVisibility(View.VISIBLE);
+        }
+
         return mRootView;
     }
 
@@ -89,14 +97,6 @@ public class ArticleFragment extends Fragment implements
     @Override
     public void onStart() {
         super.onStart();
-        if (isNetworkAvailable()) {
-            mRecyclerView.setVisibility(View.VISIBLE);
-            mEmptyView.setVisibility(View.VISIBLE);
-            ArticleFetchTask();
-        } else {
-            mRecyclerView.setVisibility(View.GONE);
-            mEmptyView.setVisibility(View.VISIBLE);
-        }
     }
 
     public boolean isNetworkAvailable() {
