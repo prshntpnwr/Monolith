@@ -67,6 +67,7 @@ public class GalleryFragment extends Fragment implements
         final FabOptions fabOptions = (FabOptions) mRootView.findViewById(R.id.fab_options);
         fabOptions.setButtonsMenu(R.menu.gallery_fab);
         fabOptions.setOnClickListener(this);
+        ImageFetchTask();
 //        SharedPreferences sharedPref = getActivity().getSharedPreferences(getString(R.string.key), 0);
 //        int defaultValue = 0;
 //        tag = sharedPref.getInt(getString(R.string.key), defaultValue);
@@ -93,7 +94,7 @@ public class GalleryFragment extends Fragment implements
 
                 // TODO: check for page threshold value
                 // TODO: animate page loading
-                sharedPage = getContext().getSharedPreferences(getString(R.string.page_num), 0);
+                sharedPage = getContext().getSharedPreferences(getString(R.string.page_num), 1);
                 editor = sharedPage.edit();
                 if (savedPage >= 2)
                     savedPage -= 1;
@@ -119,7 +120,7 @@ public class GalleryFragment extends Fragment implements
             case R.id.fab_next_page:
                 // TODO: check for page threshold value
                 // TODO: animate page loading
-                sharedPage = getContext().getSharedPreferences(getString(R.string.page_num), 0);
+                sharedPage = getContext().getSharedPreferences(getString(R.string.page_num), 1);
                 editor = sharedPage.edit();
                 savedPage += 1;
                 editor.putInt(getString(R.string.page_num), savedPage);
@@ -181,7 +182,6 @@ public class GalleryFragment extends Fragment implements
 
     @Override
     public void onStart() {
-        ImageFetchTask();
         super.onStart();
     }
 

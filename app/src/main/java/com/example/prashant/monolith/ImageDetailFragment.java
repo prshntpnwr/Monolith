@@ -14,6 +14,7 @@ import android.support.v4.app.ShareCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.Loader;
 import android.support.v4.view.ViewCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -190,7 +191,8 @@ public class ImageDetailFragment extends Fragment implements
             toolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    getActivity().finish();
+                    //getActivity().finish();
+                    ((AppCompatActivity) getActivity()).supportFinishAfterTransition();
                 }
             });
 
