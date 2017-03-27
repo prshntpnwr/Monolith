@@ -42,6 +42,7 @@ public class ArticleFragment extends Fragment implements
     private RecyclerView mRecyclerView;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private Cursor mCursor;
+    private boolean mIsRefreshing = false;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -54,15 +55,6 @@ public class ArticleFragment extends Fragment implements
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getActivity().setContentView(R.layout.fragment_article);
-
-        mSwipeRefreshLayout = (SwipeRefreshLayout) getActivity().findViewById(R.id.swipe_refresh_layout);
-
-        if (mSwipeRefreshLayout != null) {
-            mSwipeRefreshLayout.setColorSchemeResources(R.color.accent);
-            mSwipeRefreshLayout.setOnRefreshListener(this);
-        }
-
         if (savedInstanceState == null) {
             onRefresh();
         }
@@ -73,12 +65,20 @@ public class ArticleFragment extends Fragment implements
                              Bundle savedInstanceState) {
         View mRootView = inflater.inflate(R.layout.fragment_article, container, false);
         mRecyclerView = (RecyclerView) mRootView.findViewById(R.id.recycler_view_article);
+        mSwipeRefreshLayout = (SwipeRefreshLayout) mRootView.findViewById(R.id.swipe_refresh_layout);
+
+        if (mSwipeRefreshLayout != null) {
+            mSwipeRefreshLayout.setColorSchemeResources(R.color.accent);
+            mSwipeRefreshLayout.setOnRefreshListener(this);
+        }
+
         ArticleFetchTask();
         return mRootView;
     }
 
     @Override
     public void onRefresh() {
+        if (!mIsRefreshing)
         ArticleFetchTask();
     }
 
