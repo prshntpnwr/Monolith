@@ -160,12 +160,12 @@ public class ArticleDetailFragment extends Fragment implements
         Intent intent =  getActivity().getIntent();
         if(intent != null && intent.getExtras() != null){
 
-            titleView.setText(intent.getStringExtra("title"));
-            bylineView.setText(intent.getStringExtra("date"));
-            bodyView.setText(intent.getStringExtra("description"));
+            titleView.setText(intent.getStringExtra(getResources().getString(R.string.title)));
+            bylineView.setText(intent.getStringExtra(getResources().getString(R.string.date)));
+            bodyView.setText(intent.getStringExtra(getResources().getString(R.string.description)));
             try {
                 Glide.with(this.getContext())
-                        .load(intent.getStringExtra("image"))
+                        .load(intent.getStringExtra(getResources().getString(R.string.image)))
                         .listener(new RequestListener<String, GlideDrawable>() {
                             @Override
                             public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
@@ -303,7 +303,7 @@ public class ArticleDetailFragment extends Fragment implements
 
         Intent intent1 =  getActivity().getIntent();
         if(intent1 != null && intent1.getExtras() != null) {
-            url = intent1.getStringExtra("link");
+            url = intent1.getStringExtra(getResources().getString(R.string.link));
         } else {
             url = mCursor.getString(ArticleLoader.Query.COLUMN_LINK);
         }

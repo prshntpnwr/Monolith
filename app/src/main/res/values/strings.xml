@@ -11,6 +11,22 @@
     <string name="gallery_detail_image" translatable="false">Gallery Image</string>
     <string name="transition_gallery_photo" translatable="false">TN_Gallery_Photo</string>
     <string name="select_a_category">"Select a category"</string>
+    <string name="loading_next">Loading Next&#8230;</string>
+    <string name="loading_previous">Loading Previous&#8230;</string>
+    <string name="refreshing">Refreshing&#8230;</string>
+    <string name="loading">Loading&#8230;</string>
+    <string name="nasa">Nasa</string>
+    <string name="stars">Stars</string>
+    <string name="earth">Earth</string>
+    <string name="night_sky">night-sky</string>
+    <string name="nebula">Nebula</string>
+
+    <!--article strings-->\
+    <string name="title">title</string>
+    <string name="date">date</string>
+    <string name="description">description</string>
+    <string name="image">image</string>
+    <string name="link">link</string>
 
     <!--fab keys-->
     <string name="key">Pref_key</string>
@@ -55,6 +71,5 @@
     <string name="empty_view_text">Something Went Wrong Please Try Again !</string>
     <string name="please_try_again">Please try Again</string>
     <string name="retry">Retry</string>
-
 
 </resources>

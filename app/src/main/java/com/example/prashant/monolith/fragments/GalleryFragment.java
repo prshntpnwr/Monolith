@@ -40,9 +40,6 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import static android.view.View.GONE;
-import static android.view.View.VISIBLE;
-
 public class GalleryFragment extends Fragment implements
         LoaderManager.LoaderCallbacks<Cursor>, View.OnClickListener {
     // TODO: RecyclerView images margin and padding
@@ -81,14 +78,6 @@ public class GalleryFragment extends Fragment implements
         ImageFetchTask();
 
         return mRootView;
-////        FloatingActionButton fab = (FloatingActionButton) mRootView.findViewById(R.id.fab);
-//        fabOptions.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
     }
 
     @Override
@@ -126,7 +115,7 @@ public class GalleryFragment extends Fragment implements
 
                 ImageFetchTask();
 
-                Toast.makeText(getContext(), "Loading Previous...", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), getResources().getString(R.string.loading_previous), Toast.LENGTH_SHORT).show();
                 break;
 
             case R.id.fab_tag:
@@ -134,14 +123,12 @@ public class GalleryFragment extends Fragment implements
                 break;
 
             case R.id.fab_refresh:
-                // TODO: animate Refresh
                 ImageFetchTask();
-                Toast.makeText(getContext(), "Refreshing...", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), getResources().getString(R.string.refresh), Toast.LENGTH_SHORT).show();
                 break;
 
             case R.id.fab_next_page:
-                // TODO: check for page threshold value
-                // TODO: animate page loading
+
                 sharedPage = getContext().getSharedPreferences(getString(R.string.page_num), getContext().MODE_PRIVATE);
                 editor = sharedPage.edit();
                 savedPage += 1;
@@ -154,7 +141,7 @@ public class GalleryFragment extends Fragment implements
 
                 Log.d(TAG + "saved page after fetch ", String.valueOf(savedPage));
 
-                Toast.makeText(getContext(), "Loading Next...", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), getResources().getString(R.string.loading_next), Toast.LENGTH_SHORT).show();
 
             default:
         }
@@ -177,7 +164,7 @@ public class GalleryFragment extends Fragment implements
                         editor.apply();
 
                         ImageFetchTask();
-                        Toast.makeText(getContext(), "Loading...", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), getResources().getString(R.string.loading), Toast.LENGTH_SHORT).show();
                     }
                 })
 
@@ -224,19 +211,19 @@ public class GalleryFragment extends Fragment implements
             Log.d(TAG + "mPage in ImageFetchTask", String.valueOf(mPage));
 
             if (mTag == 0) {
-                query_tag = "Nasa";
+                query_tag = getResources().getString(R.string.nasa);
                 Log.d("TAG", query_tag);
             } else if (mTag == 1) {
-                query_tag = "stars";
+                query_tag = getResources().getString(R.string.stars);
                 Log.d("TAG", query_tag);
             } else if (mTag == 2) {
-                query_tag = "Earth";
+                query_tag = getResources().getString(R.string.earth);
                 Log.d("TAG", query_tag);
             } else if (mTag == 3) {
-                query_tag = "night-sky";
+                query_tag = getResources().getString(R.string.night_sky);
                 Log.d("TAG", query_tag);
             } else if (mTag == 4) {
-                query_tag = "Nebula";
+                query_tag = getResources().getString(R.string.nebula);
                 Log.d("TAG", query_tag);
             }
 
@@ -286,23 +273,6 @@ public class GalleryFragment extends Fragment implements
                                 null,
                                 null);
                     }
-                    //for testing our added images properly
-//                try {
-//                    if (mCursor != null) {
-//                        while (mCursor.moveToNext()) {
-//
-//                            Log.d(TAG, "Data from Cursor :  " + mCursor.getString(0));
-//                            imageList.add(mCursor.getString(0));
-//
-//                            if (mCursor.isAfterLast())
-//                                break;
-//                        }
-//                        mCursor.moveToFirst();
-//                    }
-//
-//                } catch (Error error) {
-//                    Log.e(TAG, "Insertion failed :( " + error.getCause());
-//                }
                 }
 
                 @Override
@@ -324,8 +294,6 @@ public class GalleryFragment extends Fragment implements
                     .setActionTextColor(getResources().getColor(R.color.accent));
             snackbar.show();
         }
-
-
 //        String API_BASE_URL_f = "https://api.flickr.com/";
 //
 //        Retrofit retrofit_f = new Retrofit.Builder()
