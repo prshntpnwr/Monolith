@@ -16,4 +16,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center" />
 
+    <include
+        android:id="@+id/empty_include"
+        layout="@layout/empty_layout" />
+
 </FrameLayout>

@@ -50,7 +50,8 @@ public class GalleryFragment extends Fragment implements
     private final String TAG = GalleryFragment.class.getSimpleName();
 
     private RecyclerView mRecyclerView;
-    private FrameLayout mEmptyLayout;
+    private FrameLayout mEmptyView;
+    private View mRootView;
     LoaderManager.LoaderCallbacks callbacks;
     private Cursor mCursor;
     private int mTag;
@@ -69,35 +70,17 @@ public class GalleryFragment extends Fragment implements
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        if (isNetworkAvailable()){
-            View mRootView = inflater.inflate(R.layout.fragment_gallery, container, false);
-            mRecyclerView = (RecyclerView) mRootView.findViewById(R.id.recycler_view);
+        mRootView = inflater.inflate(R.layout.fragment_gallery, container, false);
+        mRecyclerView = (RecyclerView) mRootView.findViewById(R.id.recycler_view);
+        mEmptyView = (FrameLayout) mRootView.findViewById(R.id.empty_include);
 
-            final FabOptions fabOptions = (FabOptions) mRootView.findViewById(R.id.fab_options);
-            fabOptions.setButtonsMenu(R.menu.gallery_fab);
-            fabOptions.setOnClickListener(this);
+        final FabOptions fabOptions = (FabOptions) mRootView.findViewById(R.id.fab_options);
+        fabOptions.setButtonsMenu(R.menu.gallery_fab);
+        fabOptions.setOnClickListener(this);
 
-            ImageFetchTask();
+        ImageFetchTask();
 
-            return mRootView;
-
-        } else {
-            View mEmptyView = inflater.inflate(R.layout.empty_layout, container, false);
-            mEmptyLayout = (FrameLayout) mEmptyView.findViewById(R.id.empty_container);
-            final Snackbar snackbar = Snackbar
-                    .make(mEmptyView, "Please try Again", Snackbar.LENGTH_INDEFINITE)
-                    .setAction("Retry", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            ImageFetchTask();
-                        }
-                    })
-                    .setActionTextColor(getResources().getColor(R.color.accent));
-
-            snackbar.show();
-
-            return mEmptyLayout;
-        }
+        return mRootView;
 ////        FloatingActionButton fab = (FloatingActionButton) mRootView.findViewById(R.id.fab);
 //        fabOptions.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -226,80 +209,84 @@ public class GalleryFragment extends Fragment implements
     }
 
     public void ImageFetchTask() {
-        mTag = readSharePreferences(getString(R.string.key), 0);
-        mPage = readSharePreferences(getString(R.string.page_num), 1);
 
-        Log.d(TAG + " mTag response", String.valueOf(mTag));
-        Log.d(TAG + " mPage response", String.valueOf(mPage));
+        if (isNetworkAvailable()) {
+            mEmptyView.setVisibility(View.GONE);
 
-        String query_tag = null;
+            mTag = readSharePreferences(getString(R.string.key), 0);
+            mPage = readSharePreferences(getString(R.string.page_num), 1);
 
-        Log.d(TAG + "mPage in ImageFetchTask", String.valueOf(mPage));
+            Log.d(TAG + " mTag response", String.valueOf(mTag));
+            Log.d(TAG + " mPage response", String.valueOf(mPage));
 
-        if (mTag == 0) {
-            query_tag = "Nasa";
-            Log.d("TAG", query_tag);
-        } else if (mTag == 1) {
-            query_tag = "stars";
-            Log.d("TAG", query_tag);
-        } else if (mTag == 2) {
-            query_tag = "Earth";
-            Log.d("TAG", query_tag);
-        } else if (mTag == 3) {
-            query_tag = "night-sky";
-            Log.d("TAG", query_tag);
-        } else if (mTag == 4) {
-            query_tag = "Nebula";
-            Log.d("TAG", query_tag);
-        }
+            String query_tag = null;
 
-        String API_BASE_URL = "https://api.unsplash.com/";
+            Log.d(TAG + "mPage in ImageFetchTask", String.valueOf(mPage));
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(API_BASE_URL)
-                .client(new OkHttpClient())
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
+            if (mTag == 0) {
+                query_tag = "Nasa";
+                Log.d("TAG", query_tag);
+            } else if (mTag == 1) {
+                query_tag = "stars";
+                Log.d("TAG", query_tag);
+            } else if (mTag == 2) {
+                query_tag = "Earth";
+                Log.d("TAG", query_tag);
+            } else if (mTag == 3) {
+                query_tag = "night-sky";
+                Log.d("TAG", query_tag);
+            } else if (mTag == 4) {
+                query_tag = "Nebula";
+                Log.d("TAG", query_tag);
+            }
 
-        UnsplashGalleryInterface service = retrofit.create(UnsplashGalleryInterface.class);
+            String API_BASE_URL = "https://api.unsplash.com/";
 
-        Call<Results> call = service.result(mPage, 30, query_tag, getResources().getString(R.string.unsplash_api_key));
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(API_BASE_URL)
+                    .client(new OkHttpClient())
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
 
-        call.enqueue(new Callback<Results>() {
+            UnsplashGalleryInterface service = retrofit.create(UnsplashGalleryInterface.class);
 
-            @Override
-            public void onResponse(Call<Results> call, Response<Results> response) {
-                Log.d(TAG + " Response goes here ", response.toString());
-                String result;
+            Call<Results> call = service.result(mPage, 30, query_tag, getResources().getString(R.string.unsplash_api_key));
 
-                int deleteRows = getContext().getContentResolver()
-                        .delete(GalleryContract.GalleryEntry.CONTENT_URI, null, null);
+            call.enqueue(new Callback<Results>() {
 
-                Log.d(TAG + " deleted rows ", Integer.toString(deleteRows));
+                @Override
+                public void onResponse(Call<Results> call, Response<Results> response) {
+                    Log.d(TAG + " Response goes here ", response.toString());
+                    String result;
 
-                int length = response.body().getResults().size();
+                    int deleteRows = getContext().getContentResolver()
+                            .delete(GalleryContract.GalleryEntry.CONTENT_URI, null, null);
 
-                for (int i = 0; i < length; i++) {
-                    Log.d(TAG + " Result from unsplash ", i + " " + response.body().getResults()
-                            .get(i).getCoverPhoto().getUrls().getRegular());
+                    Log.d(TAG + " deleted rows ", Integer.toString(deleteRows));
 
-                    result = response.body().getResults().get(i).getCoverPhoto().getUrls().getRegular();
+                    int length = response.body().getResults().size();
 
-                    Uri uri = GalleryContract.GalleryEntry.CONTENT_URI;
-                    ContentValues contentValues = new ContentValues();
-                    final ContentResolver resolver = getContext().getContentResolver();
+                    for (int i = 0; i < length; i++) {
+                        Log.d(TAG + " Result from unsplash ", i + " " + response.body().getResults()
+                                .get(i).getCoverPhoto().getUrls().getRegular());
 
-                    contentValues.put(GalleryContract.GalleryEntry.COLUMN_IMAGE_PATH, result);
-                    contentValues.put(GalleryContract.GalleryEntry.COLUMN_IMAGE_STATUS, 1);
-                    resolver.insert(uri, contentValues);
-                    mCursor = resolver.query(uri, new String[]{
-                                    GalleryContract.GalleryEntry.COLUMN_IMAGE_PATH,
-                                    GalleryContract.GalleryEntry.COLUMN_IMAGE_STATUS},
-                            null,
-                            null,
-                            null);
-                }
-                //for testing our added images properly
+                        result = response.body().getResults().get(i).getCoverPhoto().getUrls().getRegular();
+
+                        Uri uri = GalleryContract.GalleryEntry.CONTENT_URI;
+                        ContentValues contentValues = new ContentValues();
+                        final ContentResolver resolver = getContext().getContentResolver();
+
+                        contentValues.put(GalleryContract.GalleryEntry.COLUMN_IMAGE_PATH, result);
+                        contentValues.put(GalleryContract.GalleryEntry.COLUMN_IMAGE_STATUS, 1);
+                        resolver.insert(uri, contentValues);
+                        mCursor = resolver.query(uri, new String[]{
+                                        GalleryContract.GalleryEntry.COLUMN_IMAGE_PATH,
+                                        GalleryContract.GalleryEntry.COLUMN_IMAGE_STATUS},
+                                null,
+                                null,
+                                null);
+                    }
+                    //for testing our added images properly
 //                try {
 //                    if (mCursor != null) {
 //                        while (mCursor.moveToNext()) {
@@ -316,13 +303,27 @@ public class GalleryFragment extends Fragment implements
 //                } catch (Error error) {
 //                    Log.e(TAG, "Insertion failed :( " + error.getCause());
 //                }
-            }
+                }
 
-            @Override
-            public void onFailure(Call<Results> call, Throwable t) {
-                Log.d(TAG + "unsplash Fail response", t.getLocalizedMessage());
-            }
-        });
+                @Override
+                public void onFailure(Call<Results> call, Throwable t) {
+                    Log.d(TAG + "unsplash Fail response", t.getLocalizedMessage());
+                }
+            });
+
+        } else {
+            mRootView.setVisibility(View.VISIBLE);
+            final Snackbar snackbar = Snackbar
+                    .make(mRootView, "Please try Again", Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Retry", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            ImageFetchTask();
+                        }
+                    })
+                    .setActionTextColor(getResources().getColor(R.color.accent));
+            snackbar.show();
+        }
 //        String API_BASE_URL_f = "https://api.flickr.com/";
 //
 //        Retrofit retrofit_f = new Retrofit.Builder()

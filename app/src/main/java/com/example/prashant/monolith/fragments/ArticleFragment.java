@@ -11,6 +11,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
@@ -44,6 +45,7 @@ public class ArticleFragment extends Fragment implements
     private final String TAG = ArticleFragment.class.getSimpleName();
 
     private RecyclerView mRecyclerView;
+    private View mRootView;
     private FrameLayout mEmptyView;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private Cursor mCursor;
@@ -67,15 +69,19 @@ public class ArticleFragment extends Fragment implements
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View mRootView = inflater.inflate(R.layout.fragment_article, container, false);
+        mRootView = inflater.inflate(R.layout.fragment_article, container, false);
         mRecyclerView = (RecyclerView) mRootView.findViewById(R.id.recycler_view_article);
-        mEmptyView = (FrameLayout) mRootView.findViewById(R.id.empty_container);
+        mEmptyView = (FrameLayout) mRootView.findViewById(R.id.empty_include);
+
         mSwipeRefreshLayout = (SwipeRefreshLayout) mRootView.findViewById(R.id.swipe_refresh_layout);
 
         if (mSwipeRefreshLayout != null) {
             mSwipeRefreshLayout.setColorSchemeResources(R.color.accent);
             mSwipeRefreshLayout.setOnRefreshListener(this);
         }
+
+        ArticleFetchTask();
+
         return mRootView;
     }
 
@@ -101,81 +107,98 @@ public class ArticleFragment extends Fragment implements
     }
 
     public void ArticleFetchTask() {
-        String API_BASE_URL = "https://rss.sciencedaily.com/";
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(API_BASE_URL)
-                .client(new OkHttpClient())
-                .addConverterFactory(SimpleXmlConverterFactory.create())
-                .build();
+        if (isNetworkAvailable()) {
+            mEmptyView.setVisibility(View.GONE);
 
-        ArticleInterface service = retrofit.create(ArticleInterface.class);
+            String API_BASE_URL = "https://rss.sciencedaily.com/";
 
-        Call<Rss> call = service.results();
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(API_BASE_URL)
+                    .client(new OkHttpClient())
+                    .addConverterFactory(SimpleXmlConverterFactory.create())
+                    .build();
 
-        call.enqueue(new Callback<Rss>() {
-            @Override
-            public void onResponse(Call<Rss> call, Response<Rss> response) {
-                mSwipeRefreshLayout.setRefreshing(false);
-                Log.d(TAG + " Article response ", response.message());
-                Log.d(TAG + " Article response size", String.valueOf(response.body().getChannel().getItem().size()));
+            ArticleInterface service = retrofit.create(ArticleInterface.class);
 
-                String title;
-                String description;
-                String image_url;
-                String pub_date;
-                String link;
+            Call<Rss> call = service.results();
 
-                int deleteRows = getActivity().getContentResolver()
-                        .delete(ArticleContract.ArticleEntry.CONTENT_URI, null, null);
+            call.enqueue(new Callback<Rss>() {
+                @Override
+                public void onResponse(Call<Rss> call, Response<Rss> response) {
+                    mSwipeRefreshLayout.setRefreshing(false);
+                    Log.d(TAG + " Article response ", response.message());
+                    Log.d(TAG + " Article response size", String.valueOf(response.body().getChannel().getItem().size()));
 
-                Log.d(TAG + " deleted rows ", Integer.toString(deleteRows));
+                    String title;
+                    String description;
+                    String image_url;
+                    String pub_date;
+                    String link;
 
-                int length = response.body().getChannel().getItem().size();
+                    int deleteRows = getActivity().getContentResolver()
+                            .delete(ArticleContract.ArticleEntry.CONTENT_URI, null, null);
 
-                for (int i = 0; i < length; i++) {
+                    Log.d(TAG + " deleted rows ", Integer.toString(deleteRows));
 
-                    title = response.body().getChannel().getItem().get(i).getTitle();
-                    description = response.body().getChannel().getItem().get(i).getDescription();
-                    image_url = response.body().getChannel().getItem().get(i).getthumbnail().getUrl();
-                    pub_date = response.body().getChannel().getItem().get(i).getPubDate();
-                    link = response.body().getChannel().getItem().get(i).getLink();
+                    int length = response.body().getChannel().getItem().size();
 
-                    Log.d(TAG + " title : ", title);
-                    Log.d(TAG + " description : ", description);
-                    Log.d(TAG + " image url : ", image_url);
-                    Log.d(TAG + " publish date : ", pub_date);
-                    Log.d(TAG + " link : ", link);
+                    for (int i = 0; i < length; i++) {
 
-                    Uri uri = ArticleContract.ArticleEntry.CONTENT_URI;
-                    ContentValues contentValues = new ContentValues();
-                    final ContentResolver resolver = getActivity().getContentResolver();
+                        title = response.body().getChannel().getItem().get(i).getTitle();
+                        description = response.body().getChannel().getItem().get(i).getDescription();
+                        image_url = response.body().getChannel().getItem().get(i).getthumbnail().getUrl();
+                        pub_date = response.body().getChannel().getItem().get(i).getPubDate();
+                        link = response.body().getChannel().getItem().get(i).getLink();
 
-                    contentValues.put(ArticleContract.ArticleEntry.COLUMN_TITLE, title);
-                    contentValues.put(ArticleContract.ArticleEntry.COLUMN_DESCRIPTION, description);
-                    contentValues.put(ArticleContract.ArticleEntry.COLUMN_IMAGE_URL, image_url);
-                    contentValues.put(ArticleContract.ArticleEntry.COLUMN_PUBLISH_DATE, pub_date);
-                    contentValues.put(ArticleContract.ArticleEntry.COLUMN_LINK, link);
+                        Log.d(TAG + " title : ", title);
+                        Log.d(TAG + " description : ", description);
+                        Log.d(TAG + " image url : ", image_url);
+                        Log.d(TAG + " publish date : ", pub_date);
+                        Log.d(TAG + " link : ", link);
 
-                    resolver.insert(uri, contentValues);
-                    mCursor = resolver.query(uri, new String[]{
-                                    ArticleContract.ArticleEntry.COLUMN_TITLE,
-                                    ArticleContract.ArticleEntry.COLUMN_DESCRIPTION,
-                                    ArticleContract.ArticleEntry.COLUMN_IMAGE_URL,
-                                    ArticleContract.ArticleEntry.COLUMN_PUBLISH_DATE,
-                                    ArticleContract.ArticleEntry.COLUMN_LINK},
-                            null,
-                            null,
-                            null);
+                        Uri uri = ArticleContract.ArticleEntry.CONTENT_URI;
+                        ContentValues contentValues = new ContentValues();
+                        final ContentResolver resolver = getActivity().getContentResolver();
+
+                        contentValues.put(ArticleContract.ArticleEntry.COLUMN_TITLE, title);
+                        contentValues.put(ArticleContract.ArticleEntry.COLUMN_DESCRIPTION, description);
+                        contentValues.put(ArticleContract.ArticleEntry.COLUMN_IMAGE_URL, image_url);
+                        contentValues.put(ArticleContract.ArticleEntry.COLUMN_PUBLISH_DATE, pub_date);
+                        contentValues.put(ArticleContract.ArticleEntry.COLUMN_LINK, link);
+
+                        resolver.insert(uri, contentValues);
+                        mCursor = resolver.query(uri, new String[]{
+                                        ArticleContract.ArticleEntry.COLUMN_TITLE,
+                                        ArticleContract.ArticleEntry.COLUMN_DESCRIPTION,
+                                        ArticleContract.ArticleEntry.COLUMN_IMAGE_URL,
+                                        ArticleContract.ArticleEntry.COLUMN_PUBLISH_DATE,
+                                        ArticleContract.ArticleEntry.COLUMN_LINK},
+                                null,
+                                null,
+                                null);
+                    }
                 }
-            }
 
-            @Override
-            public void onFailure(Call<Rss> call, Throwable t) {
-                mSwipeRefreshLayout.setRefreshing(false);
-                Log.e(TAG + " failed response from ", t.getLocalizedMessage());
-            }
-        });
+                @Override
+                public void onFailure(Call<Rss> call, Throwable t) {
+                    mSwipeRefreshLayout.setRefreshing(false);
+                    Log.e(TAG + " failed response from ", t.getLocalizedMessage());
+                }
+            });
+        }else {
+            mRootView.setVisibility(View.VISIBLE);
+            final Snackbar snackbar = Snackbar
+                    .make(mRootView, "Please try Again", Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Retry", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            ArticleFetchTask();
+                        }
+                    })
+                    .setActionTextColor(getResources().getColor(R.color.accent));
+            snackbar.show();
+        }
     }
 
     @Override
@@ -185,14 +208,16 @@ public class ArticleFragment extends Fragment implements
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        ArticleAdapter adapter = new ArticleAdapter(data);
-        adapter.setHasStableIds(true);
-        mRecyclerView.setAdapter(adapter);
-        int columnCount = getResources().getInteger(R.integer.article_list_column_count);
-        StaggeredGridLayoutManager sglm =
-                new StaggeredGridLayoutManager(columnCount, StaggeredGridLayoutManager.VERTICAL);
-        mRecyclerView.setLayoutManager(sglm);
-        udpateWidget();
+        if (isNetworkAvailable()) {
+            ArticleAdapter adapter = new ArticleAdapter(data);
+            adapter.setHasStableIds(true);
+            mRecyclerView.setAdapter(adapter);
+            int columnCount = getResources().getInteger(R.integer.article_list_column_count);
+            StaggeredGridLayoutManager sglm =
+                    new StaggeredGridLayoutManager(columnCount, StaggeredGridLayoutManager.VERTICAL);
+            mRecyclerView.setLayoutManager(sglm);
+            udpateWidget();
+        }
     }
 
     @Override

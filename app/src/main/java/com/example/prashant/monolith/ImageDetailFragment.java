@@ -143,11 +143,11 @@ public class ImageDetailFragment extends Fragment implements
                                 + Monolith_SHARE_HASHTAG)
                         .getIntent(), getString(R.string.action_share)));
 
+                Toast.makeText(getActivity(), "Shared Successfully! ", Toast.LENGTH_SHORT).show();
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-        Toast.makeText(getActivity(), "Shared Successfully! ", Toast.LENGTH_SHORT).show();
     }
 
     private void bindViews() {
@@ -172,7 +172,7 @@ public class ImageDetailFragment extends Fragment implements
 
             mCursor.moveToPosition(mItemPosition);
             Picasso.with(this.getContext()).load(mCursor.getString(GalleryLoader.Query.COLUMN_IMAGE_PATH))
-                    .placeholder(R.color.accent)
+                    .placeholder(R.color.photo_placeholder)
                     .error(R.color.primary_dark)
                     .into(imageView);
 
