@@ -120,7 +120,7 @@ public class ArticleFragment extends Fragment implements
 
             ArticleInterface service = retrofit.create(ArticleInterface.class);
 
-            Call<Rss> call = service.results();
+            Call<Rss> call = service.results1();
 
             call.enqueue(new Callback<Rss>() {
                 @Override

@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.example.prashant.monolith.fragments.ArticleFragment;
 import com.example.prashant.monolith.fragments.GalleryFragment;
 import com.example.prashant.monolith.service.MonolithFetchService;
+import com.firebase.jobdispatcher.Constraint;
 import com.firebase.jobdispatcher.FirebaseJobDispatcher;
 import com.firebase.jobdispatcher.GooglePlayDriver;
 import com.firebase.jobdispatcher.Job;
@@ -73,9 +74,10 @@ public class MainActivity extends AppCompatActivity {
         Job myJob = dispatcher.newJobBuilder()
                 .setService(MonolithFetchService.class)
                 .setRecurring(true)
-                .setTrigger(Trigger.executionWindow(SYNC_INTERVAL, SYNC_FLEXTIME))
+                .setTrigger(Trigger.executionWindow(SYNC_INTERVAL, SYNC_INTERVAL + SYNC_FLEXTIME))
                 .setRetryStrategy(RetryStrategy.DEFAULT_LINEAR)
                 .setTag("update-job")
+                .setConstraints(Constraint.ON_ANY_NETWORK)
                 .setLifetime(Lifetime.FOREVER)
                 .build();
 

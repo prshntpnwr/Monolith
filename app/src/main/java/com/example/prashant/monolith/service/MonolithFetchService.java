@@ -39,6 +39,7 @@ public class MonolithFetchService extends JobService {
     public boolean onStartJob(JobParameters job) {
         // Do some work here
         fetchDataTask();
+        Log.d(TAG, "Job started");
 
         return false; // Answers the question: "Is there still work going on?"
     }
