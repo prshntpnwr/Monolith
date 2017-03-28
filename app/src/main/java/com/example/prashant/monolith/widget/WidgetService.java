@@ -5,9 +5,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.os.Binder;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.View;
 import android.widget.AdapterView;
 import android.util.Log;
@@ -15,10 +18,13 @@ import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.AppWidgetTarget;
 import com.example.prashant.monolith.R;
 import com.example.prashant.monolith.articleData.ArticleContract;
 import com.example.prashant.monolith.articleData.ArticleLoader;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import java.io.IOException;
 
@@ -36,7 +42,6 @@ public class WidgetService extends RemoteViewsService {
         Cursor mCursor;
         Context mContext;
         private Intent intent;
-
 
         public RemoteAdapter(WidgetService context, Intent intent) {
             this.mContext = context;
@@ -86,18 +91,18 @@ public class WidgetService extends RemoteViewsService {
 
             Log.d(TAG, "Cursor position is : " + mCursor.getPosition());
             final RemoteViews remoteViews = new RemoteViews(mContext.getPackageName(), R.layout.widget_detail_list_item);
+
             try {
                 Picasso picasso = Picasso.with(mContext);
                 picasso.setLoggingEnabled(true);
                 Bitmap bitmap = picasso.load(mCursor.getString(ArticleLoader.Query.COLUMN_IMAGE_URL))
-                        .placeholder(R.color.accent)
+                        .placeholder(R.color.photo_placeholder)
                         .error(R.color.primary_dark)
                         .get();
                 remoteViews.setImageViewBitmap(R.id.widget_photo, bitmap);
                 remoteViews.setTextViewText(R.id.widget_article_title, mCursor.getString(ArticleLoader.Query.COLUMN_TITLE));
                 remoteViews.setTextViewText(R.id.widget_article_date, mCursor.getString(ArticleLoader.Query.COLUMN_PUBLISH_DATE));
-
-            } catch (IOException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
 

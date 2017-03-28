@@ -79,9 +79,9 @@ public class MonolithWidget extends AppWidgetProvider {
             Log.e(TAG, "onReceive: Intent has ACTION_WIDGET_CLICK");
             Bundle bundle = new Bundle();
             bundle.putString(context.getResources().getString(R.string.title), intent.getStringExtra(context.getResources().getString(R.string.title)));
-            bundle.putString(context.getResources().getString(R.string.date), intent.getStringExtra(context.getResources().getString(R.string.date)));
-            bundle.putString(context.getResources().getString(R.string.image), intent.getStringExtra(context.getResources().getString(R.string.image)));
-            bundle.putString(context.getResources().getString(R.string.description), intent.getStringExtra(context.getResources().getString(R.string.description)));
+            bundle.putString(context.getResources().getString(R.string.date), intent.getStringExtra("date"));
+            bundle.putString(context.getResources().getString(R.string.image), intent.getStringExtra("image"));
+            bundle.putString(context.getResources().getString(R.string.description), intent.getStringExtra("description"));
             bundle.putString(context.getResources().getString(R.string.link), intent.getStringExtra(context.getResources().getString(R.string.link)));
             Intent intent1 = new Intent(context, ArticleDetailActivity.class);
             intent1.putExtras(bundle);

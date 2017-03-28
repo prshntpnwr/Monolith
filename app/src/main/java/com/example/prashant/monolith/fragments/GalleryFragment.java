@@ -89,7 +89,6 @@ public class GalleryFragment extends Fragment implements
     @Override
     public void onResume() {
         super.onResume();
-        ImageFetchTask();
     }
 
     @Override
