@@ -142,8 +142,7 @@ public class ImageDetailFragment extends Fragment implements
                         .setText(mCursor.getString(GalleryLoader.Query.COLUMN_IMAGE_PATH) + "\n\n"
                                 + Monolith_SHARE_HASHTAG)
                         .getIntent(), getString(R.string.action_share)));
-
-                Toast.makeText(getActivity(), getResources().getString(R.string.share_successful), Toast.LENGTH_SHORT).show();
+                
             } catch (Exception e) {
                 e.printStackTrace();
             }
