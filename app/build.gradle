@@ -54,7 +54,7 @@ dependencies {
     compile 'com.squareup.retrofit2:converter-gson:2.2.0'
 
     compile 'com.github.bumptech.glide:glide:3.7.0'
-   // compile 'com.firebase:firebase-jobdispatcher-with-gcm-dep:0.5.2'
+    compile 'com.firebase:firebase-jobdispatcher-with-gcm-dep:0.5.2'
     compile 'com.android.support:recyclerview-v7:25.2.0'
     //image detail fab
     compile 'com.hlab.fabrevealmenu:fab-reveal-menu:1.0.1'
