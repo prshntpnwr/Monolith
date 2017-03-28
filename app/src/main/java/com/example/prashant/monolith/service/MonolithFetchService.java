@@ -8,6 +8,9 @@ import android.net.Uri;
 import android.util.Log;
 
 import com.example.prashant.monolith.R;
+import com.example.prashant.monolith.articleData.ArticleContract;
+import com.example.prashant.monolith.articleObject.ArticleInterface;
+import com.example.prashant.monolith.articleObject.Rss;
 import com.example.prashant.monolith.galleryData.GalleryContract;
 import com.example.prashant.monolith.galleryObjects.Results;
 import com.example.prashant.monolith.galleryObjects.UnsplashGalleryInterface;
@@ -20,6 +23,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.converter.simplexml.SimpleXmlConverterFactory;
 
 import static java.security.AccessController.getContext;
 
@@ -85,7 +89,7 @@ public class MonolithFetchService extends JobService {
                 Log.d(TAG + " Response goes here ", response.toString());
                 String result;
 
-                int deleteRows = getContext().getContentResolver()
+                int deleteRows = getContentResolver()
                         .delete(GalleryContract.GalleryEntry.CONTENT_URI, null, null);
 
                 Log.d(TAG + " deleted rows ", Integer.toString(deleteRows));
@@ -100,7 +104,7 @@ public class MonolithFetchService extends JobService {
 
                     Uri uri = GalleryContract.GalleryEntry.CONTENT_URI;
                     ContentValues contentValues = new ContentValues();
-                    final ContentResolver resolver = getContext().getContentResolver();
+                    final ContentResolver resolver = getContentResolver();
 
                     contentValues.put(GalleryContract.GalleryEntry.COLUMN_IMAGE_PATH, result);
                     contentValues.put(GalleryContract.GalleryEntry.COLUMN_IMAGE_STATUS, 1);
@@ -119,12 +123,88 @@ public class MonolithFetchService extends JobService {
                 Log.d(TAG + "unsplash Fail response", t.getLocalizedMessage());
             }
         });
+
+        String API_BASE_URL1 = "https://rss.sciencedaily.com/";
+
+        Retrofit retrofit1 = new Retrofit.Builder()
+                .baseUrl(API_BASE_URL1)
+                .client(new OkHttpClient())
+                .addConverterFactory(SimpleXmlConverterFactory.create())
+                .build();
+
+        ArticleInterface service1 = retrofit1.create(ArticleInterface.class);
+
+        Call<Rss> call1 = service1.results1();
+
+        call1.enqueue(new Callback<Rss>() {
+            @Override
+            public void onResponse(Call<Rss> call, Response<Rss> response) {
+                //mSwipeRefreshLayout.setRefreshing(false);
+                Log.d(TAG + " Article response ", response.message());
+                Log.d(TAG + " Article response size", String.valueOf(response.body().getChannel().getItem().size()));
+
+                String title;
+                String description;
+                String image_url;
+                String pub_date;
+                String link;
+
+                int deleteRows = getContentResolver()
+                        .delete(ArticleContract.ArticleEntry.CONTENT_URI, null, null);
+
+                Log.d(TAG + " deleted rows ", Integer.toString(deleteRows));
+
+                int length = response.body().getChannel().getItem().size();
+
+                for (int i = 0; i < length; i++) {
+
+                    title = response.body().getChannel().getItem().get(i).getTitle();
+                    description = response.body().getChannel().getItem().get(i).getDescription();
+                    image_url = response.body().getChannel().getItem().get(i).getthumbnail().getUrl();
+                    pub_date = response.body().getChannel().getItem().get(i).getPubDate();
+                    link = response.body().getChannel().getItem().get(i).getLink();
+
+                    Log.d(TAG + " title : ", title);
+                    Log.d(TAG + " description : ", description);
+                    Log.d(TAG + " image url : ", image_url);
+                    Log.d(TAG + " publish date : ", pub_date);
+                    Log.d(TAG + " link : ", link);
+
+                    Uri uri = ArticleContract.ArticleEntry.CONTENT_URI;
+                    ContentValues contentValues = new ContentValues();
+                    final ContentResolver resolver = getContentResolver();
+
+                    contentValues.put(ArticleContract.ArticleEntry.COLUMN_TITLE, title);
+                    contentValues.put(ArticleContract.ArticleEntry.COLUMN_DESCRIPTION, description);
+                    contentValues.put(ArticleContract.ArticleEntry.COLUMN_IMAGE_URL, image_url);
+                    contentValues.put(ArticleContract.ArticleEntry.COLUMN_PUBLISH_DATE, pub_date);
+                    contentValues.put(ArticleContract.ArticleEntry.COLUMN_LINK, link);
+
+                    resolver.insert(uri, contentValues);
+                    mCursor = resolver.query(uri, new String[]{
+                                    ArticleContract.ArticleEntry.COLUMN_TITLE,
+                                    ArticleContract.ArticleEntry.COLUMN_DESCRIPTION,
+                                    ArticleContract.ArticleEntry.COLUMN_IMAGE_URL,
+                                    ArticleContract.ArticleEntry.COLUMN_PUBLISH_DATE,
+                                    ArticleContract.ArticleEntry.COLUMN_LINK},
+                            null,
+                            null,
+                            null);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Rss> call, Throwable t) {
+               // mSwipeRefreshLayout.setRefreshing(false);
+                Log.e(TAG + " failed response from ", t.getLocalizedMessage());
+            }
+        });
     }
 
     public int readSharePreferences(String key, int value) {
         SharedPreferences sharedPref;
         try {
-            sharedPref = getApplicationContext().getSharedPreferences(key, getContext().MODE_PRIVATE);
+            sharedPref = getApplicationContext().getSharedPreferences(key, MODE_PRIVATE);
             value = sharedPref.getInt(key, value);
             return value;
         } catch (Exception e) {

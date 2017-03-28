@@ -8,5 +8,5 @@ import retrofit2.Call;
 public interface ArticleInterface {
 
     @retrofit2.http.GET("/space_time.xml")
-    Call<Rss> results();
+    Call<Rss> results1();
 }
