@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Build;
-import android.os.Bundle;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -49,7 +48,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
                     final ImageView image = (ImageView) view.findViewById(R.id.picture);
                     ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation
                             ((Activity) view.getContext(), image, view.getContext()
-                                    .getResources().getString(R.string.transition_gallery_photo)+String.valueOf(vh.getAdapterPosition()));
+                                    .getResources().getString(R.string.transition_gallery_photo) + String.valueOf(vh.getAdapterPosition()));
                     view.getContext().startActivity(intent, optionsCompat.toBundle());
                 }
             }

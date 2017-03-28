@@ -1,14 +1,12 @@
 package com.example.prashant.monolith;
 
 import android.content.Intent;
-import android.content.res.ColorStateList;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.customtabs.CustomTabsIntent;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -30,7 +28,6 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.GlideBitmapDrawable;
@@ -45,7 +42,7 @@ import com.hlab.fabrevealmenu.listeners.OnFABMenuSelectedListener;
 import com.hlab.fabrevealmenu.view.FABRevealMenu;
 
 public class ArticleDetailFragment extends Fragment implements
-        LoaderManager.LoaderCallbacks<Cursor> , OnFABMenuSelectedListener {
+        LoaderManager.LoaderCallbacks<Cursor>, OnFABMenuSelectedListener {
 
     private static final String TAG = ImageDetailFragment.class.getSimpleName();
 
@@ -157,8 +154,8 @@ public class ArticleDetailFragment extends Fragment implements
         bylineView.setTypeface(Typeface.createFromAsset(getResources().getAssets(), "Roboto-Regular.ttf"));
         bodyView.setTypeface(Typeface.createFromAsset(getResources().getAssets(), "Roboto-Regular.ttf"));
 
-        Intent intent =  getActivity().getIntent();
-        if(intent != null && intent.getExtras() != null){
+        Intent intent = getActivity().getIntent();
+        if (intent != null && intent.getExtras() != null) {
 
             titleView.setText(intent.getStringExtra(getResources().getString(R.string.title)));
             bylineView.setText(intent.getStringExtra(getResources().getString(R.string.date)));
@@ -186,7 +183,7 @@ public class ArticleDetailFragment extends Fragment implements
                             }
                         })
                         .into(mPhotoView);
-            }catch (Exception e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         } else if (mCursor != null) {
@@ -222,13 +219,13 @@ public class ArticleDetailFragment extends Fragment implements
                             }
                         })
                         .into(mPhotoView);
-            }catch (Exception e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
-        }else {
+        } else {
             mRootView.setVisibility(View.GONE);
             titleView.setText("N/A");
-            bylineView.setText("N/A" );
+            bylineView.setText("N/A");
             bodyView.setText("N/A");
         }
     }
@@ -301,8 +298,8 @@ public class ArticleDetailFragment extends Fragment implements
         int id = (int) view.getTag();
         String url;
 
-        Intent intent1 =  getActivity().getIntent();
-        if(intent1 != null && intent1.getExtras() != null) {
+        Intent intent1 = getActivity().getIntent();
+        if (intent1 != null && intent1.getExtras() != null) {
             url = intent1.getStringExtra(getResources().getString(R.string.link));
         } else {
             url = mCursor.getString(ArticleLoader.Query.COLUMN_LINK);

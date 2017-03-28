@@ -3,11 +3,9 @@ package com.example.prashant.monolith.adapters;
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Typeface;
 import android.os.Build;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.RecyclerView;
-import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -58,7 +56,7 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
                     final ImageView image = (ImageView) view.findViewById(R.id.thumbnail);
                     ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation
                             ((Activity) view.getContext(), image, view.getContext()
-                                    .getResources().getString(R.string.transition_gallery_photo)+String.valueOf(vh.getAdapterPosition()));
+                                    .getResources().getString(R.string.transition_gallery_photo) + String.valueOf(vh.getAdapterPosition()));
                     view.getContext().startActivity(intent, optionsCompat.toBundle());
                 }
             }

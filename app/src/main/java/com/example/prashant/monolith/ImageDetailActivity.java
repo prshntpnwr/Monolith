@@ -21,7 +21,6 @@ import com.xgc1986.parallaxPagerTransformer.ParallaxPagerTransformer;
 public class ImageDetailActivity extends AppCompatActivity
         implements LoaderManager.LoaderCallbacks<Cursor> {
 
-    public static String Fragment_tag = "current_fragment";
     private Cursor mCursor;
     private long mStartId;
 

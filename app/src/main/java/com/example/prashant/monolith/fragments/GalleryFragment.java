@@ -2,12 +2,9 @@ package com.example.prashant.monolith.fragments;
 
 import android.content.ContentResolver;
 import android.content.ContentValues;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -22,12 +19,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.prashant.monolith.R;
 import com.example.prashant.monolith.adapters.GalleryAdapter;
-import com.example.prashant.monolith.articleData.ArticleLoader;
 import com.example.prashant.monolith.galleryData.GalleryContract;
 import com.example.prashant.monolith.galleryData.GalleryLoader;
 import com.example.prashant.monolith.galleryObjects.Results;
@@ -303,38 +298,6 @@ public class GalleryFragment extends Fragment implements
                 snackbar.show();
             }
         }
-//        String API_BASE_URL_f = "https://api.flickr.com/";
-//
-//        Retrofit retrofit_f = new Retrofit.Builder()
-//                .baseUrl(API_BASE_URL_f)
-//                .client(new OkHttpClient())
-//                .addConverterFactory(GsonConverterFactory.create())
-//                .build();
-//
-//        FlickrGalleryInterface service_f = retrofit_f.create(FlickrGalleryInterface.class);
-//
-//        Call<FlickrGalleryObject> call_f = service_f.resp(1, 50, "nasa", "493ae838552615924d866a32c4812a2d");
-//
-//        call_f.enqueue(new Callback<FlickrGalleryObject>() {
-//
-//            public void onResponse(Call<FlickrGalleryObject> call, Response<FlickrGalleryObject> response) {
-//                Log.d("Response from flickr", response.toString());
-//
-//                for (int i = 0; i < response.body().getItems().size(); i++) {
-//                    Log.d("onResponse" , i + " " + response.body().getItems().get(i).getMedia().getM());
-//                    imageList.add(response.body().getItems().get(i).getMedia().getM());
-
-
-//                }
-//                adapter = new GalleryAdapter(getContext(), imageList);
-//                gridView.setAdapter(adapter);
-//            }
-//
-//            @Override
-//            public void onFailure(Call<FlickrGalleryObject> call, Throwable t) {
-//                Log.d("Fail response from", "flickr");
-//            }
-//        });}
     }
 
     @Override

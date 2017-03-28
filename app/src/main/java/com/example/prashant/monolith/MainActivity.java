@@ -1,19 +1,13 @@
 package com.example.prashant.monolith;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.Toast;
 
 import com.example.prashant.monolith.fragments.ArticleFragment;
 import com.example.prashant.monolith.fragments.GalleryFragment;
@@ -26,7 +20,6 @@ import com.firebase.jobdispatcher.Lifetime;
 import com.firebase.jobdispatcher.RetryStrategy;
 import com.firebase.jobdispatcher.Trigger;
 import com.google.firebase.analytics.FirebaseAnalytics;
-import com.joaquimley.faboptions.FabOptions;
 
 public class MainActivity extends AppCompatActivity {
     /**
@@ -41,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private final String TAG = getClass().getSimpleName();
 
     public static final int SYNC_INTERVAL = 60 * 180;
-    public static final int SYNC_FLEXTIME = SYNC_INTERVAL/3;
+    public static final int SYNC_FLEXTIME = SYNC_INTERVAL / 3;
 
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -105,10 +98,6 @@ public class MainActivity extends AppCompatActivity {
 
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.setupWithViewPager(mViewPager);
-
-//        tabLayout.getTabAt(0).setIcon(getResources().getDrawable(R.drawable.ic_wallpaper));
-//        tabLayout.getTabAt(1).setIcon(getResources().getDrawable(R.drawable.ic_chrome_tab));
-
     }
 
     /**

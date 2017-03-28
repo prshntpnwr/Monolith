@@ -1,6 +1,5 @@
 package com.example.prashant.monolith.galleryData;
 
-import android.content.ContentProvider;
 import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
@@ -14,8 +13,8 @@ import com.example.prashant.monolith.articleData.ArticleContract.ArticleEntry;
 import com.example.prashant.monolith.articleData.ArticleDbHelper;
 import com.example.prashant.monolith.galleryData.GalleryContract.GalleryEntry;
 
-import static com.example.prashant.monolith.galleryData.GalleryContract.GalleryEntry.TABLE_NAME_GALLERY;
 import static com.example.prashant.monolith.articleData.ArticleContract.ArticleEntry.TABLE_NAME_ARTICLE;
+import static com.example.prashant.monolith.galleryData.GalleryContract.GalleryEntry.TABLE_NAME_GALLERY;
 
 public class DataProvider extends android.content.ContentProvider {
 

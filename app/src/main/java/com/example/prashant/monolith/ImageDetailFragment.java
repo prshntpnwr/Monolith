@@ -14,7 +14,6 @@ import android.support.v4.app.ShareCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.Loader;
 import android.support.v4.view.ViewCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -26,13 +25,11 @@ import android.widget.Toast;
 
 import com.example.prashant.monolith.galleryData.GalleryLoader;
 import com.hlab.fabrevealmenu.listeners.OnFABMenuSelectedListener;
-import com.hlab.fabrevealmenu.model.FABMenuItem;
 import com.hlab.fabrevealmenu.view.FABRevealMenu;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class ImageDetailFragment extends Fragment implements
         LoaderManager.LoaderCallbacks<Cursor>, OnFABMenuSelectedListener {
@@ -114,22 +111,25 @@ public class ImageDetailFragment extends Fragment implements
             String wallpaper = mCursor.getString(GalleryLoader.Query.COLUMN_IMAGE_PATH);
             final WallpaperManager wallpaperManager = WallpaperManager.getInstance(getContext());
 
-                Target target = new Target() {
-                    @Override
-                    public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                        try {
-                            wallpaperManager.setBitmap(bitmap);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
+            Target target = new Target() {
+                @Override
+                public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                    try {
+                        wallpaperManager.setBitmap(bitmap);
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
-                    @Override
-                    public void onBitmapFailed(Drawable errorDrawable) {}
+                }
 
-                    @Override
-                    public void onPrepareLoad(Drawable placeHolderDrawable) {}
+                @Override
+                public void onBitmapFailed(Drawable errorDrawable) {
+                }
 
-                };
+                @Override
+                public void onPrepareLoad(Drawable placeHolderDrawable) {
+                }
+
+            };
 
             Picasso.with(getContext()).load(wallpaper).into(target);
 
