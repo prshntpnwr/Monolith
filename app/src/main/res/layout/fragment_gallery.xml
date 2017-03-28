@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.example.prashant.monolith.fragments.GalleryFragment">
 
     <android.support.v7.widget.RecyclerView
@@ -12,6 +13,7 @@
 
     <com.joaquimley.faboptions.FabOptions
         android:id="@+id/fab_options"
+        app:pressedTranslationZ="@dimen/fab_press_translation_z"
         android:contentDescription="@string/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
