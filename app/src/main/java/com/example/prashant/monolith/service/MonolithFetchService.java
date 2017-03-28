@@ -25,19 +25,20 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.simplexml.SimpleXmlConverterFactory;
 
-import static java.security.AccessController.getContext;
-
 public class MonolithFetchService extends JobService {
 
     private int mTag;
     private int mPage = 1;
     private Cursor mCursor;
+    public static final int SYNC_INTERVAL = 60 * 180;
+    public static final int SYNC_FLEXTIME = SYNC_INTERVAL/3;
 
     private static String TAG = MonolithFetchService.class.getSimpleName();
 
     @Override
     public boolean onStartJob(JobParameters job) {
         // Do some work here
+        fetchDataTask();
 
         return false; // Answers the question: "Is there still work going on?"
     }

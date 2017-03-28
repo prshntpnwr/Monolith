@@ -17,6 +17,13 @@ import android.widget.Toast;
 
 import com.example.prashant.monolith.fragments.ArticleFragment;
 import com.example.prashant.monolith.fragments.GalleryFragment;
+import com.example.prashant.monolith.service.MonolithFetchService;
+import com.firebase.jobdispatcher.FirebaseJobDispatcher;
+import com.firebase.jobdispatcher.GooglePlayDriver;
+import com.firebase.jobdispatcher.Job;
+import com.firebase.jobdispatcher.Lifetime;
+import com.firebase.jobdispatcher.RetryStrategy;
+import com.firebase.jobdispatcher.Trigger;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.joaquimley.faboptions.FabOptions;
 
@@ -31,6 +38,9 @@ public class MainActivity extends AppCompatActivity {
      */
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private final String TAG = getClass().getSimpleName();
+
+    public static final int SYNC_INTERVAL = 60 * 180;
+    public static final int SYNC_FLEXTIME = SYNC_INTERVAL/3;
 
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -57,6 +67,19 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Create a new dispatcher using the Google Play driver.
+        FirebaseJobDispatcher dispatcher = new FirebaseJobDispatcher(new GooglePlayDriver(this));
+        Job myJob = dispatcher.newJobBuilder()
+                .setService(MonolithFetchService.class)
+                .setRecurring(true)
+                .setTrigger(Trigger.executionWindow(SYNC_INTERVAL, SYNC_FLEXTIME))
+                .setRetryStrategy(RetryStrategy.DEFAULT_LINEAR)
+                .setTag("update-job")
+                .setLifetime(Lifetime.FOREVER)
+                .build();
+
+        dispatcher.mustSchedule(myJob);
 
         // Obtain the FirebaseAnalytics instance.
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
