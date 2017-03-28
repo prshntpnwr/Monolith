@@ -134,7 +134,6 @@ public class MainActivity extends AppCompatActivity {
             return mNumOfTabs;
         }
 
-        // TODO: set image icons instead of text
         @Override
         public CharSequence getPageTitle(int position) {
             switch (position) {
