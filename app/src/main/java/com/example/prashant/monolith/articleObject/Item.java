@@ -1,10 +1,7 @@
 package com.example.prashant.monolith.articleObject;
 
 import org.simpleframework.xml.Element;
-import org.simpleframework.xml.Path;
 import org.simpleframework.xml.Root;
-
-import static android.R.attr.path;
 
 @Root(strict = false)
 public class Item {
@@ -18,18 +15,17 @@ public class Item {
     @Element
     private String description;
 
-//    @Path("link")
     @Element
     private String link;
 
     @Element(required = false)
-    private thumbnail thumbnail;
+    private Thumbnail thumbnail;
 
-    public thumbnail getthumbnail() {
+    public Thumbnail getthumbnail() {
         if (thumbnail != null) {
             return thumbnail;
         } else {
-            thumbnail t = new thumbnail();
+            Thumbnail t = new Thumbnail();
             t.setUrl("https://images.unsplash.com/photo-1447433693259-c8549e937d62?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=240&fit=max&s=c35d20b6b5c18c91290fd5fa4c6c634a");
             t.setHeight("240");
             t.setWidth("240");
@@ -37,7 +33,7 @@ public class Item {
         }
     }
 
-    public void setthumbnail(thumbnail thumbnail) {
+    public void setthumbnail(Thumbnail thumbnail) {
         this.thumbnail = thumbnail;
     }
 

@@ -4,7 +4,7 @@ import org.simpleframework.xml.Root;
 
 import retrofit2.Call;
 
-@Root(strict=false)
+@Root(strict = false)
 public interface ArticleInterface {
 
     @retrofit2.http.GET("/space_time.xml")

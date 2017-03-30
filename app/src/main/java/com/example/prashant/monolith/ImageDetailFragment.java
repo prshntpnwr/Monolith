@@ -142,7 +142,7 @@ public class ImageDetailFragment extends Fragment implements
                         .setText(mCursor.getString(GalleryLoader.Query.COLUMN_IMAGE_PATH) + "\n\n"
                                 + Monolith_SHARE_HASHTAG)
                         .getIntent(), getString(R.string.action_share)));
-                
+
             } catch (Exception e) {
                 e.printStackTrace();
             }

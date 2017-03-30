@@ -3,8 +3,8 @@ package com.example.prashant.monolith.articleObject;
 import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Root;
 
-@Root(strict=false)
-public class thumbnail {
+@Root(strict = false)
+public class Thumbnail {
 
     @Attribute
     private String height;
@@ -15,33 +15,33 @@ public class thumbnail {
     @Attribute
     private String url;
 
-    public String getHeight () {
+    public String getHeight() {
         return height;
     }
 
-    public void setHeight (String height) {
+    public void setHeight(String height) {
         this.height = height;
     }
 
-    public String getWidth () {
+    public String getWidth() {
         return width;
     }
 
-    public void setWidth (String width) {
+    public void setWidth(String width) {
         this.width = width;
     }
 
-    public String getUrl () {
+    public String getUrl() {
         return url;
     }
 
-    public void setUrl (String url) {
+    public void setUrl(String url) {
         this.url = url;
     }
 
     @Override
     public String toString() {
-        return "ClassPojo [height = "+height+", width = "+width+", url = "+url+"]";
+        return "ClassPojo [height = " + height + ", width = " + width + ", url = " + url + "]";
     }
 }
 

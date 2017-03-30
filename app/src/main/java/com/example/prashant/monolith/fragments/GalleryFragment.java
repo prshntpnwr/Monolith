@@ -22,12 +22,12 @@ import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.example.prashant.monolith.R;
+import com.example.prashant.monolith.Utility;
 import com.example.prashant.monolith.adapters.GalleryAdapter;
 import com.example.prashant.monolith.galleryData.GalleryContract;
 import com.example.prashant.monolith.galleryData.GalleryLoader;
 import com.example.prashant.monolith.galleryObjects.Results;
 import com.example.prashant.monolith.galleryObjects.UnsplashGalleryInterface;
-import com.example.prashant.monolith.utility;
 import com.joaquimley.faboptions.FabOptions;
 
 import okhttp3.OkHttpClient;
@@ -196,7 +196,7 @@ public class GalleryFragment extends Fragment implements
 
     public void ImageFetchTask() {
 
-        if (utility.isNetworkAvailable(getContext())) {
+        if (Utility.isNetworkAvailable(getContext())) {
             mEmptyView.setVisibility(View.GONE);
 
             mTag = readSharePreferences(getString(R.string.key), 0);
@@ -307,7 +307,7 @@ public class GalleryFragment extends Fragment implements
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        if (utility.isNetworkAvailable(getContext())) {
+        if (Utility.isNetworkAvailable(getContext())) {
             GalleryAdapter adapter = new GalleryAdapter(data);
             adapter.setHasStableIds(true);
             mRecyclerView.setAdapter(adapter);

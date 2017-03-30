@@ -7,13 +7,12 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.TaskStackBuilder;
 import android.util.Log;
 import android.widget.RemoteViews;
 
 import com.example.prashant.monolith.ArticleDetailActivity;
-import com.example.prashant.monolith.MainActivity;
 import com.example.prashant.monolith.R;
+
 /**
  * Implementation of App Widget functionality.
  */
@@ -34,7 +33,7 @@ public class MonolithWidget extends AppWidgetProvider {
         onItemClick.setAction(ACTION_WIDGET_CLICK);
         if (intent != null) {
             onItemClick.setData(intent.getData());
-            Log.e("Content not null", "updateAppWidget: " + intent.getData() );
+            Log.e("Content not null", "updateAppWidget: " + intent.getData());
         }
         PendingIntent onClickPendingIntent = PendingIntent
                 .getBroadcast(context, 0, onItemClick,

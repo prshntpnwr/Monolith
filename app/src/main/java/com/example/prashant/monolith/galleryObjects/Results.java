@@ -7,7 +7,7 @@ import org.simpleframework.xml.Root;
 
 import java.util.ArrayList;
 
-@Root(strict=false)
+@Root(strict = false)
 public class Results {
 
     @SerializedName("results")
@@ -22,7 +22,7 @@ public class Results {
         this.results = results;
     }
 
-    @Root(strict=false)
+    @Root(strict = false)
     public static class SingleResult {
 
         @SerializedName("cover_photo")
@@ -38,12 +38,13 @@ public class Results {
         }
     }
 
-    @Root(strict=false)
+    @Root(strict = false)
     public static class CoverPhoto {
 
         @SerializedName("urls")
         @Expose
         private Urls urls = null;
+
         @SerializedName("categories")
 
         public Urls getUrls() {
@@ -55,7 +56,7 @@ public class Results {
         }
     }
 
-    @Root(strict=false)
+    @Root(strict = false)
     public static class Urls {
 
         @SerializedName("raw")

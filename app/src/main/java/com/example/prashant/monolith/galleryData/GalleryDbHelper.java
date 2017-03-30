@@ -7,14 +7,13 @@ import android.util.Log;
 
 import com.example.prashant.monolith.galleryData.GalleryContract.GalleryEntry;
 
-public class GalleryDbHelper extends SQLiteOpenHelper{
+public class GalleryDbHelper extends SQLiteOpenHelper {
 
     private final String TAG = GalleryDbHelper.class.getSimpleName();
 
     private static final int DATABASE_VERSION = 1;
 
     static final String DATABASE_NAME = "gallery.db";
-
 
     public GalleryDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);

@@ -305,10 +305,10 @@ public class ArticleDetailFragment extends Fragment implements
         Intent intent1 = getActivity().getIntent();
         if (intent1 != null && intent1.getExtras() != null) {
             url = intent1.getStringExtra(getResources().getString(R.string.link));
-            Log.d(TAG , "share url is : " +  url);
+            Log.d(TAG, "share url is : " + url);
         } else {
             url = mCursor.getString(ArticleLoader.Query.COLUMN_LINK);
-            Log.d(TAG , "share url is : " +  url);
+            Log.d(TAG, "share url is : " + url);
         }
 
         if (id == R.id.fab_custom_tab) {
@@ -339,7 +339,7 @@ public class ArticleDetailFragment extends Fragment implements
                                 + Monolith_SHARE_HASHTAG)
                         .getIntent(), getString(R.string.action_share)));
 
-                Log.d(TAG , "share url inside share fab is : " +  url);
+                Log.d(TAG, "share url inside share fab is : " + url);
             } catch (Exception e) {
                 e.printStackTrace();
             }

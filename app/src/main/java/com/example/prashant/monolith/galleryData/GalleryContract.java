@@ -28,7 +28,7 @@ public class GalleryContract {
         public static final String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/vnd.com.example.prashant.monolith.images";
 
         public static final Uri CONTENT_URI =
-               BASE_CONTENT_URI.buildUpon().appendPath(PATH_IMAGE).build();
+                BASE_CONTENT_URI.buildUpon().appendPath(PATH_IMAGE).build();
 
         public static final String TABLE_NAME_GALLERY = "gallery";
 
@@ -43,6 +43,7 @@ public class GalleryContract {
             return ContentUris.withAppendedId(CONTENT_URI, id);
             //return BASE_CONTENT_URI.buildUpon().appendPath("images").appendPath(Long.toString(id)).build();
         }
+
         public static long getItemId(Uri itemUri) {
             return Long.parseLong(itemUri.getPathSegments().get(1));
         }

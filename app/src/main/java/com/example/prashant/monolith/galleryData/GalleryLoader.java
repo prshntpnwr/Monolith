@@ -1,8 +1,8 @@
 package com.example.prashant.monolith.galleryData;
 
 import android.content.Context;
-import android.support.v4.content.CursorLoader;
 import android.net.Uri;
+import android.support.v4.content.CursorLoader;
 
 /**
  * Helper for loading a list of articles or a single article.
@@ -30,6 +30,6 @@ public class GalleryLoader extends CursorLoader {
 
         int COLUMN_IMAGE_ID = 0;
         int COLUMN_IMAGE_PATH = 1;
-        int COLUMN_IMAGE_STATUS= 2;
+        int COLUMN_IMAGE_STATUS = 2;
     }
 }

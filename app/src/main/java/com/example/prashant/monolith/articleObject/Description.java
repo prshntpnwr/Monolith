@@ -5,32 +5,32 @@ import org.simpleframework.xml.Root;
 
 import java.util.ArrayList;
 
-@Root(strict=false)
+@Root(strict = false)
 public class Description {
 
-    @ElementList(inline = true,required = false)
+    @ElementList(inline = true, required = false)
     private ArrayList<String> content;
 
     private String em;
 
-    public ArrayList<String> getContent () {
+    public ArrayList<String> getContent() {
         return content;
     }
 
-    public void setContent (ArrayList<String> content) {
+    public void setContent(ArrayList<String> content) {
         this.content = content;
     }
 
-    public String getEm () {
+    public String getEm() {
         return em;
     }
 
-    public void setEm (String em) {
+    public void setEm(String em) {
         this.em = em;
     }
 
     @Override
     public String toString() {
-        return "ClassPojo [content = "+content+", em = "+em+"]";
+        return "ClassPojo [content = " + content + ", em = " + em + "]";
     }
 }

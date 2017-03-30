@@ -22,12 +22,12 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import com.example.prashant.monolith.R;
+import com.example.prashant.monolith.Utility;
 import com.example.prashant.monolith.adapters.ArticleAdapter;
 import com.example.prashant.monolith.articleData.ArticleContract;
 import com.example.prashant.monolith.articleData.ArticleLoader;
 import com.example.prashant.monolith.articleObject.ArticleInterface;
 import com.example.prashant.monolith.articleObject.Rss;
-import com.example.prashant.monolith.utility;
 import com.example.prashant.monolith.widget.MonolithWidget;
 
 import okhttp3.OkHttpClient;
@@ -96,7 +96,7 @@ public class ArticleFragment extends Fragment implements
 
     public void ArticleFetchTask() {
 
-        if (utility.isNetworkAvailable(getContext())) {
+        if (Utility.isNetworkAvailable(getContext())) {
             mEmptyView.setVisibility(View.GONE);
 
             String API_BASE_URL = "https://rss.sciencedaily.com/";
@@ -202,7 +202,7 @@ public class ArticleFragment extends Fragment implements
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        if (utility.isNetworkAvailable(getContext())) {
+        if (Utility.isNetworkAvailable(getContext())) {
             ArticleAdapter adapter = new ArticleAdapter(data);
             adapter.setHasStableIds(true);
             mRecyclerView.setAdapter(adapter);

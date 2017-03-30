@@ -5,7 +5,7 @@ import org.simpleframework.xml.Root;
 import retrofit2.Call;
 import retrofit2.http.Query;
 
-@Root(strict=false)
+@Root(strict = false)
 public interface UnsplashGalleryInterface {
 
     @retrofit2.http.GET("/search/collections?")

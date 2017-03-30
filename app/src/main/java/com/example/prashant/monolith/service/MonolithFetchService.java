@@ -31,7 +31,7 @@ public class MonolithFetchService extends JobService {
     private int mPage = 1;
     private Cursor mCursor;
     public static final int SYNC_INTERVAL = 60 * 180;
-    public static final int SYNC_FLEXTIME = SYNC_INTERVAL/3;
+    public static final int SYNC_FLEXTIME = SYNC_INTERVAL / 3;
 
     private static String TAG = MonolithFetchService.class.getSimpleName();
 
@@ -197,7 +197,7 @@ public class MonolithFetchService extends JobService {
 
             @Override
             public void onFailure(Call<Rss> call, Throwable t) {
-               // mSwipeRefreshLayout.setRefreshing(false);
+                // mSwipeRefreshLayout.setRefreshing(false);
                 Log.e(TAG + " failed response from ", t.getLocalizedMessage());
             }
         });

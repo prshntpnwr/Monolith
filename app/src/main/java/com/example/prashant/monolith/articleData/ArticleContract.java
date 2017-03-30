@@ -24,7 +24,7 @@ public class ArticleContract {
         public static final String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/vnd.com.example.prashant.monolith.articles";
 
         public static final Uri CONTENT_URI =
-               BASE_CONTENT_URI.buildUpon().appendPath(PATH_ARTICLE).build();
+                BASE_CONTENT_URI.buildUpon().appendPath(PATH_ARTICLE).build();
 
         public static final String TABLE_NAME_ARTICLE = "article";
 
