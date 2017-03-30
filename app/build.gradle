@@ -14,17 +14,19 @@ android {
     signingConfigs {
         release {
             storeFile file("Key_store.jks")
-            storePassword ""
-            keyAlias ""
-            keyPassword ""
+            storePassword "jarvis@1"
+            keyAlias "Monolith"
+            keyPassword "jarvis@12"
         }
     }
     buildTypes {
         release {
             minifyEnabled true
             shrinkResources true
+            multiDexEnabled true
             signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
         }
     }
 }
