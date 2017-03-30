@@ -23,3 +23,12 @@
 -dontwarn android.support.v4.**
 -keep public class com.google.android.gms.* { public *; }
 -dontwarn com.google.android.gms.**
+-dontwarn retrofit2.**
+-keep class retrofit2.** { *; }
+-keepattributes Signature
+-keepattributes Exceptions
+-keep public class org.simpleframework.**{ *; }
+-keep class org.simpleframework.xml.**{ *; }
+-keep class org.simpleframework.xml.core.**{ *; }
+-keep class org.simpleframework.xml.util.**{ *; }
+-keep class com.example.prashant.monolith.articleObject.** {*; }
