@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:id="@+id/main_content"
     android:fitsSystemWindows="true"
-    tools:context="com.example.prashant.monolith.MainActivity">
+    tools:context="com.example.prashant.monolith.ui.MainActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"

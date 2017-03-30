@@ -1,4 +1,4 @@
-package com.example.prashant.monolith;
+package com.example.prashant.monolith.ui;
 
 import android.database.Cursor;
 import android.graphics.drawable.ColorDrawable;
@@ -14,8 +14,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.TypedValue;
 import android.view.View;
 
+import com.example.prashant.monolith.R;
 import com.example.prashant.monolith.articleData.ArticleContract;
 import com.example.prashant.monolith.articleData.ArticleLoader;
+import com.example.prashant.monolith.fragments.ArticleDetailFragment;
 import com.xgc1986.parallaxPagerTransformer.ParallaxPagerTransformer;
 
 public class ArticleDetailActivity extends AppCompatActivity

@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/image_container"
-    tools:context=".ImageDetailActivity"
+    tools:context=".ui.ImageDetailActivity"
     tools:ignore="MergeRootFrame">
 
     <android.support.v4.view.ViewPager

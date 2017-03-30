@@ -1,4 +1,4 @@
-package com.example.prashant.monolith;
+package com.example.prashant.monolith.ui;
 
 import android.database.Cursor;
 import android.graphics.drawable.ColorDrawable;
@@ -14,6 +14,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.TypedValue;
 import android.view.WindowManager;
 
+import com.example.prashant.monolith.R;
+import com.example.prashant.monolith.fragments.ImageDetailFragment;
 import com.example.prashant.monolith.galleryData.GalleryContract;
 import com.example.prashant.monolith.galleryData.GalleryLoader;
 import com.xgc1986.parallaxPagerTransformer.ParallaxPagerTransformer;

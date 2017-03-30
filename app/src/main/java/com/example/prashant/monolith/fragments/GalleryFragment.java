@@ -22,7 +22,7 @@ import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.example.prashant.monolith.R;
-import com.example.prashant.monolith.Utility;
+import com.example.prashant.monolith.ui.Utility;
 import com.example.prashant.monolith.adapters.GalleryAdapter;
 import com.example.prashant.monolith.galleryData.GalleryContract;
 import com.example.prashant.monolith.galleryData.GalleryLoader;

@@ -1,4 +1,4 @@
-package com.example.prashant.monolith;
+package com.example.prashant.monolith.ui;
 
 import android.view.View;
 

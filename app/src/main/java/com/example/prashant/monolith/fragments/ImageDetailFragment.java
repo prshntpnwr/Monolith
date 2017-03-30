@@ -1,4 +1,4 @@
-package com.example.prashant.monolith;
+package com.example.prashant.monolith.fragments;
 
 import android.app.WallpaperManager;
 import android.content.Intent;
@@ -23,6 +23,7 @@ import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.prashant.monolith.R;
 import com.example.prashant.monolith.galleryData.GalleryLoader;
 import com.hlab.fabrevealmenu.listeners.OnFABMenuSelectedListener;
 import com.hlab.fabrevealmenu.view.FABRevealMenu;

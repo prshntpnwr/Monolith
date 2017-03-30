@@ -1,4 +1,4 @@
-package com.example.prashant.monolith;
+package com.example.prashant.monolith.fragments;
 
 import android.content.Intent;
 import android.database.Cursor;
@@ -34,6 +34,7 @@ import com.bumptech.glide.load.resource.bitmap.GlideBitmapDrawable;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
+import com.example.prashant.monolith.R;
 import com.example.prashant.monolith.articleData.ArticleLoader;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;

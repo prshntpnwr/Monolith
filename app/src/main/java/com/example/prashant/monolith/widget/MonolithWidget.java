@@ -10,7 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.RemoteViews;
 
-import com.example.prashant.monolith.ArticleDetailActivity;
+import com.example.prashant.monolith.ui.ArticleDetailActivity;
 import com.example.prashant.monolith.R;
 
 /**

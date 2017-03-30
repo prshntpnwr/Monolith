@@ -22,7 +22,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import com.example.prashant.monolith.R;
-import com.example.prashant.monolith.Utility;
+import com.example.prashant.monolith.ui.Utility;
 import com.example.prashant.monolith.adapters.ArticleAdapter;
 import com.example.prashant.monolith.articleData.ArticleContract;
 import com.example.prashant.monolith.articleData.ArticleLoader;
