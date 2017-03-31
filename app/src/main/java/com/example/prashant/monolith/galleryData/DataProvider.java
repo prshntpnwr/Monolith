@@ -25,8 +25,8 @@ public class DataProvider extends android.content.ContentProvider {
 
     private static final int IMAGE = 0;
     private static final int IMAGE_ID = 1;
-    private static final int ARTICLE = 3;
-    private static final int ARTICLE_ID = 4;
+    private static final int ARTICLE = 2;
+    private static final int ARTICLE_ID = 3;
 
     private static UriMatcher buildUriMatcher() {
         //The code passed into the constructor represents the code to return for the root URI.
@@ -167,7 +167,7 @@ public class DataProvider extends android.content.ContentProvider {
         final int match = sUriMatcher.match(uri);
         int rowDeleted;
 
-        if (null == selection) selection = "1";
+        if (selection == null) selection = "1";
 
         switch (match) {
             case IMAGE:
@@ -217,23 +217,4 @@ public class DataProvider extends android.content.ContentProvider {
 
         return rowUpdated;
     }
-
-//    @NonNull
-//    public ContentProviderResult[] applyBatch(ArrayList<ContentProviderOperation> operations)
-//            throws OperationApplicationException {
-//        final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
-//        db.beginTransaction();
-//        try {
-//            final int numOperations = operations.size();
-//            final ContentProviderResult[] results = new ContentProviderResult[numOperations];
-//            for (int i = 0; i < numOperations; i++) {
-//                results[i] = operations.get(i).apply(this, results, i);
-//            }
-//            db.setTransactionSuccessful();
-//            return results;
-//        } finally {
-//            db.endTransaction();
-//        }
-//    }
-
 }

@@ -41,9 +41,6 @@ public class ImageDetailFragment extends Fragment implements
     public static final String ARG_ITEM_POSITION = "item_position";
     private static final String Monolith_SHARE_HASHTAG = " #MonolithApp";
 
-    public ImageDetailFragment() {
-    }
-
     private int mItemPosition;
     private long mItemId;
     private Cursor mCursor;
@@ -159,16 +156,6 @@ public class ImageDetailFragment extends Fragment implements
 
         if (mCursor != null) {
             mRootView.setVisibility(View.VISIBLE);
-
-            //cause screen refresh
-//            mRootView.setAlpha(0);
-//            mRootView.animate().alpha(1);
-
-//            for explicit intent
-//            Picasso.with(this.getContext()).load(getActivity().getIntent().getStringExtra("URL"))
-//                    .placeholder(R.color.accent)
-//                    .error(R.color.primary_dark)
-//                    .into(imageView);
 
             mCursor.moveToPosition(mItemPosition);
             Picasso.with(this.getContext()).load(mCursor.getString(GalleryLoader.Query.COLUMN_IMAGE_PATH))

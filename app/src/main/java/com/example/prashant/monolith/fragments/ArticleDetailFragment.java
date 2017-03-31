@@ -51,9 +51,6 @@ public class ArticleDetailFragment extends Fragment implements
     public static final String ARG_ITEM_POSITION = "item_position";
     private static final String Monolith_SHARE_HASHTAG = " #MonolithApp";
 
-    public ArticleDetailFragment() {
-    }
-
     private ColorDrawable mStatusBarColorDrawable;
 
     private View mPhotoContainerView;
