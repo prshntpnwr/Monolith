@@ -1,7 +1,7 @@
 # Monolith
 [![GitHub license](https://img.shields.io/crates/l/rustc-serialize.svg)](https://github.com/prshntpnwr/Monolith/blob/master/LICENSE.txt)
 
-Android Application for news read and image gallery. Get amazing images, wallpaper and news related to space eveery day. 
+Android Application for news read and image gallery. Get amazing images, wallpapers and news related to space every day. 
 
 
 ## License
