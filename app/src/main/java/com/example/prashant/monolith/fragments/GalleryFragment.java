@@ -19,6 +19,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.prashant.monolith.R;
@@ -28,6 +30,12 @@ import com.example.prashant.monolith.galleryData.GalleryContract;
 import com.example.prashant.monolith.galleryData.GalleryLoader;
 import com.example.prashant.monolith.galleryObjects.Results;
 import com.example.prashant.monolith.galleryObjects.UnsplashGalleryInterface;
+import com.github.ybq.android.spinkit.SpinKitView;
+import com.github.ybq.android.spinkit.SpriteFactory;
+import com.github.ybq.android.spinkit.Style;
+import com.github.ybq.android.spinkit.sprite.Sprite;
+import com.github.ybq.android.spinkit.style.CubeGrid;
+import com.github.ybq.android.spinkit.style.DoubleBounce;
 import com.joaquimley.faboptions.FabOptions;
 
 import okhttp3.OkHttpClient;
@@ -45,6 +53,8 @@ public class GalleryFragment extends Fragment implements
     private RecyclerView mRecyclerView;
     FrameLayout mEmptyView;
     View mRootView;
+    SpinKitView spinKitView;
+
     LoaderManager.LoaderCallbacks callbacks;
     private Cursor mCursor;
     private int mTag;
@@ -66,6 +76,10 @@ public class GalleryFragment extends Fragment implements
         mRootView = inflater.inflate(R.layout.fragment_gallery, container, false);
         mRecyclerView = (RecyclerView) mRootView.findViewById(R.id.recycler_view);
         mEmptyView = (FrameLayout) mRootView.findViewById(R.id.empty_include);
+
+        spinKitView = (SpinKitView) mRootView.findViewById(R.id.spin_kit);
+        CubeGrid mCubeGrid = new CubeGrid();
+        spinKitView.setIndeterminateDrawable(mCubeGrid);
 
         final FabOptions fabOptions = (FabOptions) mRootView.findViewById(R.id.fab_options);
         fabOptions.setButtonsMenu(R.menu.gallery_fab);
@@ -112,6 +126,7 @@ public class GalleryFragment extends Fragment implements
                 editor.putInt(getString(R.string.page_num), savedPage);
                 editor.apply();
 
+                spinKitView.setVisibility(View.VISIBLE);
                 ImageFetchTask();
 
                 Toast.makeText(getContext(), getResources().getString(R.string.loading_previous), Toast.LENGTH_SHORT).show();
@@ -122,6 +137,7 @@ public class GalleryFragment extends Fragment implements
                 break;
 
             case R.id.fab_refresh:
+                spinKitView.setVisibility(View.VISIBLE);
                 ImageFetchTask();
                 Toast.makeText(getContext(), getResources().getString(R.string.refresh), Toast.LENGTH_SHORT).show();
                 break;
@@ -136,6 +152,7 @@ public class GalleryFragment extends Fragment implements
 
                 Log.d(TAG + "saved page is ", String.valueOf(savedPage));
 
+                spinKitView.setVisibility(View.VISIBLE);
                 ImageFetchTask();
 
                 Log.d(TAG + "saved page after fetch ", String.valueOf(savedPage));
@@ -162,6 +179,7 @@ public class GalleryFragment extends Fragment implements
                         editor.putInt(getString(R.string.key), savedPref);
                         editor.apply();
 
+                        spinKitView.setVisibility(View.VISIBLE);
                         ImageFetchTask();
                         Toast.makeText(getContext(), getResources().getString(R.string.loading), Toast.LENGTH_SHORT).show();
                     }
@@ -242,6 +260,7 @@ public class GalleryFragment extends Fragment implements
 
                 @Override
                 public void onResponse(Call<Results> call, Response<Results> response) {
+                    spinKitView.setVisibility(View.GONE);
                     Log.d(TAG + " Response goes here ", response.toString());
                     String result;
 
@@ -276,6 +295,7 @@ public class GalleryFragment extends Fragment implements
 
                 @Override
                 public void onFailure(Call<Results> call, Throwable t) {
+                    spinKitView.setVisibility(View.GONE);
                     Log.d(TAG + "unsplash Fail response", t.getLocalizedMessage());
                 }
             });

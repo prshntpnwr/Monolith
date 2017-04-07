@@ -72,6 +72,9 @@ dependencies {
     //custom chrome tab
     compile 'com.android.support:customtabs:25.2.0'
 
+    //progress dialog
+    compile 'com.github.ybq:Android-SpinKit:1.1.0'
+
 }
 
 apply plugin: 'com.google.gms.google-services'
