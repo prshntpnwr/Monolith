@@ -71,7 +71,7 @@ public class FcmMessagingService extends FirebaseMessagingService {
             public void onResponse(Bitmap response) {
                 mBuilder.setStyle(new NotificationCompat.BigPictureStyle().bigPicture(response));
             }
-        }, 0, 0, null, new Response.ErrorListener() {
+        }, 0, 0, null, Bitmap.Config.RGB_565, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
 
