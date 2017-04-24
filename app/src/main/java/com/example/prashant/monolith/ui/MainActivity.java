@@ -1,13 +1,19 @@
 package com.example.prashant.monolith.ui;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.widget.Toast;
 
 import com.example.prashant.monolith.R;
 import com.example.prashant.monolith.fragments.ArticleFragment;
@@ -63,6 +69,17 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+//        if (checkMyPermission()) {
+//            Toast.makeText(MainActivity.this, "Permission Already Granted", Toast.LENGTH_SHORT).show();
+//        } else {
+//            ActivityCompat.requestPermissions(MainActivity.this, new String[] {
+//                Manifest.permission.ACCESS_NETWORK_STATE,
+//                        Manifest.permission.SET_WALLPAPER,
+//                        Manifest.permission.ACCESS_NETWORK_STATE,
+//                        Manifest.permission.INTERNET,
+//                        Manifest.permission.WAKE_LOCK}, 1000);
+//        }
+
         // Create a new dispatcher using the Google Play driver.
         FirebaseJobDispatcher dispatcher = new FirebaseJobDispatcher(new GooglePlayDriver(this));
         Job myJob = dispatcher.newJobBuilder()
@@ -101,6 +118,26 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(mViewPager);
     }
 
+//    private boolean checkMyPermission() {
+//
+//        return ContextCompat.checkSelfPermission(this, Manifest.permission.INTERNET) != PackageManager.PERMISSION_GRANTED;
+//    }
+//
+//    @Override
+//    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+//        switch (requestCode) {
+//            case 1000:
+//                for (int grantResult : grantResults) {
+//                    if (grantResult == PackageManager.PERMISSION_GRANTED) {
+//                        Toast.makeText(MainActivity.this, "Permission Granted", Toast.LENGTH_SHORT).show();
+//                    } else {
+//                        checkMyPermission();
+//                    }
+//                }
+//                break;
+//        }
+//    }
+
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
@@ -118,11 +155,10 @@ public class MainActivity extends AppCompatActivity {
 
             switch (position) {
                 case 0:
-                    GalleryFragment tab1 = new GalleryFragment();
-                    return tab1;
+                    return new GalleryFragment();
+
                 case 1:
-                    ArticleFragment tab2 = new ArticleFragment();
-                    return tab2;
+                    return new ArticleFragment();
 
                 default:
                     return null;

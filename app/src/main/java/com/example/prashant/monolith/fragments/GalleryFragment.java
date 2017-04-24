@@ -19,23 +19,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.prashant.monolith.R;
-import com.example.prashant.monolith.ui.Utility;
 import com.example.prashant.monolith.adapters.GalleryAdapter;
 import com.example.prashant.monolith.galleryData.GalleryContract;
 import com.example.prashant.monolith.galleryData.GalleryLoader;
 import com.example.prashant.monolith.galleryObjects.Results;
 import com.example.prashant.monolith.galleryObjects.UnsplashGalleryInterface;
+import com.example.prashant.monolith.ui.Utility;
 import com.github.ybq.android.spinkit.SpinKitView;
-import com.github.ybq.android.spinkit.SpriteFactory;
-import com.github.ybq.android.spinkit.Style;
-import com.github.ybq.android.spinkit.sprite.Sprite;
 import com.github.ybq.android.spinkit.style.CubeGrid;
-import com.github.ybq.android.spinkit.style.DoubleBounce;
 import com.joaquimley.faboptions.FabOptions;
 
 import okhttp3.OkHttpClient;

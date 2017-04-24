@@ -75,6 +75,8 @@ dependencies {
     //progress dialog
     compile 'com.github.ybq:Android-SpinKit:1.1.0'
 
+    compile 'com.kishan.askpermission:askpermission:1.0.3'
+
 }
 
 apply plugin: 'com.google.gms.google-services'

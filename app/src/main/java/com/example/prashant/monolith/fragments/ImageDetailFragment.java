@@ -1,11 +1,16 @@
 package com.example.prashant.monolith.fragments;
 
+import android.Manifest;
 import android.app.WallpaperManager;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -14,6 +19,7 @@ import android.support.v4.app.ShareCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.Loader;
 import android.support.v4.view.ViewCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -27,6 +33,10 @@ import com.example.prashant.monolith.R;
 import com.example.prashant.monolith.galleryData.GalleryLoader;
 import com.hlab.fabrevealmenu.listeners.OnFABMenuSelectedListener;
 import com.hlab.fabrevealmenu.view.FABRevealMenu;
+import com.kishan.askpermission.AskPermission;
+import com.kishan.askpermission.ErrorCallback;
+import com.kishan.askpermission.PermissionCallback;
+import com.kishan.askpermission.PermissionInterface;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
