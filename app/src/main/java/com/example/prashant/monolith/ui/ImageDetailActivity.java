@@ -2,15 +2,11 @@ package com.example.prashant.monolith.ui;
 
 import android.Manifest;
 import android.app.Activity;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.drawable.ColorDrawable;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.Settings;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -20,21 +16,14 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.content.Loader;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.util.SparseIntArray;
 import android.util.TypedValue;
-import android.view.View;
 import android.view.WindowManager;
-import android.widget.Toast;
 
 import com.example.prashant.monolith.R;
 import com.example.prashant.monolith.fragments.ImageDetailFragment;
 import com.example.prashant.monolith.galleryData.GalleryContract;
 import com.example.prashant.monolith.galleryData.GalleryLoader;
-
 import com.xgc1986.parallaxPagerTransformer.ParallaxPagerTransformer;
-
-import static java.security.AccessController.getContext;
 
 public class ImageDetailActivity extends AppCompatActivity
         implements LoaderManager.LoaderCallbacks<Cursor> {

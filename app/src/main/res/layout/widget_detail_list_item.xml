@@ -40,7 +40,7 @@
                 tools:text="@string/article_widget_date"/>
         </LinearLayout>
 
-        <ImageView
+        <com.example.prashant.monolith.ui.SquareImageView
             android:id="@+id/widget_photo"
             android:layout_gravity="center"
             android:layout_width="@dimen/widget_image_size"
