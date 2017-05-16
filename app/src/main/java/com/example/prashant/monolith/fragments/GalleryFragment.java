@@ -12,8 +12,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -325,10 +325,13 @@ public class GalleryFragment extends Fragment implements
             GalleryAdapter adapter = new GalleryAdapter(data);
             adapter.setHasStableIds(true);
             mRecyclerView.setAdapter(adapter);
-            int columnCount = getResources().getInteger(R.integer.gallery_list_column_count);
-            StaggeredGridLayoutManager sglm =
-                    new StaggeredGridLayoutManager(columnCount, StaggeredGridLayoutManager.VERTICAL);
-            mRecyclerView.setLayoutManager(sglm);
+
+//            int columnCount = getResources().getInteger(R.integer.gallery_list_column_count);
+//            StaggeredGridLayoutManager sglm =
+//                    new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
+
+            GridLayoutManager mGridLayoutManager = new GridLayoutManager(getActivity(), 1);
+            mRecyclerView.setLayoutManager(mGridLayoutManager);
         }
     }
 
