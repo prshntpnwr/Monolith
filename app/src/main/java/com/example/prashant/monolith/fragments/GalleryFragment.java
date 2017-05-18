@@ -65,6 +65,25 @@ public class GalleryFragment extends Fragment implements
     }
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (savedInstanceState != null) {
+            savedPref = savedInstanceState.getInt("savedPref", savedPref);
+            savedPage = savedInstanceState.getInt("savedPage", savedPage);
+            mPage = savedInstanceState.getInt("mPage", mPage);
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle bundle) {
+        super.onSaveInstanceState(bundle);
+        bundle.putInt("savedPref", savedPref);
+        bundle.putInt("savedPage", savedPage);
+        bundle.putInt("mPage", mPage);
+
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mRootView = inflater.inflate(R.layout.fragment_gallery, container, false);
@@ -325,10 +344,6 @@ public class GalleryFragment extends Fragment implements
             GalleryAdapter adapter = new GalleryAdapter(data);
             adapter.setHasStableIds(true);
             mRecyclerView.setAdapter(adapter);
-
-//            int columnCount = getResources().getInteger(R.integer.gallery_list_column_count);
-//            StaggeredGridLayoutManager sglm =
-//                    new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
 
             GridLayoutManager mGridLayoutManager = new GridLayoutManager(getActivity(), 1);
             mRecyclerView.setLayoutManager(mGridLayoutManager);
