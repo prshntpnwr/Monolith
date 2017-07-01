@@ -29,6 +29,11 @@ android {
 
         }
     }
+    allprojects {
+        repositories {
+            maven { url "https://jitpack.io" }
+        }
+    }
 }
 
 dependencies {
@@ -76,6 +81,8 @@ dependencies {
     compile 'com.github.ybq:Android-SpinKit:1.1.0'
 
     compile 'com.kishan.askpermission:askpermission:1.0.3'
+
+    compile 'com.github.jrvansuita:MaterialAbout:+'
 
 }
 
