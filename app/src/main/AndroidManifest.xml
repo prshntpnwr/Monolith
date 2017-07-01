@@ -56,6 +56,15 @@
                 android:value=".ui.MainActivity" />
         </activity>
 
+        <activity
+            android:name=".ui.AboutActivity"
+            android:parentActivityName=".ui.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
         <provider
             android:name=".galleryData.DataProvider"
             android:authorities="com.example.prashant.monolith"
@@ -84,7 +93,6 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".ui.AboutActivity"></activity>
     </application>
 
 </manifest>

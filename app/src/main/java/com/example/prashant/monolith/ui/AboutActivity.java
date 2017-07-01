@@ -2,6 +2,7 @@ package com.example.prashant.monolith.ui;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.ViewGroup;
 
 import com.example.prashant.monolith.R;
 import com.vansuita.materialabout.builder.AboutBuilder;
@@ -24,6 +25,9 @@ public class AboutActivity extends AppCompatActivity {
                 .addGooglePlayStoreLink("8002078663318221363")
                 .addGitHubLink("user")
                 .addFacebookLink("user")
+                .addDribbbleLink("dribble")
+                .addBitbucketLink("bucket")
+                .addTwitterLink("")
                 .addFiveStarsAction()
                 .setVersionNameAsAppSubTitle()
                 .addShareAction(R.string.app_name)
@@ -32,10 +36,12 @@ public class AboutActivity extends AppCompatActivity {
                 .setShowAsCard(true)
                 .build();
 
-        setContentView(view);
-        
-        this.setTitle("About");
+//        setContentView(view);
 
-//        addContentView(view, );
+//        this.setTitle("About");
+
+        addContentView(view, new ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT));
     }
 }
