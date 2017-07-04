@@ -2,10 +2,15 @@
 <resources>
     <color name="photo_placeholder">#e0e7e7e7</color>
 
-    <color name="primary">#00BCD4</color>
-    <color name="primary_dark">#0097A7</color>
-    <color name="primary_light">#B2EBF2</color>
-    <color name="accent">#FF4081</color>
+    <!--<color name="primary">#00BCD4</color>-->
+    <!--<color name="primary_dark">#0097A7</color>-->
+    <!--<color name="primary_light">#B2EBF2</color>-->
+    <!--<color name="accent">#FF4081</color>-->
+
+    <color name="primary">#494853</color>
+    <color name="primary_dark">#30303d</color>
+    <color name="primary_light">#8f8ea6</color>
+    <color name="accent">#33cc99</color>
 
     <!--other option-->
     <!--<color name="primary">#9B26AF</color>-->

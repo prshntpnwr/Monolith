@@ -27,6 +27,10 @@
 
         <android.support.design.widget.TabLayout
             android:id="@+id/tabs"
+            app:tabBackground="@color/colorWhite"
+            app:tabTextColor="@color/secondary_text"
+            app:tabIndicatorColor="@color/accent"
+            app:tabSelectedTextColor="@color/accent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 

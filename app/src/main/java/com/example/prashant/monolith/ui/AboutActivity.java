@@ -17,7 +17,7 @@ public class AboutActivity extends AppCompatActivity {
         AboutView view = AboutBuilder.with(this)
                 .setPhoto(R.mipmap.profile_picture)
                 .setCover(R.mipmap.profile_cover)
-                .setName("Your Full Name")
+                .setName("Prashant Panwar")
                 .setSubTitle("Mobile Developer")
                 .setBrief("I'm warmed of mobile technologies. Ideas maker, curious and nature lover.")
                 .setAppIcon(R.mipmap.ic_launcher)
@@ -37,7 +37,6 @@ public class AboutActivity extends AppCompatActivity {
                 .build();
 
 //        setContentView(view);
-
 //        this.setTitle("About");
 
         addContentView(view, new ViewGroup.LayoutParams(
