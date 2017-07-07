@@ -16,6 +16,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -275,7 +276,7 @@ public class GalleryFragment extends Fragment implements
                 public void onResponse(Call<Results> call, Response<Results> response) {
                     spinKitView.setVisibility(View.GONE);
                     Log.d(TAG + " Response goes here ", response.toString());
-                    String result;
+                    String result, hd_result;
 
                     int deleteRows = getContext().getContentResolver()
                             .delete(GalleryContract.GalleryEntry.CONTENT_URI, null, null);
@@ -288,17 +289,23 @@ public class GalleryFragment extends Fragment implements
                         Log.d(TAG + " Result from unsplash ", i + " " + response.body().getResults()
                                 .get(i).getCoverPhoto().getUrls().getRegular());
 
+                        hd_result = response.body().getResults().get(i).getCoverPhoto().getUrls().getFull();
+                        Log.d(TAG, " HD image - " + hd_result);
+
                         result = response.body().getResults().get(i).getCoverPhoto().getUrls().getRegular();
+                        Log.d(TAG, " Regular image - " + result);
 
                         Uri uri = GalleryContract.GalleryEntry.CONTENT_URI;
                         ContentValues contentValues = new ContentValues();
                         final ContentResolver resolver = getContext().getContentResolver();
 
                         contentValues.put(GalleryContract.GalleryEntry.COLUMN_IMAGE_PATH, result);
+                        contentValues.put(GalleryContract.GalleryEntry.COLUMN_IMAGE_HD_PATH, hd_result);
                         contentValues.put(GalleryContract.GalleryEntry.COLUMN_IMAGE_STATUS, 1);
                         resolver.insert(uri, contentValues);
                         mCursor = resolver.query(uri, new String[]{
                                         GalleryContract.GalleryEntry.COLUMN_IMAGE_PATH,
+                                        GalleryContract.GalleryEntry.COLUMN_IMAGE_HD_PATH,
                                         GalleryContract.GalleryEntry.COLUMN_IMAGE_STATUS},
                                 null,
                                 null,

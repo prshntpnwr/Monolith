@@ -16,6 +16,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.example.prashant.monolith.R;
 import com.example.prashant.monolith.fragments.ArticleFragment;
@@ -102,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
         // Obtain the FirebaseAnalytics instance.
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         //gallery tab fab
 
@@ -133,6 +134,28 @@ public class MainActivity extends AppCompatActivity {
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if (position == 0) {
+                    toolbar.getMenu().clear();
+                    toolbar.inflateMenu(R.menu.menu_main);
+                } else if (position == 1) {
+                    toolbar.getMenu().clear();
+                    toolbar.inflateMenu(R.menu.menu_article);
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
         tabLayout.setupWithViewPager(mViewPager);
     }
 
@@ -174,7 +197,13 @@ public class MainActivity extends AppCompatActivity {
 
             case R.id.action_search:
                 //openSearch();
+                Toast.makeText(this, "Search", Toast.LENGTH_SHORT).show();
                 return true;
+
+            case R.id.action_filter:
+                Toast.makeText(this, "Filter", Toast.LENGTH_SHORT).show();
+                return true;
+
         }
         return super.onOptionsItemSelected(item);
     }

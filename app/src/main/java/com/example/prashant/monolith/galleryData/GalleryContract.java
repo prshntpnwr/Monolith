@@ -36,6 +36,8 @@ public class GalleryContract {
 
         public static final String COLUMN_IMAGE_PATH = "image";
 
+        public static final String COLUMN_IMAGE_HD_PATH = "image_hd";
+
         public static final String COLUMN_IMAGE_STATUS = "image_status";
 
         public static Uri buildGalleryUri(long id) {

@@ -25,11 +25,13 @@ public class GalleryLoader extends CursorLoader {
         String[] PROJECTION = {
                 GalleryContract.GalleryEntry.COLUMN_IMAGE_ID,
                 GalleryContract.GalleryEntry.COLUMN_IMAGE_PATH,
+                GalleryContract.GalleryEntry.COLUMN_IMAGE_HD_PATH,
                 GalleryContract.GalleryEntry.COLUMN_IMAGE_STATUS
         };
 
         int COLUMN_IMAGE_ID = 0;
         int COLUMN_IMAGE_PATH = 1;
-        int COLUMN_IMAGE_STATUS = 2;
+        int COLUMN_IMAGE_HD_PATH = 2;
+        int COLUMN_IMAGE_STATUS = 3;
     }
 }

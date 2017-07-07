@@ -7,9 +7,7 @@
         <item
             android:id="@+id/action_about"
             android:orderInCategory="100"
-            android:icon="@drawable/ic_back"
             android:title="@string/action_about"
-            app:showAsAction="never" />
-
-        </group>
-    </menu>
+            app:showAsAction="always" />
+    </group>
+</menu>
