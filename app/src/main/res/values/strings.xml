@@ -76,6 +76,7 @@
     <!--empty view strings-->
     <string name="empty_view_text">Something Went Wrong Please Try Again !</string>
     <string name="please_try_again">Please try Again</string>
+    <string name="network_error">Check Your Internet Connection !</string>
     <string name="retry">Retry</string>
     <string name="empty_view_image">Empty View Image</string>
     <string name="empty_view_ic">Empty View Logo</string>

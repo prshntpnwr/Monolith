@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
@@ -42,12 +43,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class GalleryFragment extends Fragment implements
         LoaderManager.LoaderCallbacks<Cursor>, View.OnClickListener {
 
-    private final String TAG = GalleryFragment.class.getSimpleName();
+    private final String TAG = getClass().getSimpleName();
 
     private RecyclerView mRecyclerView;
-    FrameLayout mEmptyView;
-    View mRootView;
-    SpinKitView spinKitView;
+    private FrameLayout mEmptyView;
+    private View mRootView;
+    private SpinKitView spinKitView;
 
     LoaderManager.LoaderCallbacks callbacks;
     private Cursor mCursor;
@@ -55,6 +56,36 @@ public class GalleryFragment extends Fragment implements
     private int mPage = 1;
     int savedPref;
     int savedPage = 1;
+
+    Handler handler = new Handler();
+    boolean shouldHandlerRunAgain = true;
+    private Bundle savedInstanceState;
+    private final int HANDLER_DELAY_TIME = 1000;
+
+    Runnable task = new Runnable() {
+        @Override
+        public void run() {
+            runNetworkTask();
+            if (shouldHandlerRunAgain)
+                handler.postDelayed(task, HANDLER_DELAY_TIME);
+        }
+    };
+
+    private void runNetworkTask() {
+        if (Utility.isNetworkAvailable(getContext())) {
+            shouldHandlerRunAgain = false;
+            handler.removeCallbacks(task);
+            mEmptyView.setVisibility(View.GONE);
+            mRecyclerView.setVisibility(View.VISIBLE);
+
+            if (savedInstanceState == null) {
+                ImageFetchTask();
+            }
+        } else {
+            mEmptyView.setVisibility(View.VISIBLE);
+            mRecyclerView.setVisibility(ViewGroup.GONE);
+        }
+    }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -80,16 +111,18 @@ public class GalleryFragment extends Fragment implements
         bundle.putInt("savedPref", savedPref);
         bundle.putInt("savedPage", savedPage);
         bundle.putInt("mPage", mPage);
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        this.savedInstanceState = savedInstanceState;
+
         mRootView = inflater.inflate(R.layout.fragment_gallery, container, false);
         mRecyclerView = (RecyclerView) mRootView.findViewById(R.id.recycler_view);
         mEmptyView = (FrameLayout) mRootView.findViewById(R.id.empty_include);
 
+        //Loading cube design progress bar
         spinKitView = (SpinKitView) mRootView.findViewById(R.id.spin_kit);
         CubeGrid mCubeGrid = new CubeGrid();
         spinKitView.setIndeterminateDrawable(mCubeGrid);
@@ -97,8 +130,6 @@ public class GalleryFragment extends Fragment implements
         final FabOptions fabOptions = (FabOptions) mRootView.findViewById(R.id.fab_options);
         fabOptions.setButtonsMenu(R.menu.gallery_fab);
         fabOptions.setOnClickListener(this);
-
-        ImageFetchTask();
 
         return mRootView;
     }
@@ -111,15 +142,7 @@ public class GalleryFragment extends Fragment implements
     @Override
     public void onResume() {
         super.onResume();
-    }
-
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-
-        if (isVisibleToUser) {
-            ImageFetchTask();
-        }
+        handler.post(task);
     }
 
     @Override
@@ -315,16 +338,13 @@ public class GalleryFragment extends Fragment implements
 
         } else {
             if (mRootView != null && mRootView.isAttachedToWindow()) {
-                Log.e(TAG, "ArticleFetchTask: ");
                 mRootView.setVisibility(View.VISIBLE);
                 final Snackbar snackbar = Snackbar
                         .make(mRootView, getResources().getString(R.string.please_try_again), Snackbar.LENGTH_INDEFINITE)
                         .setAction(getResources().getString(R.string.retry), new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                ImageFetchTask();
-                                ArticleFragment articleFragment = new ArticleFragment();
-                                articleFragment.ArticleFetchTask();
+                                runNetworkTask();
                             }
                         })
                         .setActionTextColor(getResources().getColor(R.color.accent));
@@ -340,14 +360,12 @@ public class GalleryFragment extends Fragment implements
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        if (Utility.isNetworkAvailable(getContext())) {
-            GalleryAdapter adapter = new GalleryAdapter(data);
-            adapter.setHasStableIds(true);
-            mRecyclerView.setAdapter(adapter);
+        GalleryAdapter adapter = new GalleryAdapter(data);
+        adapter.setHasStableIds(true);
+        mRecyclerView.setAdapter(adapter);
 
-            GridLayoutManager mGridLayoutManager = new GridLayoutManager(getActivity(), 1);
-            mRecyclerView.setLayoutManager(mGridLayoutManager);
-        }
+        GridLayoutManager mGridLayoutManager = new GridLayoutManager(getActivity(), 1);
+        mRecyclerView.setLayoutManager(mGridLayoutManager);
     }
 
     @Override

@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
@@ -48,6 +49,37 @@ public class ArticleFragment extends Fragment implements
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private Cursor mCursor;
 
+    Handler handler = new Handler();
+    boolean shouldHandlerRunAgain = true;
+    private Bundle savedInstanceState;
+    private final int HANDLER_DELAY_TIME = 1000;
+
+    Runnable task = new Runnable() {
+        @Override
+        public void run() {
+            runNetworkTask();
+            if (shouldHandlerRunAgain)
+                handler.postDelayed(task, HANDLER_DELAY_TIME);
+        }
+    };
+
+    private void runNetworkTask() {
+        if (Utility.isNetworkAvailable(getContext())) {
+            shouldHandlerRunAgain = false;
+            handler.removeCallbacks(task);
+            mEmptyView.setVisibility(View.GONE);
+            mRecyclerView.setVisibility(View.VISIBLE);
+
+            if (savedInstanceState == null) {
+                ArticleFetchTask();
+            }
+        } else {
+            mEmptyView.setVisibility(View.VISIBLE);
+            mRecyclerView.setVisibility(ViewGroup.GONE);
+        }
+    }
+
+
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -70,14 +102,12 @@ public class ArticleFragment extends Fragment implements
             mSwipeRefreshLayout.setOnRefreshListener(this);
         }
 
-        ArticleFetchTask();
-
         return mRootView;
     }
 
     @Override
     public void onRefresh() {
-        ArticleFetchTask();
+        runNetworkTask();
     }
 
     @Override
@@ -86,12 +116,9 @@ public class ArticleFragment extends Fragment implements
     }
 
     @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-
-        if (isVisibleToUser) {
-            ArticleFetchTask();
-        }
+    public void onResume() {
+        super.onResume();
+        handler.post(task);
     }
 
     public void ArticleFetchTask() {
@@ -118,11 +145,7 @@ public class ArticleFragment extends Fragment implements
                     Log.d(TAG + " Article response ", response.message());
                     Log.d(TAG + " Article response size", String.valueOf(response.body().getChannel().getItem().size()));
 
-                    String title;
-                    String description;
-                    String image_url;
-                    String pub_date;
-                    String link;
+                    String title, description, image_url, pub_date, link;
 
                     int deleteRows = getContext().getContentResolver()
                             .delete(ArticleContract.ArticleEntry.CONTENT_URI, null, null);
@@ -177,16 +200,13 @@ public class ArticleFragment extends Fragment implements
         } else {
             //tells if the current view is attached to the window
             if (mRootView != null && mRootView.isAttachedToWindow()) {
-                Log.e(TAG, "ArticleFetchTask: ");
                 mEmptyView.setVisibility(View.VISIBLE);
                 final Snackbar snackbar = Snackbar
                         .make(mRootView, getResources().getString(R.string.please_try_again), Snackbar.LENGTH_INDEFINITE)
                         .setAction(getResources().getString(R.string.retry), new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                ArticleFetchTask();
-                                GalleryFragment galleryfragment = new GalleryFragment();
-                                galleryfragment.ImageFetchTask();
+                                runNetworkTask();
                             }
                         })
                         .setActionTextColor(getResources().getColor(R.color.accent));
@@ -202,16 +222,14 @@ public class ArticleFragment extends Fragment implements
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        if (Utility.isNetworkAvailable(getContext())) {
-            ArticleAdapter adapter = new ArticleAdapter(data);
-            adapter.setHasStableIds(true);
-            mRecyclerView.setAdapter(adapter);
-            int columnCount = getResources().getInteger(R.integer.article_list_column_count);
-            StaggeredGridLayoutManager sglm =
-                    new StaggeredGridLayoutManager(columnCount, StaggeredGridLayoutManager.VERTICAL);
-            mRecyclerView.setLayoutManager(sglm);
-            udpateWidget();
-        }
+        ArticleAdapter adapter = new ArticleAdapter(data);
+        adapter.setHasStableIds(true);
+        mRecyclerView.setAdapter(adapter);
+        int columnCount = getResources().getInteger(R.integer.article_list_column_count);
+        StaggeredGridLayoutManager sglm =
+                new StaggeredGridLayoutManager(columnCount, StaggeredGridLayoutManager.VERTICAL);
+        mRecyclerView.setLayoutManager(sglm);
+        udpateWidget();
     }
 
     @Override
@@ -220,7 +238,7 @@ public class ArticleFragment extends Fragment implements
     }
 
     public void udpateWidget() {
-        Log.d(TAG + "udpateWidget", "is called");
+        Log.d(TAG + "updateWidget", "is called");
         ComponentName name = new ComponentName(this.getContext(), MonolithWidget.class);
         int[] ids = AppWidgetManager.getInstance(this.getContext()).getAppWidgetIds(name);
         Intent intent = new Intent(this.getContext(), MonolithWidget.class);
