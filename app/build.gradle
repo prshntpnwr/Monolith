@@ -82,7 +82,7 @@ dependencies {
 
     compile 'com.kishan.askpermission:askpermission:1.0.3'
 
-    compile 'com.github.jrvansuita:MaterialAbout:+'
+    compile 'com.github.medyo:android-about-page:1.2'
 
 }
 
