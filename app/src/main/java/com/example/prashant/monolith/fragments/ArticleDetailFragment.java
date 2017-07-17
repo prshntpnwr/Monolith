@@ -109,13 +109,6 @@ public class ArticleDetailFragment extends Fragment implements
                              Bundle savedInstanceState) {
         mRootView = inflater.inflate(R.layout.fragment_article_detail, container, false);
 
-        AdView mAdView = (AdView) mRootView.findViewById(R.id.adView);
-        MobileAds.initialize(getContext(), getResources().getString(R.string.banner_ad_unit_id));
-        AdRequest adRequest = new AdRequest.Builder()
-                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-                .build();
-        mAdView.loadAd(adRequest);
-
         toolbar = (Toolbar) mRootView.findViewById(R.id.detail_toolbar);
 
         mScrollView = (NestedScrollView) mRootView.findViewById(R.id.scrollview);
