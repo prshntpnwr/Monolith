@@ -89,18 +89,19 @@ public class WidgetService extends RemoteViewsService {
                 remoteViews.setImageViewBitmap(R.id.widget_photo, bitmap);
                 remoteViews.setTextViewText(R.id.widget_article_title, mCursor.getString(ArticleLoader.Query.COLUMN_TITLE));
                 remoteViews.setTextViewText(R.id.widget_article_date, mCursor.getString(ArticleLoader.Query.COLUMN_PUBLISH_DATE));
+
+                final Intent fillInIntent = new Intent();
+                fillInIntent.setAction(MonolithWidget.ACTION_WIDGET_CLICK);
+                fillInIntent.putExtra(getResources().getString(R.string.title), mCursor.getString(ArticleLoader.Query.COLUMN_TITLE));
+                fillInIntent.putExtra(getResources().getString(R.string.date), mCursor.getString(ArticleLoader.Query.COLUMN_PUBLISH_DATE));
+                fillInIntent.putExtra(getResources().getString(R.string.image), mCursor.getString(ArticleLoader.Query.COLUMN_IMAGE_URL));
+                fillInIntent.putExtra(getResources().getString(R.string.description), mCursor.getString(ArticleLoader.Query.COLUMN_DESCRIPTION));
+                fillInIntent.putExtra(getResources().getString(R.string.link), mCursor.getString(ArticleLoader.Query.COLUMN_LINK));
+                remoteViews.setOnClickFillInIntent(R.id.widget_list_item, fillInIntent);
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
-            final Intent fillInIntent = new Intent();
-            fillInIntent.setAction(MonolithWidget.ACTION_WIDGET_CLICK);
-            fillInIntent.putExtra(getResources().getString(R.string.title), mCursor.getString(ArticleLoader.Query.COLUMN_TITLE));
-            fillInIntent.putExtra(getResources().getString(R.string.date), mCursor.getString(ArticleLoader.Query.COLUMN_PUBLISH_DATE));
-            fillInIntent.putExtra(getResources().getString(R.string.image), mCursor.getString(ArticleLoader.Query.COLUMN_IMAGE_URL));
-            fillInIntent.putExtra(getResources().getString(R.string.description), mCursor.getString(ArticleLoader.Query.COLUMN_DESCRIPTION));
-            fillInIntent.putExtra(getResources().getString(R.string.link), mCursor.getString(ArticleLoader.Query.COLUMN_LINK));
-            remoteViews.setOnClickFillInIntent(R.id.widget_list_item, fillInIntent);
 
             return remoteViews;
         }

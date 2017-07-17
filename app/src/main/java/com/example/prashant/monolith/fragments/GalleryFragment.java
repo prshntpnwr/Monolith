@@ -8,6 +8,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Parcelable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
@@ -30,7 +31,14 @@ import com.example.prashant.monolith.galleryObjects.Results;
 import com.example.prashant.monolith.galleryObjects.UnsplashGalleryInterface;
 import com.example.prashant.monolith.ui.Utility;
 import com.github.ybq.android.spinkit.SpinKitView;
+import com.github.ybq.android.spinkit.style.ChasingDots;
+import com.github.ybq.android.spinkit.style.Circle;
 import com.github.ybq.android.spinkit.style.CubeGrid;
+import com.github.ybq.android.spinkit.style.DoubleBounce;
+import com.github.ybq.android.spinkit.style.FadingCircle;
+import com.github.ybq.android.spinkit.style.ThreeBounce;
+import com.github.ybq.android.spinkit.style.WanderingCubes;
+import com.github.ybq.android.spinkit.style.Wave;
 import com.joaquimley.faboptions.FabOptions;
 
 import okhttp3.OkHttpClient;
@@ -124,6 +132,7 @@ public class GalleryFragment extends Fragment implements
 
         //Loading cube design progress bar
         spinKitView = (SpinKitView) mRootView.findViewById(R.id.spin_kit);
+        //Wave mCubeGrid = new Wave();
         CubeGrid mCubeGrid = new CubeGrid();
         spinKitView.setIndeterminateDrawable(mCubeGrid);
 
@@ -132,11 +141,6 @@ public class GalleryFragment extends Fragment implements
         fabOptions.setOnClickListener(this);
 
         return mRootView;
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
     }
 
     @Override
@@ -314,18 +318,25 @@ public class GalleryFragment extends Fragment implements
                         result = response.body().getResults().get(i).getCoverPhoto().getUrls().getRegular();
 
                         Uri uri = GalleryContract.GalleryEntry.CONTENT_URI;
-                        ContentValues contentValues = new ContentValues();
-                        final ContentResolver resolver = getContext().getContentResolver();
 
-                        contentValues.put(GalleryContract.GalleryEntry.COLUMN_IMAGE_PATH, result);
-                        contentValues.put(GalleryContract.GalleryEntry.COLUMN_IMAGE_STATUS, 1);
-                        resolver.insert(uri, contentValues);
-                        mCursor = resolver.query(uri, new String[]{
-                                        GalleryContract.GalleryEntry.COLUMN_IMAGE_PATH,
-                                        GalleryContract.GalleryEntry.COLUMN_IMAGE_STATUS},
-                                null,
-                                null,
-                                null);
+                        try {
+                            ContentValues contentValues = new ContentValues();
+                            final ContentResolver resolver = getContext().getContentResolver();
+
+                            contentValues.put(GalleryContract.GalleryEntry.COLUMN_IMAGE_PATH, result);
+                            contentValues.put(GalleryContract.GalleryEntry.COLUMN_IMAGE_STATUS, 1);
+
+                            resolver.insert(uri, contentValues);
+                            mCursor = resolver.query(uri, new String[]{
+                                            GalleryContract.GalleryEntry.COLUMN_IMAGE_PATH,
+                                            GalleryContract.GalleryEntry.COLUMN_IMAGE_STATUS},
+                                    null,
+                                    null,
+                                    null);
+                        } catch (Exception e) {
+                            Log.e(TAG , "Error inserting into db " + e.toString());
+                            e.printStackTrace();
+                        }
                     }
                 }
 
@@ -363,7 +374,6 @@ public class GalleryFragment extends Fragment implements
         GalleryAdapter adapter = new GalleryAdapter(data);
         adapter.setHasStableIds(true);
         mRecyclerView.setAdapter(adapter);
-
         GridLayoutManager mGridLayoutManager = new GridLayoutManager(getActivity(), 1);
         mRecyclerView.setLayoutManager(mGridLayoutManager);
     }

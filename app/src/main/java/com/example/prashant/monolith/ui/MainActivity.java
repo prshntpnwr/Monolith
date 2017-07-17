@@ -51,8 +51,6 @@ public class MainActivity extends AppCompatActivity {
     private TabLayout tabLayout;
     public static String POSITION = "position";
 
-    private FirebaseAnalytics mFirebaseAnalytics;
-
     static {
         AppCompatDelegate.setDefaultNightMode(
                 AppCompatDelegate.MODE_NIGHT_AUTO);
@@ -75,17 +73,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        if (checkMyPermission()) {
-//            Toast.makeText(MainActivity.this, "Permission Already Granted", Toast.LENGTH_SHORT).show();
-//        } else {
-//            ActivityCompat.requestPermissions(MainActivity.this, new String[] {
-//                Manifest.permission.ACCESS_NETWORK_STATE,
-//                        Manifest.permission.SET_WALLPAPER,
-//                        Manifest.permission.ACCESS_NETWORK_STATE,
-//                        Manifest.permission.INTERNET,
-//                        Manifest.permission.WAKE_LOCK}, 1000);
-//        }
-
         // Create a new dispatcher using the Google Play driver.
         FirebaseJobDispatcher dispatcher = new FirebaseJobDispatcher(new GooglePlayDriver(this));
         Job myJob = dispatcher.newJobBuilder()
@@ -101,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
         dispatcher.mustSchedule(myJob);
 
         // Obtain the FirebaseAnalytics instance.
-        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+        FirebaseAnalytics mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -158,26 +145,6 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
-//    private boolean checkMyPermission() {
-//
-//        return ContextCompat.checkSelfPermission(this, Manifest.permission.INTERNET) != PackageManager.PERMISSION_GRANTED;
-//    }
-//
-//    @Override
-//    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-//        switch (requestCode) {
-//            case 1000:
-//                for (int grantResult : grantResults) {
-//                    if (grantResult == PackageManager.PERMISSION_GRANTED) {
-//                        Toast.makeText(MainActivity.this, "Permission Granted", Toast.LENGTH_SHORT).show();
-//                    } else {
-//                        checkMyPermission();
-//                    }
-//                }
-//                break;
-//        }
-//    }
 
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to

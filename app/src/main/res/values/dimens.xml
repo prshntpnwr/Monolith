@@ -58,7 +58,7 @@
     <dimen name="widget_image_margin">4dp</dimen>
 
     <!--empty view strings-->
-    <dimen name="empty_view_image_dim">120dp</dimen>
+    <dimen name="empty_view_image_dim">140dp</dimen>
     <dimen name="empty_view_image_margin">24dp</dimen>
     <dimen name="empty_view_ic_margin">4dp</dimen>
     <dimen name="empty_view_text_size">16sp</dimen>

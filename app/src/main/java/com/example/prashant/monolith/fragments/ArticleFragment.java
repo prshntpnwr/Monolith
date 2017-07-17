@@ -189,6 +189,12 @@ public class ArticleFragment extends Fragment implements
                                 null,
                                 null);
                     }
+                    try{
+                        mCursor.close();
+                    } catch (Exception e) {
+                        Log.e(TAG, "Cursor error " + e.toString());
+                        e.printStackTrace();
+                    }
                 }
 
                 @Override

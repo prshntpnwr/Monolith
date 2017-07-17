@@ -78,7 +78,7 @@
     <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
 
     <!--empty view strings-->
-    <string name="empty_view_text">Something Went Wrong Please Try Again !</string>
+    <string name="empty_view_text">Please Check Your Internet Connection !</string>
     <string name="please_try_again">Please try Again</string>
     <string name="network_error">Check Your Internet Connection !</string>
     <string name="retry">Retry</string>
