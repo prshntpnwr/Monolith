@@ -47,7 +47,6 @@ public class ArticleFragment extends Fragment implements
     View mRootView;
     FrameLayout mEmptyView;
     private SwipeRefreshLayout mSwipeRefreshLayout;
-    private Cursor mCursor;
 
     Handler handler = new Handler();
     boolean shouldHandlerRunAgain = true;
@@ -91,6 +90,7 @@ public class ArticleFragment extends Fragment implements
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        this.savedInstanceState = savedInstanceState;
         mRootView = inflater.inflate(R.layout.fragment_article, container, false);
         mRecyclerView = (RecyclerView) mRootView.findViewById(R.id.recycler_view_article);
         mEmptyView = (FrameLayout) mRootView.findViewById(R.id.empty_container);
@@ -179,7 +179,7 @@ public class ArticleFragment extends Fragment implements
                         contentValues.put(ArticleContract.ArticleEntry.COLUMN_LINK, link);
 
                         resolver.insert(uri, contentValues);
-                        mCursor = resolver.query(uri, new String[]{
+                        resolver.query(uri, new String[]{
                                         ArticleContract.ArticleEntry.COLUMN_TITLE,
                                         ArticleContract.ArticleEntry.COLUMN_DESCRIPTION,
                                         ArticleContract.ArticleEntry.COLUMN_IMAGE_URL,
@@ -188,12 +188,6 @@ public class ArticleFragment extends Fragment implements
                                 null,
                                 null,
                                 null);
-                    }
-                    try{
-                        mCursor.close();
-                    } catch (Exception e) {
-                        Log.e(TAG, "Cursor error " + e.toString());
-                        e.printStackTrace();
                     }
                 }
 

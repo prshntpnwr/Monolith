@@ -5,10 +5,10 @@ import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteConstraintException;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Parcelable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
@@ -31,14 +31,7 @@ import com.example.prashant.monolith.galleryObjects.Results;
 import com.example.prashant.monolith.galleryObjects.UnsplashGalleryInterface;
 import com.example.prashant.monolith.ui.Utility;
 import com.github.ybq.android.spinkit.SpinKitView;
-import com.github.ybq.android.spinkit.style.ChasingDots;
-import com.github.ybq.android.spinkit.style.Circle;
 import com.github.ybq.android.spinkit.style.CubeGrid;
-import com.github.ybq.android.spinkit.style.DoubleBounce;
-import com.github.ybq.android.spinkit.style.FadingCircle;
-import com.github.ybq.android.spinkit.style.ThreeBounce;
-import com.github.ybq.android.spinkit.style.WanderingCubes;
-import com.github.ybq.android.spinkit.style.Wave;
 import com.joaquimley.faboptions.FabOptions;
 
 import okhttp3.OkHttpClient;
@@ -59,7 +52,7 @@ public class GalleryFragment extends Fragment implements
     private SpinKitView spinKitView;
 
     LoaderManager.LoaderCallbacks callbacks;
-    private Cursor mCursor;
+    //private Cursor mCursor;
     private int mTag;
     private int mPage = 1;
     int savedPref;
@@ -327,14 +320,20 @@ public class GalleryFragment extends Fragment implements
                             contentValues.put(GalleryContract.GalleryEntry.COLUMN_IMAGE_STATUS, 1);
 
                             resolver.insert(uri, contentValues);
-                            mCursor = resolver.query(uri, new String[]{
+
+                            resolver.query(uri, new String[]{
                                             GalleryContract.GalleryEntry.COLUMN_IMAGE_PATH,
                                             GalleryContract.GalleryEntry.COLUMN_IMAGE_STATUS},
                                     null,
                                     null,
                                     null);
-                        } catch (Exception e) {
-                            Log.e(TAG , "Error inserting into db " + e.toString());
+
+                        } catch (SQLiteConstraintException sqLiteConstraintException) {
+                            //do nothing
+                        }
+
+                        catch (Exception e) {
+                            Log.e(TAG, "Error inserting into db " + e.toString());
                             e.printStackTrace();
                         }
                     }
