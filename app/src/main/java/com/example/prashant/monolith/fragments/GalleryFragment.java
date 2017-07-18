@@ -21,7 +21,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.Toast;
 
 import com.example.prashant.monolith.R;
 import com.example.prashant.monolith.adapters.GalleryAdapter;
@@ -334,20 +333,10 @@ public class GalleryFragment extends Fragment implements
                             contentValues.put(GalleryContract.GalleryEntry.COLUMN_IMAGE_STATUS, 1);
 
                             resolver.insert(uri, contentValues);
-                            /*
-                            resolver.query(uri, new String[]{
-                                            GalleryContract.GalleryEntry.COLUMN_IMAGE_PATH,
-                                            GalleryContract.GalleryEntry.COLUMN_IMAGE_STATUS},
-                                    null,
-                                    null,
-                                    null);
-                              */
 
                         } catch (SQLiteConstraintException sqLiteConstraintException) {
                             //do nothing
-                        }
-
-                        catch (Exception e) {
+                        } catch (Exception e) {
                             Log.e(TAG, "Error inserting into db " + e.toString());
                             e.printStackTrace();
                         }

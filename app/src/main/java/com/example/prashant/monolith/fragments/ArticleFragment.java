@@ -78,7 +78,6 @@ public class ArticleFragment extends Fragment implements
         }
     }
 
-
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -181,15 +180,7 @@ public class ArticleFragment extends Fragment implements
                         contentValues.put(ArticleContract.ArticleEntry.COLUMN_LINK, link);
 
                         resolver.insert(uri, contentValues);
-//                        resolver.query(uri, new String[]{
-//                                        ArticleContract.ArticleEntry.COLUMN_TITLE,
-//                                        ArticleContract.ArticleEntry.COLUMN_DESCRIPTION,
-//                                        ArticleContract.ArticleEntry.COLUMN_IMAGE_URL,
-//                                        ArticleContract.ArticleEntry.COLUMN_PUBLISH_DATE,
-//                                        ArticleContract.ArticleEntry.COLUMN_LINK},
-//                                null,
-//                                null,
-//                                null);
+
                     }
                 }
 

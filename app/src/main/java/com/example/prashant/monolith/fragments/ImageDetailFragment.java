@@ -1,10 +1,13 @@
 package com.example.prashant.monolith.fragments;
 
+import android.Manifest;
 import android.app.WallpaperManager;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
@@ -49,6 +52,8 @@ public class ImageDetailFragment extends Fragment implements
     public View mRootView;
     public Toolbar toolbar;
 
+    public final int PERMISSION_REQUEST_CODE = 1000;
+
     public static ImageDetailFragment newInstance(long itemId, int position) {
         Bundle arguments = new Bundle();
         arguments.putLong(ARG_ITEM_ID, itemId);
@@ -62,12 +67,33 @@ public class ImageDetailFragment extends Fragment implements
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
+            if (!checkAppPermission()) {
+                requestAppPermission();
+            }
+        }
+
         if (getArguments().containsKey(ARG_ITEM_ID)) {
             mItemId = getArguments().getLong(ARG_ITEM_ID);
             mItemPosition = getArguments().getInt(ARG_ITEM_POSITION);
         }
 
         setHasOptionsMenu(true);
+    }
+
+    private boolean checkAppPermission() {
+        int result = ContextCompat.checkSelfPermission(getContext().getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        return result == PackageManager.PERMISSION_GRANTED;
+    }
+
+    private void requestAppPermission() {
+        ActivityCompat.requestPermissions(getActivity(), new String[]{
+                Manifest.permission.SET_WALLPAPER,
+                Manifest.permission.INTERNET,
+                Manifest.permission.ACCESS_NETWORK_STATE,
+                Manifest.permission.WAKE_LOCK,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE
+        );
     }
 
     @Override
