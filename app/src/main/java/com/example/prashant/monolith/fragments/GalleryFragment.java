@@ -132,6 +132,8 @@ public class GalleryFragment extends Fragment implements
         fabOptions.setButtonsMenu(R.menu.gallery_fab);
         fabOptions.setOnClickListener(this);
 
+        ImageFetchTask();
+
         return mRootView;
     }
 

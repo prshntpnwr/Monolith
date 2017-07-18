@@ -80,9 +80,11 @@ dependencies {
     //progress dialog
     compile 'com.github.ybq:Android-SpinKit:1.1.0'
 
-    compile 'com.kishan.askpermission:askpermission:1.0.3'
-
+    //about app
     compile 'com.github.medyo:android-about-page:1.2'
+
+    //check for app version
+    compile 'com.github.jrvansuita:CheckNewAppVersionAvailable:v1.0.0'
 
 }
 

@@ -102,6 +102,8 @@ public class ArticleFragment extends Fragment implements
             mSwipeRefreshLayout.setOnRefreshListener(this);
         }
 
+        ArticleFetchTask();
+
         return mRootView;
     }
 

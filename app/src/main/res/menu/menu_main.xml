@@ -13,4 +13,11 @@
         android:orderInCategory="100"
         android:title="@string/action_feedback"
         app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/action_checkUpdate"
+        android:orderInCategory="100"
+        android:title="@string/action_checkUpdate"
+        app:showAsAction="never"/>
+
 </menu>
