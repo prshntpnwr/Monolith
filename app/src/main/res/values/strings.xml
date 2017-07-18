@@ -51,7 +51,7 @@
     <string name="next_page">Next Page</string>
 
     <!--image detail menu item-->
-    <string name="wallpaper">Wallpaper</string>
+    <string name="wallpaper">Set</string>
     <string name="image_share">Share</string>
 
     <!--unsplash api key-->
