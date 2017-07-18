@@ -52,7 +52,6 @@ public class GalleryFragment extends Fragment implements
     private SpinKitView spinKitView;
 
     LoaderManager.LoaderCallbacks callbacks;
-    //private Cursor mCursor;
     private int mTag;
     private int mPage = 1;
     int savedPref;
@@ -162,7 +161,6 @@ public class GalleryFragment extends Fragment implements
                 spinKitView.setVisibility(View.VISIBLE);
                 ImageFetchTask();
 
-                Toast.makeText(getContext(), getResources().getString(R.string.loading_previous), Toast.LENGTH_SHORT).show();
                 break;
 
             case R.id.fab_tag:
@@ -172,7 +170,7 @@ public class GalleryFragment extends Fragment implements
             case R.id.fab_refresh:
                 spinKitView.setVisibility(View.VISIBLE);
                 ImageFetchTask();
-                Toast.makeText(getContext(), getResources().getString(R.string.refresh), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getContext(), getResources().getString(R.string.refresh), Toast.LENGTH_SHORT).show();
                 break;
 
             case R.id.fab_next_page:
@@ -190,7 +188,7 @@ public class GalleryFragment extends Fragment implements
 
                 Log.d(TAG + "saved page after fetch ", String.valueOf(savedPage));
 
-                Toast.makeText(getContext(), getResources().getString(R.string.loading_next), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getContext(), getResources().getString(R.string.loading_next), Toast.LENGTH_SHORT).show();
 
             default:
         }
@@ -214,7 +212,7 @@ public class GalleryFragment extends Fragment implements
 
                         spinKitView.setVisibility(View.VISIBLE);
                         ImageFetchTask();
-                        Toast.makeText(getContext(), getResources().getString(R.string.loading), Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getContext(), getResources().getString(R.string.loading), Toast.LENGTH_SHORT).show();
                     }
                 })
 
@@ -304,7 +302,21 @@ public class GalleryFragment extends Fragment implements
 
                     int length = response.body().getResults().size();
 
+                    if (length == 0) {
+                        //if last page reached, move back to first page
+                        SharedPreferences sharedPage = getContext()
+                                .getSharedPreferences(getString(R.string.page_num), getContext().MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPage.edit();
+
+                        savedPage = 1;
+                        editor.putInt(getString(R.string.page_num), savedPage);
+                        editor.apply();
+
+                        ImageFetchTask();
+                    }
+
                     for (int i = 0; i < length; i++) {
+
                         Log.d(TAG + " Result from unsplash ", i + " " + response.body().getResults()
                                 .get(i).getCoverPhoto().getUrls().getRegular());
 
@@ -320,13 +332,14 @@ public class GalleryFragment extends Fragment implements
                             contentValues.put(GalleryContract.GalleryEntry.COLUMN_IMAGE_STATUS, 1);
 
                             resolver.insert(uri, contentValues);
-
+                            /*
                             resolver.query(uri, new String[]{
                                             GalleryContract.GalleryEntry.COLUMN_IMAGE_PATH,
                                             GalleryContract.GalleryEntry.COLUMN_IMAGE_STATUS},
                                     null,
                                     null,
                                     null);
+                              */
 
                         } catch (SQLiteConstraintException sqLiteConstraintException) {
                             //do nothing

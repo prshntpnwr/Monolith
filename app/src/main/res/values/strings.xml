@@ -54,7 +54,7 @@
     <string name="image_share">Share</string>
 
     <!--unsplash api key-->
-    <string name="unsplash_api_key">2f12038a9af628b150d141d9532b923e25818d649175c229f4d954b7f1033ef7</string>
+    <string name="unsplash_api_key">80cb47e7ad18216929bf3fcb67d291d8600d1f69ba71e481aa7ae115f8d9ddf1</string>
 
     <!--article strings-->
     <string name="article_image_desc">Article Image</string>

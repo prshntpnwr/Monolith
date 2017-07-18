@@ -86,7 +86,6 @@ public class DataProvider extends android.content.ContentProvider {
                         sortOrder);
                 break;
             case IMAGE_ID:
-//              long _id = ContentUris.parseId(uri);
                 retCursor = db_g.query(TABLE_NAME_GALLERY,
                         projection,
                         selection,

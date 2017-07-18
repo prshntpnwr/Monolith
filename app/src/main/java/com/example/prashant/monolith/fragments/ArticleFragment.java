@@ -179,15 +179,15 @@ public class ArticleFragment extends Fragment implements
                         contentValues.put(ArticleContract.ArticleEntry.COLUMN_LINK, link);
 
                         resolver.insert(uri, contentValues);
-                        resolver.query(uri, new String[]{
-                                        ArticleContract.ArticleEntry.COLUMN_TITLE,
-                                        ArticleContract.ArticleEntry.COLUMN_DESCRIPTION,
-                                        ArticleContract.ArticleEntry.COLUMN_IMAGE_URL,
-                                        ArticleContract.ArticleEntry.COLUMN_PUBLISH_DATE,
-                                        ArticleContract.ArticleEntry.COLUMN_LINK},
-                                null,
-                                null,
-                                null);
+//                        resolver.query(uri, new String[]{
+//                                        ArticleContract.ArticleEntry.COLUMN_TITLE,
+//                                        ArticleContract.ArticleEntry.COLUMN_DESCRIPTION,
+//                                        ArticleContract.ArticleEntry.COLUMN_IMAGE_URL,
+//                                        ArticleContract.ArticleEntry.COLUMN_PUBLISH_DATE,
+//                                        ArticleContract.ArticleEntry.COLUMN_LINK},
+//                                null,
+//                                null,
+//                                null);
                     }
                 }
 
@@ -229,7 +229,7 @@ public class ArticleFragment extends Fragment implements
         StaggeredGridLayoutManager sglm =
                 new StaggeredGridLayoutManager(columnCount, StaggeredGridLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(sglm);
-        udpateWidget();
+        updateWidget();
     }
 
     @Override
@@ -237,7 +237,7 @@ public class ArticleFragment extends Fragment implements
         mRecyclerView.setAdapter(null);
     }
 
-    public void udpateWidget() {
+    public void updateWidget() {
         Log.d(TAG + "updateWidget", "is called");
         ComponentName name = new ComponentName(this.getContext(), MonolithWidget.class);
         int[] ids = AppWidgetManager.getInstance(this.getContext()).getAppWidgetIds(name);
