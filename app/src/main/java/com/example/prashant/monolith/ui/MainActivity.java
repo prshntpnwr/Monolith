@@ -2,6 +2,7 @@ package com.example.prashant.monolith.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -12,6 +13,7 @@ import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.example.prashant.monolith.R;
 import com.example.prashant.monolith.fragments.ArticleFragment;
@@ -155,18 +157,22 @@ public class MainActivity extends AppCompatActivity {
         new CheckNewAppVersion(this).setOnTaskCompleteListener(new CheckNewAppVersion.ITaskComplete() {
             @Override
             public void onTaskComplete(CheckNewAppVersion.Result result) {
+                View view = findViewById(android.R.id.content);
 
                 //Checks if there is a new version available on Google Play Store.
-                result.hasNewVersion();
+                if (result.hasNewVersion()){
+                    //Get the new published version code of the app.
+                    result.getNewVersionCode();
 
-                //Get the new published version code of the app.
-                result.getNewVersionCode();
+                    //Get the app current version code.
+                    result.getOldVersionCode();
 
-                //Get the app current version code.
-                result.getOldVersionCode();
+                    //Opens the Google Play Store on your app page to do the update.
+                    result.openUpdateLink();
 
-                //Opens the Google Play Store on your app page to do the update.
-                result.openUpdateLink();
+                } else {
+                    Snackbar.make(view, "No New Version Available !", Snackbar.LENGTH_SHORT).show();
+                }
             }
         }).execute();
     }

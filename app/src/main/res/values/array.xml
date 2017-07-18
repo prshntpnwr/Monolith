@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="Category">
-        <item>Nasa</item>
         <item>Stars</item>
+        <item>Nasa</item>
         <item>Earth</item>
         <item>Night Sky</item>
         <item>Nebula</item>

@@ -260,10 +260,10 @@ public class GalleryFragment extends Fragment implements
             Log.d(TAG + "mPage in ImageFetchTask", String.valueOf(mPage));
 
             if (mTag == 0) {
-                query_tag = getResources().getString(R.string.nasa);
+                query_tag = getResources().getString(R.string.stars);
                 Log.d("TAG", query_tag);
             } else if (mTag == 1) {
-                query_tag = getResources().getString(R.string.stars);
+                query_tag = getResources().getString(R.string.nasa);
                 Log.d("TAG", query_tag);
             } else if (mTag == 2) {
                 query_tag = getResources().getString(R.string.earth);
