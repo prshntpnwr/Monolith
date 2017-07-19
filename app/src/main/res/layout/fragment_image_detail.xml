@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context = "com.example.prashant.monolith.fragments.ImageDetailFragment">
+    tools:context = "com.app.prashant.monolith.fragments.ImageDetailFragment">
 
     <ImageView
         android:id="@+id/image"
