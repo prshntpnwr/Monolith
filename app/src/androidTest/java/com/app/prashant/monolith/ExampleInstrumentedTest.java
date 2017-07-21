@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.example.prashant.monolith", appContext.getPackageName());
+        assertEquals("com.app.prashant.monolith", appContext.getPackageName());
     }
 }

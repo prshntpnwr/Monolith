@@ -33,4 +33,4 @@
 -keep class org.simpleframework.xml.core.**{ *; }
 -keep class org.simpleframework.xml.util.**{ *; }
 -keepattributes *Annotation* -keepattributes SourceFile,LineNumberTable
--keep class com.example.prashant.monolith.articleObject.** {*; }
+-keep class com.app.prashant.monolith.articleObject.** {*; }

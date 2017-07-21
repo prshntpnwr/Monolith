@@ -11,14 +11,18 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.WindowManager;
 
 import com.app.prashant.monolith.R;
+import com.app.prashant.monolith.adapters.GalleryAdapter;
 import com.app.prashant.monolith.fragments.ImageDetailFragment;
 import com.app.prashant.monolith.galleryData.GalleryContract;
 import com.app.prashant.monolith.galleryData.GalleryLoader;
 import com.xgc1986.parallaxPagerTransformer.ParallaxPagerTransformer;
+
+import org.simpleframework.xml.stream.Position;
 
 public class ImageDetailActivity extends AppCompatActivity
         implements LoaderManager.LoaderCallbacks<Cursor> {

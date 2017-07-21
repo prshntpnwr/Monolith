@@ -14,9 +14,11 @@ import android.widget.ImageView;
 import com.app.prashant.monolith.R;
 import com.app.prashant.monolith.galleryData.GalleryContract;
 import com.app.prashant.monolith.galleryData.GalleryLoader;
+import com.app.prashant.monolith.ui.ImageDetailActivity;
 import com.squareup.picasso.Picasso;
 
 public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHolder> {
+
     private Cursor mCursor;
 
     public GalleryAdapter(Cursor cursor) {
@@ -40,16 +42,20 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 Intent intent = new Intent(Intent.ACTION_VIEW,
                         GalleryContract.GalleryEntry.buildGalleryUri(getItemId(vh.getAdapterPosition())));
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 
                     final ImageView image = (ImageView) view.findViewById(R.id.picture);
+
                     ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation
                             ((Activity) view.getContext(), image, view.getContext()
                                     .getResources().getString(R.string.transition_gallery_photo) + String.valueOf(vh.getAdapterPosition()));
                     view.getContext().startActivity(intent, optionsCompat.toBundle());
+                } else {
+                    view.getContext().startActivity(intent);
                 }
             }
         });

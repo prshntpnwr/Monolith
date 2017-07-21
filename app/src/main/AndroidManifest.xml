@@ -33,7 +33,7 @@
 
                 <category android:name="android.intent.category.DEFAULT" />
 
-                <data android:mimeType="vnd.android.cursor.item/vnd.com.example.prashant.monolith.images" />
+                <data android:mimeType="vnd.android.cursor.item/vnd.com.app.prashant.monolith.images" />
             </intent-filter>
 
             <meta-data
@@ -48,7 +48,7 @@
 
                 <category android:name="android.intent.category.DEFAULT" />
 
-                <data android:mimeType="vnd.android.cursor.item/vnd.com.example.prashant.monolith.articles" />
+                <data android:mimeType="vnd.android.cursor.item/vnd.com.app.prashant.monolith.articles" />
             </intent-filter>
 
             <meta-data
