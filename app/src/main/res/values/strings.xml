@@ -85,7 +85,7 @@
 
     <!--about activity strings-->
     <string name="contact">Connect with us</string>
-    <string name="github">https://github.com/prshntpnwr</string>
+    <string name="github">prshntpnwr/Monolith</string>
     <string name="website">https://prshntpnwr.github.io/</string>
     <string name="copy_right">Copyrights © %1$d</string>
     <string name="app_detail">Monolith is an Android Application for news read and image gallery.

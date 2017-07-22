@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteConstraintException;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
@@ -72,6 +73,7 @@ public class GalleryFragment extends Fragment implements
 
     private void runNetworkTask() {
         if (Utility.isNetworkAvailable(getContext())) {
+
             shouldHandlerRunAgain = false;
             handler.removeCallbacks(task);
             mEmptyView.setVisibility(View.GONE);
@@ -113,6 +115,12 @@ public class GalleryFragment extends Fragment implements
     }
 
     @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+        spinKitView.setVisibility(View.GONE);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         this.savedInstanceState = savedInstanceState;
@@ -123,7 +131,6 @@ public class GalleryFragment extends Fragment implements
 
         //Loading cube design progress bar
         spinKitView = (SpinKitView) mRootView.findViewById(R.id.spin_kit);
-        //Wave mCubeGrid = new Wave();
         CubeGrid mCubeGrid = new CubeGrid();
         spinKitView.setIndeterminateDrawable(mCubeGrid);
 
@@ -131,7 +138,8 @@ public class GalleryFragment extends Fragment implements
         fabOptions.setButtonsMenu(R.menu.gallery_fab);
         fabOptions.setOnClickListener(this);
 
-        ImageFetchTask();
+        if (savedInstanceState == null)
+            ImageFetchTask();
 
         return mRootView;
     }
@@ -171,7 +179,6 @@ public class GalleryFragment extends Fragment implements
             case R.id.fab_refresh:
                 spinKitView.setVisibility(View.VISIBLE);
                 ImageFetchTask();
-                //Toast.makeText(getContext(), getResources().getString(R.string.refresh), Toast.LENGTH_SHORT).show();
                 break;
 
             case R.id.fab_next_page:
@@ -188,8 +195,6 @@ public class GalleryFragment extends Fragment implements
                 ImageFetchTask();
 
                 Log.d(TAG + "saved page after fetch ", String.valueOf(savedPage));
-
-                //Toast.makeText(getContext(), getResources().getString(R.string.loading_next), Toast.LENGTH_SHORT).show();
 
             default:
         }
@@ -213,7 +218,6 @@ public class GalleryFragment extends Fragment implements
 
                         spinKitView.setVisibility(View.VISIBLE);
                         ImageFetchTask();
-                        //Toast.makeText(getContext(), getResources().getString(R.string.loading), Toast.LENGTH_SHORT).show();
                     }
                 })
 
@@ -292,7 +296,9 @@ public class GalleryFragment extends Fragment implements
 
                 @Override
                 public void onResponse(Call<Results> call, Response<Results> response) {
+
                     spinKitView.setVisibility(View.GONE);
+
                     Log.d(TAG + " Response goes here ", response.toString());
                     String result;
 
