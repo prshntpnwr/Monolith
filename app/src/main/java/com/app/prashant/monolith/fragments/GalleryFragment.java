@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteConstraintException;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -112,6 +113,7 @@ public class GalleryFragment extends Fragment implements
         bundle.putInt("savedPref", savedPref);
         bundle.putInt("savedPage", savedPage);
         bundle.putInt("mPage", mPage);
+
     }
 
     @Override

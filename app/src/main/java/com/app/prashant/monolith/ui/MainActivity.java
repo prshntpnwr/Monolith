@@ -163,7 +163,7 @@ public class MainActivity extends AppCompatActivity {
                 View view = findViewById(android.R.id.content);
 
                 //Checks if there is a new version available on Google Play Store.
-                if (result.hasNewVersion()) {
+//                if (result.hasNewVersion()) {
                     //Get the new published version code of the app.
                     result.getNewVersionCode();
 
@@ -173,9 +173,9 @@ public class MainActivity extends AppCompatActivity {
                     //Opens the Google Play Store on your app page to do the update.
                     result.openUpdateLink();
 
-                } else {
-                    Snackbar.make(view, "No New Version Available !", Snackbar.LENGTH_SHORT).show();
-                }
+//                } else {
+//                    Snackbar.make(view, "No New Version Available !", Snackbar.LENGTH_SHORT).show();
+//                }
             }
         }).execute();
     }
