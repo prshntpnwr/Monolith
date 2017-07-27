@@ -3,7 +3,7 @@
 
 Android Application for news read and image gallery. Get amazing images, wallpapers and news related to space every day. 
 
-<img alt="Get it on Google Play" src="https://play.google.com/intl/en_us/badges/images/apps/en-play-badge-border.png" width="216" height="70"/>
+<a href="https://play.google.com/store/apps/details?id=com.app.prashant.monolith"><img alt="Get it on Google Play" src="https://play.google.com/intl/en_us/badges/images/apps/en-play-badge-border.png" width="216" height="70"/></a>
 
 ## License
 
