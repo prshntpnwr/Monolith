@@ -17,7 +17,8 @@
         android:contentDescription="@string/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|center" />
+        android:layout_gravity="bottom|center"
+        app:layout_behavior="com.app.prashant.monolith.ui.ScrollAwareFABBehavior" />
 
     <com.github.ybq.android.spinkit.SpinKitView
         xmlns:app="http://schemas.android.com/apk/res-auto"

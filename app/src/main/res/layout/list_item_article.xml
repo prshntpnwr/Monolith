@@ -14,8 +14,8 @@
 
         <ImageView
             android:id="@+id/thumbnail"
-            android:layout_width="220dp"
-            android:layout_height="200dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:background="@color/photo_placeholder"
             android:scaleType="centerCrop"
             android:adjustViewBounds="true"
@@ -33,7 +33,7 @@
             android:paddingBottom="@dimen/detail_title_bottom_margin"
             android:textColor="@color/primary_text"
             android:ellipsize="end"
-            android:maxLines="4"/>
+            android:maxLines="2"/>
 
         <TextView
             android:id="@+id/article_subtitle"

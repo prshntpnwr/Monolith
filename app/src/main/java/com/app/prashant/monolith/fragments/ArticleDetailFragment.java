@@ -39,6 +39,8 @@ import com.app.prashant.monolith.articleData.ArticleLoader;
 import com.hlab.fabrevealmenu.listeners.OnFABMenuSelectedListener;
 import com.hlab.fabrevealmenu.view.FABRevealMenu;
 
+import static com.app.prashant.monolith.ui.Commons.getFormattedDate;
+
 public class ArticleDetailFragment extends Fragment implements
         LoaderManager.LoaderCallbacks<Cursor>, OnFABMenuSelectedListener {
 
@@ -56,7 +58,6 @@ public class ArticleDetailFragment extends Fragment implements
     private int mStatusBarFullOpacityBottom;
 
     private NestedScrollView mScrollView;
-    private CollapsingToolbarLayout collapsingToolbarLayout;
 
     private int mItemPosition;
     private long mItemId;
@@ -147,7 +148,7 @@ public class ArticleDetailFragment extends Fragment implements
         if (intent != null && intent.getExtras() != null) {
 
             titleView.setText(intent.getStringExtra(getResources().getString(R.string.title)));
-            bylineView.setText(intent.getStringExtra(getResources().getString(R.string.date)));
+            bylineView.setText(intent.getStringExtra(getFormattedDate(getResources().getString(R.string.date))));
             bodyView.setText(intent.getStringExtra(getResources().getString(R.string.description)));
             try {
                 Glide.with(this.getContext())
@@ -182,7 +183,7 @@ public class ArticleDetailFragment extends Fragment implements
 
             mCursor.moveToPosition(mItemPosition);
             titleView.setText(mCursor.getString(ArticleLoader.Query.COLUMN_TITLE));
-            bylineView.setText(mCursor.getString(ArticleLoader.Query.COLUMN_PUBLISH_DATE));
+            bylineView.setText(getFormattedDate(mCursor.getString(ArticleLoader.Query.COLUMN_PUBLISH_DATE)));
             bodyView.setText(mCursor.getString(ArticleLoader.Query.COLUMN_DESCRIPTION));
             titleView.setTypeface(Typeface.createFromAsset(getResources().getAssets(), "Roboto-Bold.ttf"));
             bylineView.setTypeface(Typeface.createFromAsset(getResources().getAssets(), "Roboto-Regular.ttf"));
@@ -310,9 +311,8 @@ public class ArticleDetailFragment extends Fragment implements
             //tab color
             builder.setToolbarColor(color);
             //tab animation
-            builder.setStartAnimations(this.getContext(), android.R.anim.slide_out_right, android.R.anim.slide_in_left);
-            builder.setExitAnimations(this.getContext(), android.R.anim.slide_in_left,
-                    android.R.anim.slide_out_right);
+            builder.setStartAnimations(getContext(), android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+            builder.setExitAnimations(getContext(), android.R.anim.slide_out_right, android.R.anim.slide_in_left);
             //tab back button
             builder.setCloseButtonIcon(BitmapFactory.decodeResource(
                     getResources(), R.drawable.ic_back));

@@ -13,10 +13,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.app.prashant.monolith.R;
 import com.app.prashant.monolith.articleData.ArticleContract;
 import com.app.prashant.monolith.articleData.ArticleLoader;
+import com.bumptech.glide.Glide;
+
+import static com.app.prashant.monolith.ui.Commons.getFormattedDate;
 
 public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHolder> {
     private final String TAG = ArticleAdapter.class.getSimpleName();
@@ -69,8 +71,7 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
     public void onBindViewHolder(ArticleAdapter.ViewHolder holder, int position) {
         holder.titleView.setText(mCursor.getString(ArticleLoader.Query.COLUMN_TITLE));
 
-        holder.subtitleView.setText(
-                mCursor.getString(ArticleLoader.Query.COLUMN_PUBLISH_DATE));
+        holder.subtitleView.setText(getFormattedDate(mCursor.getString(ArticleLoader.Query.COLUMN_PUBLISH_DATE)));
 
         ImageView imageView = holder.thumbnail;
         //loading images using glide
