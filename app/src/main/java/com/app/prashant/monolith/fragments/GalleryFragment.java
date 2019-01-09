@@ -105,6 +105,8 @@ public class GalleryFragment extends Fragment implements
             savedPage = savedInstanceState.getInt("savedPage", savedPage);
             mPage = savedInstanceState.getInt("mPage", mPage);
         }
+
+        ImageFetchTask();
     }
 
     @Override
@@ -113,7 +115,6 @@ public class GalleryFragment extends Fragment implements
         bundle.putInt("savedPref", savedPref);
         bundle.putInt("savedPage", savedPage);
         bundle.putInt("mPage", mPage);
-
     }
 
     @Override
@@ -139,9 +140,6 @@ public class GalleryFragment extends Fragment implements
         final FabOptions fabOptions = (FabOptions) mRootView.findViewById(R.id.fab_options);
         fabOptions.setButtonsMenu(R.menu.gallery_fab);
         fabOptions.setOnClickListener(this);
-
-        if (savedInstanceState == null)
-            ImageFetchTask();
 
         return mRootView;
     }

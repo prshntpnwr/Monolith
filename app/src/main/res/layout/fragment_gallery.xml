@@ -9,7 +9,8 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
     <com.joaquimley.faboptions.FabOptions
         android:id="@+id/fab_options"
@@ -31,6 +32,7 @@
 
     <include
         android:id="@+id/empty_include"
-        layout="@layout/empty_layout" />
+        layout="@layout/empty_layout"
+        android:visibility="gone"/>
 
 </FrameLayout>

@@ -9,6 +9,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
@@ -87,6 +88,11 @@ public class ArticleFragment extends Fragment implements
     }
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         this.savedInstanceState = savedInstanceState;
@@ -100,7 +106,6 @@ public class ArticleFragment extends Fragment implements
             mSwipeRefreshLayout.setColorSchemeResources(R.color.accent);
             mSwipeRefreshLayout.setOnRefreshListener(this);
         }
-
         ArticleFetchTask();
 
         return mRootView;
