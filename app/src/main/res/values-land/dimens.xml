@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <dimen name="max_width">500dp</dimen>
-    <dimen name="material_logo_spacing">4dp</dimen>
 
-    <dimen name="material_layout_app_bar_space_negative">-150dp</dimen>
+    <dimen name="material_layout_app_bar_space_negative" tools:ignore="MissingDefaultResource">-150dp</dimen>
     <dimen name="material_layout_app_bar_height">320dp</dimen>
     <item name="detail_body_line_spacing_multiplier" format="float" type="fraction">1.25</item>
 
