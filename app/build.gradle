@@ -82,10 +82,6 @@ dependencies {
 
     //about app
     implementation 'com.github.medyo:android-about-page:1.2'
-
-    //check for app version
-    implementation 'com.github.jrvansuita:CheckNewAppVersionAvailable:v1.0.0'
-
 }
 
 apply plugin: 'com.google.gms.google-services'

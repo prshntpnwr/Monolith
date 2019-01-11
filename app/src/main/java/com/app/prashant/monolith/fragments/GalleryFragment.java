@@ -249,9 +249,8 @@ public class GalleryFragment extends Fragment implements
     }
 
     public void ImageFetchTask() {
-
         if (Utility.isNetworkAvailable(getContext())) {
-            mEmptyView.setVisibility(View.GONE);
+            if (mEmptyView != null) mEmptyView.setVisibility(View.GONE);
 
             mTag = readSharePreferences(getString(R.string.key), 0);
             mPage = readSharePreferences(getString(R.string.page_num), 1);

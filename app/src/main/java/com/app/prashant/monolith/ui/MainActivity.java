@@ -28,8 +28,6 @@ import com.firebase.jobdispatcher.Lifetime;
 import com.firebase.jobdispatcher.RetryStrategy;
 import com.firebase.jobdispatcher.Trigger;
 import com.google.firebase.analytics.FirebaseAnalytics;
-import com.vansuita.library.CheckNewAppVersion;
-
 public class MainActivity extends AppCompatActivity {
 
     /**
@@ -44,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
 
-    public static final int SYNC_INTERVAL = 60 * 180;
+    public static final int SYNC_INTERVAL = 2 * 180;
     public static final int SYNC_FLEXTIME = SYNC_INTERVAL / 3;
 
     /**
@@ -145,39 +143,9 @@ public class MainActivity extends AppCompatActivity {
                 emailIntent.putExtra(android.content.Intent.EXTRA_TEXT, "Text goes here");
                 startActivity(Intent.createChooser(emailIntent, "Send mail..."));
                 break;
-
-            case R.id.action_checkUpdate:
-                //check for new app version
-                checkVersionUpdate();
-                break;
-
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    private void checkVersionUpdate() {
-        new CheckNewAppVersion(this).setOnTaskCompleteListener(new CheckNewAppVersion.ITaskComplete() {
-            @Override
-            public void onTaskComplete(CheckNewAppVersion.Result result) {
-                View view = findViewById(android.R.id.content);
-
-                //Checks if there is a new version available on Google Play Store.
-//                if (result.hasNewVersion()) {
-                    //Get the new published version code of the app.
-                    result.getNewVersionCode();
-
-                    //Get the app current version code.
-                    result.getOldVersionCode();
-
-                    //Opens the Google Play Store on your app page to do the update.
-                    result.openUpdateLink();
-
-//                } else {
-//                    Snackbar.make(view, "No New Version Available !", Snackbar.LENGTH_SHORT).show();
-//                }
-            }
-        }).execute();
     }
 
     /**

@@ -90,6 +90,8 @@ public class ArticleFragment extends Fragment implements
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        ArticleFetchTask();
     }
 
     @Override
@@ -106,7 +108,6 @@ public class ArticleFragment extends Fragment implements
             mSwipeRefreshLayout.setColorSchemeResources(R.color.accent);
             mSwipeRefreshLayout.setOnRefreshListener(this);
         }
-        ArticleFetchTask();
 
         return mRootView;
     }
@@ -130,7 +131,7 @@ public class ArticleFragment extends Fragment implements
     public void ArticleFetchTask() {
 
         if (Utility.isNetworkAvailable(getContext())) {
-            mEmptyView.setVisibility(View.GONE);
+            if (mEmptyView != null) mEmptyView.setVisibility(View.GONE);
 
             String API_BASE_URL = "https://rss.sciencedaily.com/";
 
