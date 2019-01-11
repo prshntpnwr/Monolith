@@ -1,4 +1,4 @@
-#Privacy Policy
+# Privacy Policy
 
 Prashant Panwar built the Monolith app as a Free app. This SERVICE is provided by Prashant Panwar at no cost and is intended for use as is.
 
