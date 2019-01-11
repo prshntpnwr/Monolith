@@ -41,15 +41,15 @@ dependencies {
     androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    implementation 'com.android.support:appcompat-v7:25.1.1'
-    implementation 'com.android.support:design:25.1.1'
-    implementation 'com.android.support:support-v4:25.1.1'
+    implementation 'com.android.support:appcompat-v7:26.1.0'
+    implementation 'com.android.support:design:26.1.0'
+    implementation 'com.android.support:support-v4:26.1.0'
     implementation 'com.google.android.gms:play-services-ads:10.2.0'
     implementation 'com.google.firebase:firebase-core:10.2.0'
     testImplementation 'junit:junit:4.12'
     implementation 'com.google.code.gson:gson:2.7'
     implementation 'com.squareup.picasso:picasso:2.5.2'
-    implementation 'com.android.volley:volley:1.0.0'
+    implementation 'com.android.volley:volley:1.1.0'
     implementation 'com.github.bumptech.glide:glide:3.7.0'
     implementation 'com.xgc1986.android:parallaxpagertransformer:1.0.4'
 
@@ -67,15 +67,15 @@ dependencies {
 
     implementation 'com.github.bumptech.glide:glide:3.7.0'
     implementation 'com.firebase:firebase-jobdispatcher-with-gcm-dep:0.5.2'
-    implementation 'com.android.support:recyclerview-v7:25.2.0'
+    implementation 'com.android.support:recyclerview-v7:26.1.0'
     //image detail fab
     implementation 'com.hlab.fabrevealmenu:fab-reveal-menu:1.0.1'
-    implementation 'com.android.support:palette-v7:25.2.0'
+    implementation 'com.android.support:palette-v7:26.1.0'
     //gallery fab
     implementation 'com.github.joaquimley:faboptions:1.1.2'
 
     //custom chrome tab
-    implementation 'com.android.support:customtabs:25.2.0'
+    implementation 'com.android.support:customtabs:26.1.0'
 
     //progress dialog
     implementation 'com.github.ybq:Android-SpinKit:1.1.0'
