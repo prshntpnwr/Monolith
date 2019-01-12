@@ -26,7 +26,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.simplexml.SimpleXmlConverterFactory;
 
 public class MonolithFetchService extends JobService {
-
     private int mTag;
     private int mPage = 1;
     private Cursor mCursor;
@@ -104,19 +103,23 @@ public class MonolithFetchService extends JobService {
 
                     result = response.body().getResults().get(i).getCoverPhoto().getUrls().getRegular();
 
-                    Uri uri = GalleryContract.GalleryEntry.CONTENT_URI;
-                    ContentValues contentValues = new ContentValues();
-                    final ContentResolver resolver = getContentResolver();
+                    try {
+                        Uri uri = GalleryContract.GalleryEntry.CONTENT_URI;
+                        ContentValues contentValues = new ContentValues();
+                        final ContentResolver resolver = getContentResolver();
 
-                    contentValues.put(GalleryContract.GalleryEntry.COLUMN_IMAGE_PATH, result);
-                    contentValues.put(GalleryContract.GalleryEntry.COLUMN_IMAGE_STATUS, 1);
-                    resolver.insert(uri, contentValues);
-                    mCursor = resolver.query(uri, new String[]{
-                                    GalleryContract.GalleryEntry.COLUMN_IMAGE_PATH,
-                                    GalleryContract.GalleryEntry.COLUMN_IMAGE_STATUS},
-                            null,
-                            null,
-                            null);
+                        contentValues.put(GalleryContract.GalleryEntry.COLUMN_IMAGE_PATH, result);
+                        contentValues.put(GalleryContract.GalleryEntry.COLUMN_IMAGE_STATUS, 1);
+                        resolver.insert(uri, contentValues);
+                        mCursor = resolver.query(uri, new String[]{
+                                        GalleryContract.GalleryEntry.COLUMN_IMAGE_PATH,
+                                        GalleryContract.GalleryEntry.COLUMN_IMAGE_STATUS},
+                                null,
+                                null,
+                                null);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             }
 
@@ -159,7 +162,6 @@ public class MonolithFetchService extends JobService {
                 int length = response.body().getChannel().getItem().size();
 
                 for (int i = 0; i < length; i++) {
-
                     title = response.body().getChannel().getItem().get(i).getTitle();
                     description = response.body().getChannel().getItem().get(i).getDescription();
                     image_url = response.body().getChannel().getItem().get(i).getthumbnail().getUrl();
@@ -172,26 +174,30 @@ public class MonolithFetchService extends JobService {
                     Log.d(TAG + " publish date : ", pub_date);
                     Log.d(TAG + " link : ", link);
 
-                    Uri uri = ArticleContract.ArticleEntry.CONTENT_URI;
-                    ContentValues contentValues = new ContentValues();
-                    final ContentResolver resolver = getContentResolver();
+                    try {
+                        Uri uri = ArticleContract.ArticleEntry.CONTENT_URI;
+                        ContentValues contentValues = new ContentValues();
+                        final ContentResolver resolver = getContentResolver();
 
-                    contentValues.put(ArticleContract.ArticleEntry.COLUMN_TITLE, title);
-                    contentValues.put(ArticleContract.ArticleEntry.COLUMN_DESCRIPTION, description);
-                    contentValues.put(ArticleContract.ArticleEntry.COLUMN_IMAGE_URL, image_url);
-                    contentValues.put(ArticleContract.ArticleEntry.COLUMN_PUBLISH_DATE, pub_date);
-                    contentValues.put(ArticleContract.ArticleEntry.COLUMN_LINK, link);
+                        contentValues.put(ArticleContract.ArticleEntry.COLUMN_TITLE, title);
+                        contentValues.put(ArticleContract.ArticleEntry.COLUMN_DESCRIPTION, description);
+                        contentValues.put(ArticleContract.ArticleEntry.COLUMN_IMAGE_URL, image_url);
+                        contentValues.put(ArticleContract.ArticleEntry.COLUMN_PUBLISH_DATE, pub_date);
+                        contentValues.put(ArticleContract.ArticleEntry.COLUMN_LINK, link);
 
-                    resolver.insert(uri, contentValues);
-                    mCursor = resolver.query(uri, new String[]{
-                                    ArticleContract.ArticleEntry.COLUMN_TITLE,
-                                    ArticleContract.ArticleEntry.COLUMN_DESCRIPTION,
-                                    ArticleContract.ArticleEntry.COLUMN_IMAGE_URL,
-                                    ArticleContract.ArticleEntry.COLUMN_PUBLISH_DATE,
-                                    ArticleContract.ArticleEntry.COLUMN_LINK},
-                            null,
-                            null,
-                            null);
+                        resolver.insert(uri, contentValues);
+                        mCursor = resolver.query(uri, new String[]{
+                                        ArticleContract.ArticleEntry.COLUMN_TITLE,
+                                        ArticleContract.ArticleEntry.COLUMN_DESCRIPTION,
+                                        ArticleContract.ArticleEntry.COLUMN_IMAGE_URL,
+                                        ArticleContract.ArticleEntry.COLUMN_PUBLISH_DATE,
+                                        ArticleContract.ArticleEntry.COLUMN_LINK},
+                                null,
+                                null,
+                                null);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             }
 

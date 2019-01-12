@@ -175,17 +175,21 @@ public class ArticleFragment extends Fragment implements
                         Log.d(TAG + " publish date : ", pub_date);
                         Log.d(TAG + " link : ", link);
 
-                        Uri uri = ArticleContract.ArticleEntry.CONTENT_URI;
-                        ContentValues contentValues = new ContentValues();
-                        final ContentResolver resolver = getContext().getContentResolver();
+                        try {
+                            Uri uri = ArticleContract.ArticleEntry.CONTENT_URI;
+                            ContentValues contentValues = new ContentValues();
+                            final ContentResolver resolver = getContext().getContentResolver();
 
-                        contentValues.put(ArticleContract.ArticleEntry.COLUMN_TITLE, title);
-                        contentValues.put(ArticleContract.ArticleEntry.COLUMN_DESCRIPTION, description);
-                        contentValues.put(ArticleContract.ArticleEntry.COLUMN_IMAGE_URL, image_url);
-                        contentValues.put(ArticleContract.ArticleEntry.COLUMN_PUBLISH_DATE, pub_date);
-                        contentValues.put(ArticleContract.ArticleEntry.COLUMN_LINK, link);
+                            contentValues.put(ArticleContract.ArticleEntry.COLUMN_TITLE, title);
+                            contentValues.put(ArticleContract.ArticleEntry.COLUMN_DESCRIPTION, description);
+                            contentValues.put(ArticleContract.ArticleEntry.COLUMN_IMAGE_URL, image_url);
+                            contentValues.put(ArticleContract.ArticleEntry.COLUMN_PUBLISH_DATE, pub_date);
+                            contentValues.put(ArticleContract.ArticleEntry.COLUMN_LINK, link);
 
-                        resolver.insert(uri, contentValues);
+                            resolver.insert(uri, contentValues);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
 
                     }
                 }
