@@ -5,6 +5,10 @@ Android Application for news read and image gallery. Get amazing images, wallpap
 
 <a href="https://play.google.com/store/apps/details?id=com.app.prashant.monolith"><img alt="Get it on Google Play" src="https://play.google.com/intl/en_us/badges/images/apps/en-play-badge-border.png" width="216" height="70"/></a>
 
+<img width="40%" src="/art/article.png" />  <img width="40%" src="/art/article_detail.png" />
+
+<img width="60%" src="/art/gallery_fab_open.png" />
+
 ## License
 
 Copyright 2017 Prashant Panwar
